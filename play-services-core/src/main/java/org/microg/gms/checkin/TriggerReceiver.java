@@ -20,31 +20,31 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.preference.PreferenceManager;
-import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
+
+import androidx.legacy.content.WakefulBroadcastReceiver;
 
 import org.microg.gms.common.ForegroundServiceContext;
 
 import static org.microg.gms.checkin.CheckinService.EXTRA_FORCE_CHECKIN;
+import static org.microg.gms.checkin.CheckinService.REGULAR_CHECKIN_INTERVAL;
 
 public class TriggerReceiver extends WakefulBroadcastReceiver {
     private static final String TAG = "GmsCheckinTrigger";
-    public static final String PREF_ENABLE_CHECKIN = "checkin_enable_service";
-    private static final long REGULAR_CHECKIN_INTERVAL = 12 * 60 * 60 * 1000; // 12 hours
+    private static boolean registered = false;
 
     @Override
     public void onReceive(Context context, Intent intent) {
         try {
             boolean force = "android.provider.Telephony.SECRET_CODE".equals(intent.getAction());
-            ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-            if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean(PREF_ENABLE_CHECKIN, true) || force) {
-                if (ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction()) &&
-                        LastCheckinInfo.read(context).lastCheckin > System.currentTimeMillis() - REGULAR_CHECKIN_INTERVAL) {
+            if (CheckinPrefs.get(context).isEnabled() || force) {
+                if (LastCheckinInfo.read(context).lastCheckin > System.currentTimeMillis() - REGULAR_CHECKIN_INTERVAL && !force) {
+                    CheckinService.schedule(context);
                     return;
                 }
 
+                ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo networkInfo = cm.getActiveNetworkInfo();
                 if (networkInfo != null && networkInfo.isConnected() || force) {
                     Intent subIntent = new Intent(context, CheckinService.class);

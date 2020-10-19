@@ -16,8 +16,10 @@
 
 package org.microg.gms.maps.mapbox.model
 
+import android.os.Parcel
 import android.util.Log
 import com.google.android.gms.dynamic.IObjectWrapper
+import com.google.android.gms.dynamic.ObjectWrapper
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.gms.maps.model.internal.IMarkerDelegate
@@ -41,17 +43,16 @@ class MarkerImpl(private val map: GoogleMapImpl, private val id: String, options
     private var draggable: Boolean = options.isDraggable
     private var tag: IObjectWrapper? = null
 
+    private var infoWindowShown = false
+
     override var annotation: Symbol? = null
     override var removed: Boolean = false
     override val annotationOptions: SymbolOptions
         get() {
-            var intBits = java.lang.Float.floatToIntBits(zIndex)
-            if (intBits < 0) intBits = intBits xor 0x7fffffff
-
             val symbolOptions = SymbolOptions()
                     .withIconOpacity(if (visible) alpha else 0f)
                     .withIconRotate(rotation)
-                    .withZIndex(intBits)
+                    .withSymbolSortKey(zIndex)
                     .withDraggable(draggable)
 
             position.let { symbolOptions.withLatLng(it.toMapbox()) }
@@ -110,15 +111,17 @@ class MarkerImpl(private val map: GoogleMapImpl, private val id: String, options
 
     override fun showInfoWindow() {
         Log.d(TAG, "unimplemented Method: showInfoWindow")
+        infoWindowShown = true
     }
 
     override fun hideInfoWindow() {
         Log.d(TAG, "unimplemented Method: hideInfoWindow")
+        infoWindowShown = false
     }
 
     override fun isInfoWindowShown(): Boolean {
         Log.d(TAG, "unimplemented Method: isInfoWindowShow")
-        return false
+        return infoWindowShown
     }
 
     override fun setVisible(visible: Boolean) {
@@ -192,9 +195,7 @@ class MarkerImpl(private val map: GoogleMapImpl, private val id: String, options
 
     override fun setZIndex(zIndex: Float) {
         this.zIndex = zIndex
-        var intBits = java.lang.Float.floatToIntBits(zIndex)
-        if (intBits < 0) intBits = intBits xor 0x7fffffff
-        annotation?.zIndex = intBits
+        annotation?.symbolSortKey = zIndex
         map.symbolManager?.let { update(it) }
     }
 
@@ -204,7 +205,14 @@ class MarkerImpl(private val map: GoogleMapImpl, private val id: String, options
         this.tag = obj
     }
 
-    override fun getTag(): IObjectWrapper? = tag
+    override fun getTag(): IObjectWrapper = tag ?: ObjectWrapper.wrap(null)
+
+    override fun onTransact(code: Int, data: Parcel, reply: Parcel?, flags: Int): Boolean =
+            if (super.onTransact(code, data, reply, flags)) {
+                true
+            } else {
+                Log.d(TAG, "onTransact [unknown]: $code, $data, $flags"); false
+            }
 
     companion object {
         private val TAG = "GmsMapMarker"
