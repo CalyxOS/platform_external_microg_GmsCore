@@ -37,6 +37,7 @@ buildscript {
     ext.androidCompileSdk = 30
 
     repositories {
+        mavenLocal()
         jcenter()
         google()
     }
@@ -110,6 +111,7 @@ def versionName() {
 
 subprojects {
     repositories {
+        mavenLocal()
         jcenter()
         google()
     }
