@@ -4,7 +4,7 @@
  */
 
 buildscript {
-    ext.nlpVersion = '2.0-alpha4'
+    ext.nlpVersion = '020.09.22.12-2-g8b1ac8e642'
     ext.remoteDroidGuardVersion = '0.1.2'
     ext.safeParcelVersion = '1.6.0'
     ext.wearableVersion = '0.1.1'
