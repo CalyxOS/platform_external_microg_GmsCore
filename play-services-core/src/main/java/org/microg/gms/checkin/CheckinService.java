@@ -18,13 +18,19 @@ package org.microg.gms.checkin;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.IntentService;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
-import android.preference.PreferenceManager;
-import android.support.v4.content.WakefulBroadcastReceiver;
+import android.os.ResultReceiver;
 import android.util.Log;
+
+import androidx.legacy.content.WakefulBroadcastReceiver;
 
 import com.google.android.gms.checkin.internal.ICheckinService;
 
@@ -33,13 +39,17 @@ import org.microg.gms.common.ForegroundServiceContext;
 import org.microg.gms.gcm.McsService;
 import org.microg.gms.people.PeopleManager;
 
-import static org.microg.gms.checkin.TriggerReceiver.PREF_ENABLE_CHECKIN;
-
 public class CheckinService extends IntentService {
     private static final String TAG = "GmsCheckinSvc";
+    public static final long MAX_VALID_CHECKIN_AGE = 24 * 60 * 60 * 1000; // 12 hours
+    public static final long REGULAR_CHECKIN_INTERVAL = 12 * 60 * 60 * 1000; // 12 hours
+    public static final long BACKUP_CHECKIN_DELAY = 3 * 60 * 60 * 1000; // 3 hours
     public static final String BIND_ACTION = "com.google.android.gms.checkin.BIND_TO_SERVICE";
     public static final String EXTRA_FORCE_CHECKIN = "force";
+    @Deprecated
     public static final String EXTRA_CALLBACK_INTENT = "callback";
+    public static final String EXTRA_RESULT_RECEIVER = "receiver";
+    public static final String EXTRA_NEW_CHECKIN_TIME = "checkin_time";
 
     private ICheckinService iface = new ICheckinService.Stub() {
         @Override
@@ -57,7 +67,7 @@ public class CheckinService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         try {
             ForegroundServiceContext.completeForegroundService(this, intent, TAG);
-            if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(PREF_ENABLE_CHECKIN, true)) {
+            if (CheckinPrefs.get(this).isEnabled()) {
                 LastCheckinInfo info = CheckinManager.checkin(this, intent.getBooleanExtra(EXTRA_FORCE_CHECKIN, false));
                 if (info != null) {
                     Log.d(TAG, "Checked in as " + Long.toHexString(info.androidId));
@@ -69,12 +79,21 @@ public class CheckinService extends IntentService {
                     if (intent.hasExtra(EXTRA_CALLBACK_INTENT)) {
                         startService((Intent) intent.getParcelableExtra(EXTRA_CALLBACK_INTENT));
                     }
+                    if (intent.hasExtra(EXTRA_RESULT_RECEIVER)) {
+                        ResultReceiver receiver = intent.getParcelableExtra(EXTRA_RESULT_RECEIVER);
+                        if (receiver != null) {
+                            Bundle bundle = new Bundle();
+                            bundle.putLong(EXTRA_NEW_CHECKIN_TIME, info.lastCheckin);
+                            receiver.send(Activity.RESULT_OK, bundle);
+                        }
+                    }
                 }
             }
         } catch (Exception e) {
             Log.w(TAG, e);
         } finally {
             WakefulBroadcastReceiver.completeWakefulIntent(intent);
+            schedule(this);
             stopSelf();
         }
     }
@@ -86,5 +105,11 @@ public class CheckinService extends IntentService {
         } else {
             return super.onBind(intent);
         }
+    }
+
+    static void schedule(Context context) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        PendingIntent pendingIntent = PendingIntent.getService(context, TriggerReceiver.class.getName().hashCode(), new Intent(context, TriggerReceiver.class), PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.set(AlarmManager.RTC, Math.max(LastCheckinInfo.read(context).lastCheckin + REGULAR_CHECKIN_INTERVAL, System.currentTimeMillis() + BACKUP_CHECKIN_DELAY), pendingIntent);
     }
 }

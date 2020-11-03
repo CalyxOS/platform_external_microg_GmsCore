@@ -21,8 +21,9 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
+
+import androidx.legacy.content.WakefulBroadcastReceiver;
 
 import org.microg.gms.checkin.LastCheckinInfo;
 import org.microg.gms.common.ForegroundServiceContext;
@@ -44,11 +45,10 @@ public class TriggerReceiver extends WakefulBroadcastReceiver {
     public synchronized static void register(Context context) {
         if (SDK_INT >= N && !registered) {
             IntentFilter intentFilter = new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE");
-            context.registerReceiver(new TriggerReceiver(), intentFilter);
+            context.getApplicationContext().registerReceiver(new TriggerReceiver(), intentFilter);
             registered = true;
         }
     }
-
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -85,7 +85,7 @@ public class TriggerReceiver extends WakefulBroadcastReceiver {
                 }
             }
 
-            if (!McsService.isConnected() || force) {
+            if (!McsService.isConnected(context) || force) {
                 Log.d(TAG, "Not connected to GCM but should be, asking the service to start up. Triggered by: " + intent);
                 startWakefulService(new ForegroundServiceContext(context), new Intent(ACTION_CONNECT, null, context, McsService.class)
                         .putExtra(EXTRA_REASON, intent));

@@ -19,18 +19,16 @@ package org.microg.gms.maps.mapbox
 import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Location
-import android.os.Bundle
-import android.os.IBinder
-import android.os.Parcel
-import android.support.annotation.IdRes
-import android.support.annotation.Keep
-import android.support.v4.util.LongSparseArray
+import android.os.*
+import androidx.annotation.IdRes
+import androidx.annotation.Keep
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
+import androidx.collection.LongSparseArray
 import com.google.android.gms.dynamic.IObjectWrapper
 import com.google.android.gms.maps.GoogleMapOptions
 import com.google.android.gms.maps.internal.*
@@ -42,13 +40,16 @@ import com.mapbox.mapboxsdk.Mapbox
 import com.mapbox.mapboxsdk.R
 import com.mapbox.mapboxsdk.camera.CameraUpdate
 import com.mapbox.mapboxsdk.constants.MapboxConstants
+import com.mapbox.mapboxsdk.location.LocationComponentActivationOptions
+import com.mapbox.mapboxsdk.location.LocationComponentOptions
+import com.mapbox.mapboxsdk.location.modes.CameraMode
+import com.mapbox.mapboxsdk.location.modes.RenderMode
 import com.mapbox.mapboxsdk.maps.MapView
 import com.mapbox.mapboxsdk.maps.MapboxMap
 import com.mapbox.mapboxsdk.maps.Style
 import com.mapbox.mapboxsdk.plugins.annotation.*
 import com.mapbox.mapboxsdk.plugins.annotation.Annotation
 import com.mapbox.mapboxsdk.style.layers.Property.LINE_CAP_ROUND
-import com.mapbox.mapboxsdk.utils.ColorUtils
 import org.microg.gms.kotlin.unwrap
 import org.microg.gms.maps.MapsConstants.*
 import org.microg.gms.maps.mapbox.model.*
@@ -58,6 +59,16 @@ import org.microg.gms.maps.mapbox.utils.toGms
 import org.microg.gms.maps.mapbox.utils.toMapbox
 
 private fun <T : Any> LongSparseArray<T>.values() = (0..size()).map { valueAt(it) }.mapNotNull { it }
+
+fun runOnMainLooper(method: () -> Unit) {
+    if (Looper.myLooper() == Looper.getMainLooper()) {
+        method()
+    } else {
+        Handler(Looper.getMainLooper()).post {
+            method()
+        }
+    }
+}
 
 class GoogleMapImpl(private val context: Context, var options: GoogleMapOptions) : IGoogleMapDelegate.Stub() {
 
@@ -74,7 +85,7 @@ class GoogleMapImpl(private val context: Context, var options: GoogleMapOptions)
     private val mapLock = Object()
 
     private val initializedCallbackList = mutableListOf<IOnMapReadyCallback>()
-    private var loadedCallback : IOnMapLoadedCallback? = null
+    private var loadedCallback: IOnMapLoadedCallback? = null
     private var cameraChangeListener: IOnCameraChangeListener? = null
     private var cameraMoveListener: IOnCameraMoveListener? = null
     private var cameraMoveCanceledListener: IOnCameraMoveCanceledListener? = null
@@ -102,14 +113,21 @@ class GoogleMapImpl(private val context: Context, var options: GoogleMapOptions)
     val markers = mutableMapOf<Long, MarkerImpl>()
     var markerId = 0L
 
+    var groundId = 0L
+    var tileId = 0L
+
     var storedMapType: Int = options.mapType
     val waitingCameraUpdates = mutableListOf<CameraUpdate>()
+    var locationEnabled: Boolean = false
 
     init {
         val mapContext = MapContext(context)
         BitmapDescriptorFactoryImpl.initialize(mapContext.resources, context.resources)
         LibraryLoader.setLibraryLoader(MultiArchLoader(mapContext, context))
-        Mapbox.getInstance(mapContext, BuildConfig.MAPBOX_KEY)
+        runOnMainLooper {
+            Mapbox.getInstance(mapContext, BuildConfig.MAPBOX_KEY)
+        }
+
 
         val fakeWatermark = View(mapContext)
         fakeWatermark.layoutParams = object : RelativeLayout.LayoutParams(0, 0) {
@@ -210,6 +228,11 @@ class GoogleMapImpl(private val context: Context, var options: GoogleMapOptions)
 
     override fun stopAnimation() = map?.cancelTransitions() ?: Unit
 
+    override fun setMapStyle(options: MapStyleOptions?): Boolean {
+        Log.d(TAG, "setMapStyle options: " + options?.getJson())
+        return true
+    }
+
     override fun setMinZoomPreference(minZoom: Float) {
         map?.setMinZoomPreference(minZoom.toDouble() - 1)
     }
@@ -254,7 +277,7 @@ class GoogleMapImpl(private val context: Context, var options: GoogleMapOptions)
         return fill
     }
 
-    override fun addMarker(options: MarkerOptions): IMarkerDelegate? {
+    override fun addMarker(options: MarkerOptions): IMarkerDelegate {
         val marker = MarkerImpl(this, "m${markerId++}", options)
         synchronized(this) {
             val symbolManager = symbolManager
@@ -269,12 +292,12 @@ class GoogleMapImpl(private val context: Context, var options: GoogleMapOptions)
 
     override fun addGroundOverlay(options: GroundOverlayOptions): IGroundOverlayDelegate? {
         Log.d(TAG, "unimplemented Method: addGroundOverlay")
-        return null
+        return GroundOverlayImpl(this, "g${groundId++}", options)
     }
 
     override fun addTileOverlay(options: TileOverlayOptions): ITileOverlayDelegate? {
         Log.d(TAG, "unimplemented Method: addTileOverlay")
-        return null
+        return TileOverlayImpl(this, "t${tileId++}", options)
     }
 
     override fun addCircle(options: CircleOptions): ICircleDelegate? {
@@ -299,10 +322,12 @@ class GoogleMapImpl(private val context: Context, var options: GoogleMapOptions)
 
     fun <T : Annotation<*>> clear(manager: AnnotationManager<*, T, *, *, *, *>) {
         val annotations = manager.getAnnotations()
-        for (i in 0..annotations.size()) {
+        var i = 0
+        while (i < annotations.size()) {
             val key = annotations.keyAt(i)
-            val value = annotations[key];
+            val value = annotations[key]
             if (value is T) manager.delete(value)
+            else i++
         }
     }
 
@@ -365,13 +390,24 @@ class GoogleMapImpl(private val context: Context, var options: GoogleMapOptions)
     }
 
     override fun isMyLocationEnabled(): Boolean {
-        Log.d(TAG, "unimplemented Method: isMyLocationEnabled")
-        return false
+        return locationEnabled
     }
 
     override fun setMyLocationEnabled(myLocation: Boolean) {
-        Log.d(TAG, "unimplemented Method: setMyLocationEnabled")
-
+        synchronized(mapLock) {
+            locationEnabled = myLocation
+            if (!loaded) return
+            val locationComponent = map?.locationComponent ?: return
+            try {
+                if (locationComponent.isLocationComponentActivated) {
+                    locationComponent.isLocationComponentEnabled = myLocation
+                }
+            } catch (e: SecurityException) {
+                Log.w(TAG, e)
+                locationEnabled = false
+            }
+            Unit
+        }
     }
 
     override fun getMyLocation(): Location? {
@@ -379,7 +415,7 @@ class GoogleMapImpl(private val context: Context, var options: GoogleMapOptions)
         return null
     }
 
-    override fun setLocationSource(locationSource: ILocationSourceDelegate) {
+    override fun setLocationSource(locationSource: ILocationSourceDelegate?) {
         Log.d(TAG, "unimplemented Method: setLocationSource")
     }
 
@@ -389,7 +425,14 @@ class GoogleMapImpl(private val context: Context, var options: GoogleMapOptions)
 
     override fun getUiSettings(): IUiSettingsDelegate? = map?.uiSettings?.let { UiSettingsImpl(it) }
 
-    override fun getProjection(): IProjectionDelegate? = map?.projection?.let { ProjectionImpl(it) }
+    override fun getProjection(): IProjectionDelegate? = map?.projection?.let {
+        val experiment = try {
+            map?.cameraPosition?.tilt == 0.0 && map?.cameraPosition?.bearing == 0.0
+        } catch (e: Exception) {
+            Log.w(TAG, e); false
+        }
+        ProjectionImpl(it, experiment)
+    }
 
     override fun setOnCameraChangeListener(listener: IOnCameraChangeListener?) {
         cameraChangeListener = listener
@@ -436,20 +479,23 @@ class GoogleMapImpl(private val context: Context, var options: GoogleMapOptions)
 
     }
 
-    override fun snapshot(callback: ISnapshotReadyCallback, bitmap: IObjectWrapper) {
+    override fun snapshot(callback: ISnapshotReadyCallback, bitmap: IObjectWrapper?) {
         Log.d(TAG, "unimplemented Method: snapshot")
 
     }
 
     override fun setPadding(left: Int, top: Int, right: Int, bottom: Int) {
         Log.d(TAG, "setPadding: $left $top $right $bottom")
-        map?.setPadding(left, top, right, bottom)
-        val fourDp = mapView?.context?.resources?.getDimension(R.dimen.mapbox_four_dp)?.toInt() ?: 0
-        val ninetyTwoDp = mapView?.context?.resources?.getDimension(R.dimen.mapbox_ninety_two_dp)?.toInt()
-                ?: 0
-        map?.uiSettings?.setLogoMargins(left + fourDp, top + fourDp, right + fourDp, bottom + fourDp)
-        map?.uiSettings?.setCompassMargins(left + fourDp, top + fourDp, right + fourDp, bottom + fourDp)
-        map?.uiSettings?.setAttributionMargins(left + ninetyTwoDp, top + fourDp, right + fourDp, bottom + fourDp)
+        map?.let { map ->
+            map.setPadding(left, top, right, bottom)
+            val fourDp = mapView?.context?.resources?.getDimension(R.dimen.mapbox_four_dp)?.toInt()
+                    ?: 0
+            val ninetyTwoDp = mapView?.context?.resources?.getDimension(R.dimen.mapbox_ninety_two_dp)?.toInt()
+                    ?: 0
+            map.uiSettings.setLogoMargins(left + fourDp, top + fourDp, right + fourDp, bottom + fourDp)
+            map.uiSettings.setCompassMargins(left + fourDp, top + fourDp, right + fourDp, bottom + fourDp)
+            map.uiSettings.setAttributionMargins(left + ninetyTwoDp, top + fourDp, right + fourDp, bottom + fourDp)
+        }
     }
 
     override fun isBuildingsEnabled(): Boolean {
@@ -512,7 +558,7 @@ class GoogleMapImpl(private val context: Context, var options: GoogleMapOptions)
 
     private fun hasSymbolAt(latlng: com.mapbox.mapboxsdk.geometry.LatLng): Boolean {
         val point = map?.projection?.toScreenLocation(latlng) ?: return false
-        val features = map?.queryRenderedFeatures(point, SymbolManager.ID_GEOJSON_LAYER)
+        val features = map?.queryRenderedFeatures(point, symbolManager?.layerId)
                 ?: return false
         return features.isNotEmpty()
     }
@@ -659,7 +705,22 @@ class GoogleMapImpl(private val context: Context, var options: GoogleMapOptions)
                 pendingMarkers.forEach { it.update(symbolManager) }
                 pendingMarkers.clear()
 
+                val mapContext = MapContext(context)
+                map.locationComponent.apply {
+                    activateLocationComponent(LocationComponentActivationOptions.builder(mapContext, it)
+                            .locationComponentOptions(LocationComponentOptions.builder(mapContext).pulseEnabled(true).build())
+                            .build())
+                    cameraMode = CameraMode.TRACKING
+                    renderMode = RenderMode.COMPASS
+                }
+
                 synchronized(mapLock) {
+                    try {
+                        map.locationComponent.isLocationComponentEnabled = locationEnabled
+                    } catch (e: SecurityException) {
+                        Log.w(TAG, e)
+                        locationEnabled = false
+                    }
                     loaded = true
                     if (loadedCallback != null) {
                         Log.d(TAG, "Invoking callback delayed, as map is loaded")
@@ -694,7 +755,10 @@ class GoogleMapImpl(private val context: Context, var options: GoogleMapOptions)
         // TODO can crash?
         mapView?.onDestroy()
         mapView = null
-        map = null
+
+        // Don't make it null; this object is not deleted immediately, and it may want to access map.* stuff
+        //map = null
+
         created = false
         initialized = false
         loaded = false
@@ -739,7 +803,7 @@ class GoogleMapImpl(private val context: Context, var options: GoogleMapOptions)
         }
     }
 
-    override fun onTransact(code: Int, data: Parcel?, reply: Parcel?, flags: Int): Boolean =
+    override fun onTransact(code: Int, data: Parcel, reply: Parcel?, flags: Int): Boolean =
             if (super.onTransact(code, data, reply, flags)) {
                 true
             } else {
