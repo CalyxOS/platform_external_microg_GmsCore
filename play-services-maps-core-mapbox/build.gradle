@@ -40,12 +40,11 @@ def execResult(...args) {
 
 def mapboxKey() {
     Properties properties = new Properties()
-    try {
-        properties.load(project.rootProject.file('local.properties').newDataInputStream())
-    } catch (ignored) {
-        // Ignore
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    if (properties.getProperty("mapbox.key") == null) {
+        throw new GradleException("mapbox.key not set in local.properties")
     }
-    return properties.getProperty("mapbox.key", "invalid")
+    return properties.getProperty("mapbox.key")
 }
 
 android {
