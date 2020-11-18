@@ -12,15 +12,15 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-service:$lifecycleVersion"
 
     implementation project(':play-services-base-core')
-    implementation "org.microg.nlp:geocode-v1:$nlpVersion"
-    implementation "org.microg.nlp:location-v2:$nlpVersion"
-    implementation "org.microg.nlp:location-v3:$nlpVersion"
-    implementation "org.microg.nlp:service:$nlpVersion"
+    compile "org.microg.nlp:geocode-v1:$nlpVersion"
+    compile "org.microg.nlp:location-v2:$nlpVersion"
+    compile "org.microg.nlp:location-v3:$nlpVersion"
+    compile "org.microg.nlp:service:$nlpVersion"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion"
-    api "org.microg.nlp:client:$nlpVersion"
-    api "org.microg.nlp:ui:$nlpVersion"
+    compile "org.microg.nlp:client:$nlpVersion"
+    compile "org.microg.nlp:ui:$nlpVersion"
 }
 
 android {
