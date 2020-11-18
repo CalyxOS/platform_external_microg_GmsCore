@@ -52,3 +52,5 @@ include ':play-services-vision-common'
 include ':play-services-wearable'
 
 include ':play-services'
+
+includeBuild "../UnifiedNlp"
