@@ -20,7 +20,6 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.R;
 
@@ -66,12 +65,7 @@ public class RomSpoofSignatureChecks implements SelfCheckGroup {
     private boolean addSystemGrantsFakeSignaturePermission(Context context, ResultCollector collector) {
         boolean grantsPermission = ContextCompat.checkSelfPermission(context, FAKE_SIGNATURE_PERMISSION) == PERMISSION_GRANTED;
         collector.addResult(context.getString(R.string.self_check_name_perm_granted), grantsPermission ? Positive : Negative,
-                context.getString(R.string.self_check_resolution_perm_granted), new CheckResolver() {
-                    @Override
-                    public void tryResolve(Fragment fragment) {
-                        fragment.requestPermissions(new String[]{FAKE_SIGNATURE_PERMISSION}, 0);
-                    }
-                });
+                context.getString(R.string.self_check_resolution_perm_granted));
         return grantsPermission;
     }
 
