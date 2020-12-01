@@ -35,7 +35,7 @@ import static org.microg.tools.selfcheck.SelfCheckGroup.Result.Unknown;
 
 public class RomSpoofSignatureChecks implements SelfCheckGroup {
 
-    public static final String FAKE_SIGNATURE_PERMISSION = "android.permission.FAKE_PACKAGE_SIGNATURE";
+    public static final String FAKE_SIGNATURE_PERMISSION = "android.permission.MICROG_SPOOF_SIGNATURE";
 
     @Override
     public String getGroupName(Context context) {
