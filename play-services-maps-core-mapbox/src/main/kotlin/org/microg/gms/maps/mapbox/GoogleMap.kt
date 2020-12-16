@@ -51,7 +51,7 @@ import com.mapbox.mapboxsdk.maps.TelemetryDefinition
 import com.mapbox.mapboxsdk.plugins.annotation.*
 import com.mapbox.mapboxsdk.plugins.annotation.Annotation
 import com.mapbox.mapboxsdk.style.layers.Property.LINE_CAP_ROUND
-import org.microg.gms.kotlin.unwrap
+import com.google.android.gms.dynamic.unwrap
 import org.microg.gms.maps.MapsConstants.*
 import org.microg.gms.maps.mapbox.model.*
 import org.microg.gms.maps.mapbox.utils.MapContext

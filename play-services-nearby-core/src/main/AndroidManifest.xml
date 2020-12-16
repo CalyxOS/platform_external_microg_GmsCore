@@ -24,6 +24,7 @@
         <service android:name="org.microg.gms.nearby.exposurenotification.ScannerService" />
         <service android:name="org.microg.gms.nearby.exposurenotification.AdvertiserService" />
         <service android:name="org.microg.gms.nearby.exposurenotification.CleanupService" />
+        <service android:name="org.microg.gms.nearby.exposurenotification.NotifyService" />
 
         <service android:name="org.microg.gms.nearby.exposurenotification.ExposureNotificationService">
             <intent-filter>
@@ -41,5 +42,15 @@
                 <action android:name="android.intent.action.PACKAGE_RESTARTED" />
             </intent-filter>
         </receiver>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.microg.exposure.export"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/preferences_exposure_notifications_exportedfiles" />
+        </provider>
     </application>
 </manifest>
