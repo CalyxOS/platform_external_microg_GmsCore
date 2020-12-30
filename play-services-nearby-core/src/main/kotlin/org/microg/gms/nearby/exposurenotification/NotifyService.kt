@@ -23,8 +23,10 @@ import androidx.core.content.ContextCompat
 import androidx.core.location.LocationManagerCompat
 import androidx.lifecycle.LifecycleService
 import org.microg.gms.common.ForegroundServiceContext
+import org.microg.gms.common.ForegroundServiceInfo
 import org.microg.gms.nearby.core.R
 
+@ForegroundServiceInfo("Exposure Notification")
 class NotifyService : LifecycleService() {
     private val notificationId = NotifyService::class.java.name.hashCode()
     private val trigger = object : BroadcastReceiver() {
@@ -42,7 +44,7 @@ class NotifyService : LifecycleService() {
         if (Build.VERSION.SDK_INT >= 29) {
             channel.setAllowBubbles(false)
         }
-        channel.vibrationPattern = LongArray(0)
+        channel.vibrationPattern = longArrayOf(0)
         getSystemService(NotificationManager::class.java).createNotificationChannel(channel)
         return channel.id
     }
