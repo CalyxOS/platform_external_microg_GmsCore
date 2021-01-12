@@ -12,14 +12,14 @@ import android.content.*
 import android.os.*
 import android.util.Log
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.nearby.exposurenotification.*
 import com.google.android.gms.nearby.exposurenotification.ExposureNotificationStatusCodes.*
 import com.google.android.gms.nearby.exposurenotification.internal.*
-import kotlinx.coroutines.CompletableDeferred
-import kotlinx.coroutines.withTimeout
+import kotlinx.coroutines.*
 import org.json.JSONArray
 import org.json.JSONObject
 import org.microg.gms.common.Constants
@@ -36,6 +36,8 @@ import kotlin.math.roundToInt
 import kotlin.random.Random
 
 class ExposureNotificationServiceImpl(private val context: Context, private val lifecycle: Lifecycle, private val packageName: String) : INearbyExposureNotificationService.Stub(), LifecycleOwner {
+
+    private fun LifecycleCoroutineScope.launchSafely(block: suspend CoroutineScope.() -> Unit): Job = launchWhenStarted { try { block() } catch (e: Exception) { Log.w(TAG, "Error in coroutine", e) } }
 
     override fun getLifecycle(): Lifecycle = lifecycle
 
@@ -94,7 +96,7 @@ class ExposureNotificationServiceImpl(private val context: Context, private val 
     }
 
     override fun getVersion(params: GetVersionParams) {
-        params.callback.onResult(Status.SUCCESS, Constants.MAX_REFERENCE_VERSION.toLong())
+        params.callback.onResult(Status.SUCCESS, Constants.GMS_VERSION_CODE.toLong())
     }
 
     override fun getCalibrationConfidence(params: GetCalibrationConfidenceParams) {
@@ -102,7 +104,7 @@ class ExposureNotificationServiceImpl(private val context: Context, private val 
     }
 
     override fun start(params: StartParams) {
-        lifecycleScope.launchWhenStarted {
+        lifecycleScope.launchSafely {
             val isAuthorized = ExposureDatabase.with(context) { it.isAppAuthorized(packageName) }
             val adapter = BluetoothAdapter.getDefaultAdapter()
             val status = if (isAuthorized && ExposurePreferences(context).enabled) {
@@ -131,7 +133,7 @@ class ExposureNotificationServiceImpl(private val context: Context, private val 
     }
 
     override fun stop(params: StopParams) {
-        lifecycleScope.launchWhenStarted {
+        lifecycleScope.launchSafely {
             val isAuthorized = ExposureDatabase.with(context) { database ->
                 database.isAppAuthorized(packageName).also {
                     if (it) database.noteAppAction(packageName, "stop")
@@ -149,7 +151,7 @@ class ExposureNotificationServiceImpl(private val context: Context, private val 
     }
 
     override fun isEnabled(params: IsEnabledParams) {
-        lifecycleScope.launchWhenStarted {
+        lifecycleScope.launchSafely {
             val isAuthorized = ExposureDatabase.with(context) { database ->
                 database.isAppAuthorized(packageName)
             }
@@ -162,7 +164,7 @@ class ExposureNotificationServiceImpl(private val context: Context, private val 
     }
 
     override fun getTemporaryExposureKeyHistory(params: GetTemporaryExposureKeyHistoryParams) {
-        lifecycleScope.launchWhenStarted {
+        lifecycleScope.launchSafely {
             val status = confirmPermission(CONFIRM_ACTION_KEYS)
             val response = when {
                 status.isSuccess -> ExposureDatabase.with(context) { database ->
@@ -243,7 +245,7 @@ class ExposureNotificationServiceImpl(private val context: Context, private val 
     override fun provideDiagnosisKeys(params: ProvideDiagnosisKeysParams) {
         val token = params.token ?: TOKEN_A
         Log.w(TAG, "provideDiagnosisKeys() with $packageName/$token")
-        lifecycleScope.launchWhenStarted {
+        lifecycleScope.launchSafely {
             val tid = ExposureDatabase.with(context) { database ->
                 val configuration = params.configuration
                 if (configuration != null) {
@@ -259,7 +261,7 @@ class ExposureNotificationServiceImpl(private val context: Context, private val 
                 } catch (e: Exception) {
                     Log.w(TAG, "Callback failed", e)
                 }
-                return@launchWhenStarted
+                return@launchSafely
             }
             ExposureDatabase.with(context) { database ->
                 val start = System.currentTimeMillis()
@@ -289,21 +291,27 @@ class ExposureNotificationServiceImpl(private val context: Context, private val 
                 }
                 params.keyFileSupplier?.let { keyFileSupplier ->
                     Log.d(TAG, "Using key file supplier")
-                    while (keyFileSupplier.isAvailable && keyFileSupplier.hasNext()) {
-                        try {
-                            val cacheFile = File(context.cacheDir, "en-keyfile-${System.currentTimeMillis()}-${Random.nextInt()}.zip")
-                            ParcelFileDescriptor.AutoCloseInputStream(keyFileSupplier.next()).use { it.copyToFile(cacheFile) }
-                            val hash = MessageDigest.getInstance("SHA-256").digest(cacheFile)
-                            val storedKeys = database.storeDiagnosisFileUsed(tid, hash)
-                            if (storedKeys != null) {
-                                keys += storedKeys.toInt()
-                                cacheFile.delete()
-                            } else {
-                                todoKeyFiles.add(cacheFile to hash)
+                    try {
+                        while (keyFileSupplier.isAvailable && keyFileSupplier.hasNext()) {
+                            withContext(Dispatchers.IO) {
+                                try {
+                                    val cacheFile = File(context.cacheDir, "en-keyfile-${System.currentTimeMillis()}-${Random.nextLong()}.zip")
+                                    ParcelFileDescriptor.AutoCloseInputStream(keyFileSupplier.next()).use { it.copyToFile(cacheFile) }
+                                    val hash = MessageDigest.getInstance("SHA-256").digest(cacheFile)
+                                    val storedKeys = database.storeDiagnosisFileUsed(tid, hash)
+                                    if (storedKeys != null) {
+                                        keys += storedKeys.toInt()
+                                        cacheFile.delete()
+                                    } else {
+                                        todoKeyFiles.add(cacheFile to hash)
+                                    }
+                                } catch (e: Exception) {
+                                    Log.w(TAG, "Failed parsing file", e)
+                                }
                             }
-                        } catch (e: Exception) {
-                            Log.w(TAG, "Failed parsing file", e)
                         }
+                    } catch (e: Exception) {
+                        Log.w(TAG, "Disconnected from key file supplier", e)
                     }
                 }
 
@@ -322,32 +330,38 @@ class ExposureNotificationServiceImpl(private val context: Context, private val 
 
                 var newKeys = if (params.keys != null) database.finishSingleMatching(tid) else 0
                 for ((cacheFile, hash) in todoKeyFiles) {
-                    ZipFile(cacheFile).use { zip ->
-                        for (entry in zip.entries()) {
-                            if (entry.name == "export.bin") {
-                                val stream = zip.getInputStream(entry)
-                                val prefix = ByteArray(16)
-                                var totalBytesRead = 0
-                                var bytesRead = 0
-                                while (bytesRead != -1 && totalBytesRead < prefix.size) {
-                                    bytesRead = stream.read(prefix, totalBytesRead, prefix.size - totalBytesRead)
-                                    if (bytesRead > 0) {
-                                        totalBytesRead += bytesRead
+                    withContext(Dispatchers.IO) {
+                        try {
+                            ZipFile(cacheFile).use { zip ->
+                                for (entry in zip.entries()) {
+                                    if (entry.name == "export.bin") {
+                                        val stream = zip.getInputStream(entry)
+                                        val prefix = ByteArray(16)
+                                        var totalBytesRead = 0
+                                        var bytesRead = 0
+                                        while (bytesRead != -1 && totalBytesRead < prefix.size) {
+                                            bytesRead = stream.read(prefix, totalBytesRead, prefix.size - totalBytesRead)
+                                            if (bytesRead > 0) {
+                                                totalBytesRead += bytesRead
+                                            }
+                                        }
+                                        if (totalBytesRead == prefix.size && String(prefix).trim() == "EK Export v1") {
+                                            val export = TemporaryExposureKeyExport.ADAPTER.decode(stream)
+                                            database.finishFileMatching(tid, hash, export.end_timestamp?.let { it * 1000 }
+                                                    ?: System.currentTimeMillis(), export.keys.map { it.toKey() }, export.revised_keys.map { it.toKey() })
+                                            keys += export.keys.size + export.revised_keys.size
+                                            newKeys += export.keys.size
+                                        } else {
+                                            Log.d(TAG, "export.bin had invalid prefix")
+                                        }
                                     }
                                 }
-                                if (totalBytesRead == prefix.size && String(prefix).trim() == "EK Export v1") {
-                                    val export = TemporaryExposureKeyExport.ADAPTER.decode(stream)
-                                    database.finishFileMatching(tid, hash, export.end_timestamp?.let { it * 1000 }
-                                            ?: System.currentTimeMillis(), export.keys.map { it.toKey() }, export.revised_keys.map { it.toKey() })
-                                    keys += export.keys.size + export.revised_keys.size
-                                    newKeys += export.keys.size
-                                } else {
-                                    Log.d(TAG, "export.bin had invalid prefix")
-                                }
                             }
+                            cacheFile.delete()
+                        } catch (e: Exception) {
+                            Log.w(TAG, "Failed parsing file", e)
                         }
                     }
-                    cacheFile.delete()
                 }
 
                 val time = (System.currentTimeMillis() - start).coerceAtLeast(1).toDouble() / 1000.0
@@ -389,7 +403,7 @@ class ExposureNotificationServiceImpl(private val context: Context, private val 
     }
 
     override fun getExposureSummary(params: GetExposureSummaryParams) {
-        lifecycleScope.launchWhenStarted {
+        lifecycleScope.launchSafely {
             val response = buildExposureSummary(params.token)
 
             ExposureDatabase.with(context) { database ->
@@ -413,7 +427,7 @@ class ExposureNotificationServiceImpl(private val context: Context, private val 
     }
 
     override fun getExposureInformation(params: GetExposureInformationParams) {
-        lifecycleScope.launchWhenStarted {
+        lifecycleScope.launchSafely {
             ExposureDatabase.with(context) { database ->
                 val pair = database.loadConfiguration(packageName, params.token)
                 val response = if (pair != null && database.isAppAuthorized(packageName)) {
@@ -441,7 +455,7 @@ class ExposureNotificationServiceImpl(private val context: Context, private val 
 
     private fun ScanInstance.Builder.apply(subExposure: MergedSubExposure): ScanInstance.Builder {
         return this
-                .setSecondsSinceLastScan(subExposure.duration.coerceAtMost(5 * 60 * 1000L).toInt())
+                .setSecondsSinceLastScan(subExposure.duration.coerceAtMost(5 * 60).toInt())
                 .setMinAttenuationDb(subExposure.attenuation) // FIXME: We use the average for both, because we don't store the minimum attenuation yet
                 .setTypicalAttenuationDb(subExposure.attenuation)
     }
@@ -451,7 +465,7 @@ class ExposureNotificationServiceImpl(private val context: Context, private val 
         for (subExposure in this) {
             res.add(ScanInstance.Builder().apply(subExposure).build())
             if (subExposure.duration > 5 * 60 * 1000L) {
-                res.add(ScanInstance.Builder().apply(subExposure).setSecondsSinceLastScan((subExposure.duration - 5 * 60 * 1000L).coerceAtMost(5 * 60 * 1000L).toInt()).build())
+                res.add(ScanInstance.Builder().apply(subExposure).setSecondsSinceLastScan((subExposure.duration - 5 * 60).coerceAtMost(5 * 60).toInt()).build())
             }
         }
         return res
@@ -494,7 +508,7 @@ class ExposureNotificationServiceImpl(private val context: Context, private val 
     }
 
     override fun getExposureWindows(params: GetExposureWindowsParams) {
-        lifecycleScope.launchWhenStarted {
+        lifecycleScope.launchSafely {
             val response = getExposureWindowsInternal(params.token ?: TOKEN_A)
 
             ExposureDatabase.with(context) { database ->
@@ -529,7 +543,7 @@ class ExposureNotificationServiceImpl(private val context: Context, private val 
     }
 
     override fun getDailySummaries(params: GetDailySummariesParams) {
-        lifecycleScope.launchWhenStarted {
+        lifecycleScope.launchSafely {
             val response = getExposureWindowsInternal().groupBy { it.dateMillisSinceEpoch }.map {
                 val map = arrayListOf<DailySummary.ExposureSummaryData>()
                 for (i in 0 until ReportType.VALUES) {
@@ -564,7 +578,7 @@ class ExposureNotificationServiceImpl(private val context: Context, private val 
     }
 
     override fun setDiagnosisKeysDataMapping(params: SetDiagnosisKeysDataMappingParams) {
-        lifecycleScope.launchWhenStarted {
+        lifecycleScope.launchSafely {
             ExposureDatabase.with(context) { database ->
                 database.storeConfiguration(packageName, TOKEN_A, params.mapping)
                 database.noteAppAction(packageName, "setDiagnosisKeysDataMapping")
@@ -578,7 +592,7 @@ class ExposureNotificationServiceImpl(private val context: Context, private val 
     }
 
     override fun getDiagnosisKeysDataMapping(params: GetDiagnosisKeysDataMappingParams) {
-        lifecycleScope.launchWhenStarted {
+        lifecycleScope.launchSafely {
             val mapping = ExposureDatabase.with(context) { database ->
                 val triple = database.loadConfiguration(packageName, TOKEN_A)
                 database.noteAppAction(packageName, "getDiagnosisKeysDataMapping")
@@ -594,7 +608,7 @@ class ExposureNotificationServiceImpl(private val context: Context, private val 
 
     override fun getPackageConfiguration(params: GetPackageConfigurationParams) {
         Log.w(TAG, "Not yet implemented: getPackageConfiguration")
-        lifecycleScope.launchWhenStarted {
+        lifecycleScope.launchSafely {
             ExposureDatabase.with(context) { database ->
                 database.noteAppAction(packageName, "getPackageConfiguration")
             }
@@ -608,7 +622,7 @@ class ExposureNotificationServiceImpl(private val context: Context, private val 
 
     override fun getStatus(params: GetStatusParams) {
         Log.w(TAG, "Not yet implemented: getStatus")
-        lifecycleScope.launchWhenStarted {
+        lifecycleScope.launchSafely {
             ExposureDatabase.with(context) { database ->
                 database.noteAppAction(packageName, "getStatus")
             }
