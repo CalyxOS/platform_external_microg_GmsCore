@@ -162,4 +162,6 @@ android {
 
 if (file('user.gradle').exists()) {
     apply from: 'user.gradle'
+} else if (file('sign.gradle').exists()) {
+    apply from: 'sign.gradle'
 }
