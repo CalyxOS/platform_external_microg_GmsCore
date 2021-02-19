@@ -1,0 +1,22 @@
+android {
+    signingConfigs {
+        calyx {
+            // Generated from our microG key
+            // 5449: Sign microG APKs with our own key at build time
+            // https://review.calyxos.org/c/CalyxOS/platform_prebuilts_calyx_microg/+/5449
+            storeFile file('microg.jks')
+            storePassword 'android'
+            keyAlias 'android'
+            keyPassword 'android'
+        }
+    }
+
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.calyx
+        }
+        release {
+            signingConfig signingConfigs.calyx
+        }
+    }
+}
