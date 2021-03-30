@@ -53,9 +53,11 @@ import org.microg.gms.auth.AuthManager;
 import org.microg.gms.auth.AuthRequest;
 import org.microg.gms.auth.AuthResponse;
 import org.microg.gms.checkin.CheckinManager;
+import org.microg.gms.checkin.CheckinPrefs;
 import org.microg.gms.checkin.LastCheckinInfo;
 import org.microg.gms.common.HttpFormClient;
 import org.microg.gms.common.Utils;
+import org.microg.gms.gcm.GcmPrefs;
 import org.microg.gms.people.PeopleManager;
 
 import java.io.IOException;
@@ -189,6 +191,8 @@ public class LoginActivity extends AssistantActivity {
             CookieManager.getInstance().removeAllCookie();
             start();
         }
+        CheckinPrefs.setEnabled(this, false);
+        GcmPrefs.get(this).setEnabled(false);
     }
 
     private static WebView createWebView(Context context) {
@@ -384,6 +388,13 @@ public class LoginActivity extends AssistantActivity {
                 .appendQueryParameter("hl", locale.toString().replace("_", "-"))
                 .appendQueryParameter("tmpl", tmpl)
                 .build().toString();
+    }
+
+    @Override
+    public void finish() {
+        CheckinPrefs.setEnabled(this, true);
+        GcmPrefs.get(this).setEnabled(true);
+        super.finish();
     }
 
     private class JsBridge {
