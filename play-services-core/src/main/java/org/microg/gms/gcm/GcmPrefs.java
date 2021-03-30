@@ -261,8 +261,12 @@ public class GcmPrefs implements SharedPreferences.OnSharedPreferenceChangeListe
 
     public void setEnabled(boolean value) {
         boolean changed = gcmEnabled != value;
-        preferences.edit().putBoolean(GcmPrefs.PREF_ENABLE_GCM, value).apply();
         if (!changed) return;
+        setEnabled(context, value);
+    }
+
+    public static void setEnabled(Context context, boolean value) {
+        PreferenceManager.getDefaultSharedPreferences(context).edit().putBoolean(GcmPrefs.PREF_ENABLE_GCM, value).apply();
         if (!value) {
             McsService.stop(context);
         } else {

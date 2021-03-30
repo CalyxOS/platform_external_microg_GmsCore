@@ -28,6 +28,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -53,9 +54,11 @@ import org.microg.gms.auth.AuthManager;
 import org.microg.gms.auth.AuthRequest;
 import org.microg.gms.auth.AuthResponse;
 import org.microg.gms.checkin.CheckinManager;
+import org.microg.gms.checkin.CheckinPrefs;
 import org.microg.gms.checkin.LastCheckinInfo;
 import org.microg.gms.common.HttpFormClient;
 import org.microg.gms.common.Utils;
+import org.microg.gms.gcm.GcmPrefs;
 import org.microg.gms.people.PeopleManager;
 
 import java.io.IOException;
@@ -95,6 +98,9 @@ public class LoginActivity extends AssistantActivity {
     private InputMethodManager inputMethodManager;
     private ViewGroup authContent;
     private int state = 0;
+
+    private boolean checkinEnabled = true;
+    private boolean gcmEnabled = true;
 
     @SuppressLint("AddJavascriptInterface")
     @Override
@@ -174,6 +180,11 @@ public class LoginActivity extends AssistantActivity {
     }
 
     private void init() {
+        checkinEnabled = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(CheckinPrefs.PREF_ENABLE_CHECKIN, true);
+        gcmEnabled = PreferenceManager.getDefaultSharedPreferences(this).getBoolean(GcmPrefs.PREF_ENABLE_GCM, true);
+        CheckinPrefs.setEnabled(this, false);
+        GcmPrefs.setEnabled(this, false);
+
         setTitle(R.string.just_a_sec);
         setBackButtonText(null);
         setNextButtonText(null);
@@ -384,6 +395,13 @@ public class LoginActivity extends AssistantActivity {
                 .appendQueryParameter("hl", locale.toString().replace("_", "-"))
                 .appendQueryParameter("tmpl", tmpl)
                 .build().toString();
+    }
+
+    @Override
+    public void finish() {
+        CheckinPrefs.setEnabled(this, checkinEnabled);
+        GcmPrefs.setEnabled(this, gcmEnabled);
+        super.finish();
     }
 
     private class JsBridge {
