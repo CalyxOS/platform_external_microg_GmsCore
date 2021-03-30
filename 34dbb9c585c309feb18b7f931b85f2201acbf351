@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1070134b_7ba76eb9",
+        "filename": "play-services-core/src/main/java/org/microg/gms/gcm/GcmPrefs.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2021-03-30T20:46:07Z",
+      "side": 0,
+      "message": "does not allow LoginActivity",
+      "range": {
+        "startLine": 56,
+        "startChar": 25,
+        "endLine": 56,
+        "endChar": 51
+      },
+      "revId": "34dbb9c585c309feb18b7f931b85f2201acbf351",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0",
+      "unresolved": true
+    }
+  ]
+}

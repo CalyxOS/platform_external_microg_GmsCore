@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc94c6d4_4ed0ee14",
+        "filename": "play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2021-03-30T20:46:07Z",
+      "side": 1,
+      "message": "should it be before start()? there is a call to checkin() in start()\nany other better placement?",
+      "range": {
+        "startLine": 194,
+        "startChar": 8,
+        "endLine": 195,
+        "endChar": 45
+      },
+      "revId": "5a05bcd92a0cb758bec798624299e355142869a0",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78ca7d3f_5d7f9054",
+        "filename": "play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2021-03-30T20:46:07Z",
+      "side": 1,
+      "message": "always resets these values to our defaults, but may not be desired? (e.g. user has set them to off manually)",
+      "range": {
+        "startLine": 395,
+        "startChar": 8,
+        "endLine": 396,
+        "endChar": 44
+      },
+      "revId": "5a05bcd92a0cb758bec798624299e355142869a0",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9289d642_a8afde52",
+        "filename": "play-services-core/src/main/java/org/microg/gms/gcm/GcmPrefs.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2021-03-30T20:46:07Z",
+      "side": 1,
+      "message": "may be more fragile than persistent? previous versions did not check persistent for this class though",
+      "range": {
+        "startLine": 56,
+        "startChar": 25,
+        "endLine": 56,
+        "endChar": 45
+      },
+      "revId": "5a05bcd92a0cb758bec798624299e355142869a0",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0",
+      "unresolved": true
+    }
+  ]
+}
