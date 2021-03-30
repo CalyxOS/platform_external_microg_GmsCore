@@ -53,7 +53,7 @@ public class GcmPrefs implements SharedPreferences.OnSharedPreferenceChangeListe
 
     public static GcmPrefs get(Context context) {
         if (INSTANCE == null) {
-            PackageUtils.warnIfNotPersistentProcess(GcmPrefs.class);
+            PackageUtils.warnIfNotMainProcess(context, GcmPrefs.class);
             INSTANCE = new GcmPrefs(context.getApplicationContext());
         }
         return INSTANCE;
