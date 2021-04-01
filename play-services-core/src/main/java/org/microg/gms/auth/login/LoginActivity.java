@@ -21,13 +21,14 @@ import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.graphics.Bitmap;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -36,7 +37,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieManager;
 import android.webkit.JavascriptInterface;
-import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -53,10 +53,13 @@ import org.microg.gms.auth.AuthManager;
 import org.microg.gms.auth.AuthRequest;
 import org.microg.gms.auth.AuthResponse;
 import org.microg.gms.checkin.CheckinManager;
+import org.microg.gms.checkin.CheckinPrefs;
 import org.microg.gms.checkin.LastCheckinInfo;
 import org.microg.gms.common.HttpFormClient;
 import org.microg.gms.common.Utils;
+import org.microg.gms.gcm.GcmPrefs;
 import org.microg.gms.people.PeopleManager;
+import org.microg.gms.provision.ProvisionService;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -174,6 +177,11 @@ public class LoginActivity extends AssistantActivity {
     }
 
     private void init() {
+        PreferenceManager.getDefaultSharedPreferences(this).edit()
+                .putBoolean(CheckinPrefs.PREF_ENABLE_CHECKIN, false)
+                .putBoolean(GcmPrefs.PREF_ENABLE_GCM, false)
+                .apply();
+
         setTitle(R.string.just_a_sec);
         setBackButtonText(null);
         setNextButtonText(null);
@@ -372,6 +380,15 @@ public class LoginActivity extends AssistantActivity {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public void finish() {
+        Intent intent = new Intent(this, ProvisionService.class)
+                .putExtra("checkin_enabled", true)
+                .putExtra("gcm_enabled", true);
+        startService(intent);
+        super.finish();
     }
 
     private static String buildUrl(String tmpl, Locale locale) {
