@@ -62,7 +62,7 @@ public class GcmPrefs implements SharedPreferences.OnSharedPreferenceChangeListe
     private boolean gcmLogEnabled = true;
     private String lastPersistedId = "";
     private boolean confirmNewApps = false;
-    private boolean gcmEnabled = true;
+    private boolean gcmEnabled = false;
 
     private int networkMobile = 0;
     private int networkWifi = 0;
@@ -96,7 +96,7 @@ public class GcmPrefs implements SharedPreferences.OnSharedPreferenceChangeListe
     }
 
     public void update() {
-        gcmEnabled = getSettingsBoolean(PREF_ENABLE_GCM, true);
+        gcmEnabled = getSettingsBoolean(PREF_ENABLE_GCM, false);
         gcmLogEnabled = getSettingsBoolean(PREF_FULL_LOG, true);
         confirmNewApps = getSettingsBoolean(PREF_CONFIRM_NEW_APPS, false);
 

@@ -30,7 +30,7 @@ public class CheckinPrefs implements SharedPreferences.OnSharedPreferenceChangeL
 
     private SharedPreferences preferences;
     private SharedPreferences systemDefaultPreferences;
-    private boolean checkinEnabled = true;
+    private boolean checkinEnabled = false;
 
     private CheckinPrefs(Context context) {
         if (context != null) {
@@ -52,7 +52,7 @@ public class CheckinPrefs implements SharedPreferences.OnSharedPreferenceChangeL
     }
 
     private void update() {
-        checkinEnabled = getSettingsBoolean(PREF_ENABLE_CHECKIN, true);
+        checkinEnabled = getSettingsBoolean(PREF_ENABLE_CHECKIN, false);
     }
 
     @Override
