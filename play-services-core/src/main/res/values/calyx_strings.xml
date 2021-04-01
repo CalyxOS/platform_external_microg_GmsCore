@@ -15,4 +15,5 @@
      limitations under the License.
 -->
 <resources>
+    <string name="calyx_auth_before_connect">"An app on your device is trying to sign in to a Google account.\n\nIf this was intentional, use the <b>Sign in</b> button to connect to Google’s sign-in page, if not, press <b>Cancel</b> to go back to the application that caused this dialog to show up.\n\nSigning in will enable Google device registration and Cloud Messaging."</string>
 </resources>
