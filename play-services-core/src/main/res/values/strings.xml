@@ -28,7 +28,7 @@
     <string name="sorry">Sorry…</string>
     <string name="auth_before_connect">"An app on your device is trying to sign in to a Google account.
 
-If this was intentional, use the <b>Sign in</b> button to connect to Google’s sign-in page, if not, press <b>Cancel</b> to go back to the application that caused this dialog to show up."</string>
+If this was intentional, use the <b>Sign in</b> button to connect to Google’s sign-in page (this will enable Google device registration and Cloud Messaging), if not, press <b>Cancel</b> to go back to the application that caused this dialog to show up."</string>
     <string name="auth_sign_in">Sign in</string>
     <string name="auth_connecting">"Your device is establishing an connection to Google’s servers to sign you in.
 
