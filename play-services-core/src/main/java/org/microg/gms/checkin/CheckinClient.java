@@ -79,35 +79,6 @@ public class CheckinClient {
         return response;
     }
 
-    private static String getFingerprint(Build build) {
-        switch (build.device) {
-            case "walleye":
-                return "google/walleye/walleye:11/RP1A.201005.004.A1/6934943:user/release-keys";
-            case "taimen":
-                return "google/taimen/taimen:11/RP1A.201005.004.A1/6934943:user/release-keys";
-            case "blueline":
-                return "google/blueline/blueline:11/RQ2A.210405.005/7181113:user/release-keys";
-            case "crosshatch":
-                return "google/crosshatch/crosshatch:11/RQ2A.210405.005/7181113:user/release-keys";
-            case "sargo":
-                return "google/sargo/sargo:11/RQ2A.210405.005/7181113:user/release-keys";
-            case "bonito":
-                return "google/bonito/bonito:11/RQ2A.210405.005/7181113:user/release-keys";
-            case "flame":
-                return "google/flame/flame:11/RQ2A.210405.005/7181113:user/release-keys";
-            case "coral":
-                return "google/coral/coral:11/RQ2A.210405.005/7181113:user/release-keys";
-            case "sunfish":
-                return "google/sunfish/sunfish:11/RQ2A.210405.005/7181113:user/release-keys";
-            case "redfin":
-                return "google/redfin/redfin:11/RQ2A.210405.005/7181113:user/release-keys";
-            case "bramble":
-                return "google/bramble/bramble:11/RQ2A.210405.005/7181113:user/release-keys";
-            default:
-                return build.fingerprint;
-        }
-    }
-
     public static CheckinRequest makeRequest(Build build, DeviceConfiguration deviceConfiguration,
                                              DeviceIdentifier deviceIdent, PhoneInfo phoneInfo,
                                              LastCheckinInfo checkinInfo, Locale locale,
@@ -117,20 +88,18 @@ public class CheckinClient {
                 .androidId(checkinInfo.androidId)
                 .checkin(new CheckinRequest.Checkin.Builder()
                         .build(new CheckinRequest.Checkin.Build.Builder()
-                                .bootloader(build.bootloader)
+                                .bootloader("c2f2-0.2-5799621")
                                 .brand("google")
                                 .clientId("android-google")
-                                .device(build.device)
-                                .fingerprint(getFingerprint(build))
-                                .hardware(build.hardware)
-                                .manufacturer(build.manufacturer)
-                                .model(build.model)
+                                .device("generic")
+                                .fingerprint("google/coral/coral:10/QD1A.190821.007/5831595:user/release-keys")
+                                .hardware("coral")
+                                .manufacturer("Google")
+                                .model("mainline")
                                 .otaInstalled(false) // TODO?
-                                //.packageVersionCode(Constants.MAX_REFERENCE_VERSION)
-                                .product(build.product)
-                                .radio(build.radio)
-                                .sdkVersion(build.sdk)
-                                .time(build.time / 1000)
+                                .product("coral")
+                                .radio("")
+                                .sdkVersion(29)
                                 .build())
                         .cellOperator(phoneInfo.cellOperator)
                         .event(Collections.singletonList(new CheckinRequest.Checkin.Event.Builder()
