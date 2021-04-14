@@ -89,7 +89,7 @@ public class CheckinClient {
                 .checkin(new CheckinRequest.Checkin.Builder()
                         .build(new CheckinRequest.Checkin.Build.Builder()
                                 .bootloader(build.bootloader)
-                                .brand(build.brand)
+                                .brand("google")
                                 .clientId("android-google")
                                 .device(build.device)
                                 .fingerprint(build.fingerprint)
