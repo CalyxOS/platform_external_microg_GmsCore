@@ -79,6 +79,35 @@ public class CheckinClient {
         return response;
     }
 
+    private static String getFingerprint(Build build) {
+        switch (build.device) {
+            case "walleye":
+                return "google/walleye/walleye:11/RP1A.201005.004.A1/6934943:user/release-keys";
+            case "taimen":
+                return "google/taimen/taimen:11/RP1A.201005.004.A1/6934943:user/release-keys";
+            case "blueline":
+                return "google/blueline/blueline:11/RQ2A.210405.005/7181113:user/release-keys";
+            case "crosshatch":
+                return "google/crosshatch/crosshatch:11/RQ2A.210405.005/7181113:user/release-keys";
+            case "sargo":
+                return "google/sargo/sargo:11/RQ2A.210405.005/7181113:user/release-keys";
+            case "bonito":
+                return "google/bonito/bonito:11/RQ2A.210405.005/7181113:user/release-keys";
+            case "flame":
+                return "google/flame/flame:11/RQ2A.210405.005/7181113:user/release-keys";
+            case "coral":
+                return "google/coral/coral:11/RQ2A.210405.005/7181113:user/release-keys";
+            case "sunfish":
+                return "google/sunfish/sunfish:11/RQ2A.210405.005/7181113:user/release-keys";
+            case "redfin":
+                return "google/redfin/redfin:11/RQ2A.210405.005/7181113:user/release-keys";
+            case "bramble":
+                return "google/bramble/bramble:11/RQ2A.210405.005/7181113:user/release-keys";
+            default:
+                return build.fingerprint;
+        }
+    }
+
     public static CheckinRequest makeRequest(Build build, DeviceConfiguration deviceConfiguration,
                                              DeviceIdentifier deviceIdent, PhoneInfo phoneInfo,
                                              LastCheckinInfo checkinInfo, Locale locale,
@@ -92,7 +121,7 @@ public class CheckinClient {
                                 .brand("google")
                                 .clientId("android-google")
                                 .device(build.device)
-                                .fingerprint(build.fingerprint)
+                                .fingerprint(getFingerprint(build))
                                 .hardware(build.hardware)
                                 .manufacturer(build.manufacturer)
                                 .model(build.model)
