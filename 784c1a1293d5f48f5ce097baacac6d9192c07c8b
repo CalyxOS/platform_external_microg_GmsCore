@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5177bb3f_388dde1f",
+        "filename": "play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-04-16T19:58:17Z",
+      "side": 1,
+      "message": "Should\u0027ve removed this import too. For cleanup later.",
+      "revId": "784c1a1293d5f48f5ce097baacac6d9192c07c8b",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0",
+      "unresolved": true
+    }
+  ]
+}
