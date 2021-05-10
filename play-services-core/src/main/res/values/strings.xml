@@ -30,7 +30,7 @@
 
 If this was intentional, use the <b>Sign in</b> button to connect to Google’s sign-in page, if not, press <b>Cancel</b> to go back to the application that caused this dialog to show up."</string>
     <string name="auth_sign_in">Sign in</string>
-    <string name="auth_connecting">"Your device is establishing an connection to Google’s servers to sign you in.
+    <string name="auth_connecting">"Your device is establishing a connection to Google’s servers to sign you in.
 
 This can take a few seconds."</string>
     <string name="no_network_error_desc">"You don’t have a network connection.
@@ -171,6 +171,7 @@ This can take a couple of minutes."</string>
     <string name="gcm_network_state_disconnected">Disconnected</string>
     <string name="gcm_network_state_connected">Connected since <xliff:g example="2 hours ago">%1$s</xliff:g></string>
     <string name="gcm_enable_switch">Receive push notifications</string>
+    <string name="gcm_allow_app_popup">Allow <xliff:g example="F-Droid">%1$s</xliff:g> to register for push notifications?</string>
 
     <string name="pref_push_app_allow_register_title">Allow registration</string>
     <string name="pref_push_app_allow_register_summary">Allow the app to register for push notifications.</string>
