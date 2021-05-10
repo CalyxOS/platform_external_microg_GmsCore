@@ -58,10 +58,6 @@
         android:protectionLevel="dangerous" />
 
     <permission
-        android:name="com.google.android.gms.nearby.exposurenotification.EXPOSURE_CALLBACK"
-        android:protectionLevel="normal" />
-
-    <permission
         android:name="org.microg.gms.STATUS_BROADCAST"
         android:label="@string/perm_status_broadcast_label"
         android:protectionLevel="normal" />
@@ -298,7 +294,7 @@
             </intent-filter>
         </receiver>
 
-        <!-- DroidGuard -->
+        <!-- DroidGuard / SafetyNet / reCAPTCHA -->
 
         <service android:name="org.microg.gms.droidguard.DroidGuardService">
             <intent-filter>
@@ -308,6 +304,19 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </service>
+        <receiver android:name="org.microg.gms.droidguard.ServiceInfoReceiver" />
+
+        <service android:name="org.microg.gms.safetynet.SafetyNetClientService">
+            <intent-filter>
+                <action android:name="com.google.android.gms.safetynet.service.START" />
+            </intent-filter>
+        </service>
+        <receiver android:name="org.microg.gms.safetynet.ServiceInfoReceiver" />
+
+        <!-- TODO: Should be in :ui process and contact DroidGuardService instead of directly invoking droidguard -->
+        <activity
+            android:name="org.microg.gms.recaptcha.ReCaptchaActivity"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.NoActionBar" />
 
         <!-- Car -->
 
@@ -412,6 +421,15 @@
             android:authorities="com.google.android.gms.auth.accounts"
             android:exported="true" />
 
+        <activity
+            android:name="org.microg.gms.ui.CredentialPickerActivity"
+            android:process=":ui">
+            <intent-filter>
+                <action android:name="com.google.android.gms.auth.api.credentials.PICKER" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <!-- Games -->
 
         <service android:name="org.microg.gms.games.GamesStubService">
@@ -452,6 +470,13 @@
             android:label="@string/gms_settings_name"
             android:process=":ui"
             android:roundIcon="@mipmap/ic_microg_settings">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <data
+                    android:host="exposure-notifications-rpis"
+                    android:scheme="x-gms-settings" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -526,6 +551,7 @@
                 <action android:name="com.google.android.gms.accountsettings.ACCOUNT_PREFERENCES_SETTINGS" />
                 <action android:name="com.google.android.gms.accountsettings.PRIVACY_SETTINGS" />
                 <action android:name="com.google.android.gms.accountsettings.SECURITY_SETTINGS" />
+                <action android:name="com.google.android.gms.accountsettings.action.VIEW_SETTINGS" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -644,13 +670,6 @@
             </intent-filter>
         </service>
 
-        <receiver android:name="org.microg.gms.snet.ServiceInfoReceiver" />
-
-        <service android:name="org.microg.gms.snet.SafetyNetClientService">
-            <intent-filter>
-                <action android:name="com.google.android.gms.safetynet.service.START" />
-            </intent-filter>
-        </service>
         <service android:name="org.microg.gms.wallet.PaymentService">
             <intent-filter>
                 <action android:name="com.google.android.gms.wallet.service.BIND" />
@@ -677,6 +696,12 @@
         <service android:name="org.microg.gms.firebase.dynamiclinks.DynamicLinksService">
             <intent-filter>
                 <action android:name="com.google.firebase.dynamiclinks.service.START" />
+            </intent-filter>
+        </service>
+
+        <service android:name="org.microg.gms.udc.FacsCacheService">
+            <intent-filter>
+                <action android:name="com.google.android.gms.facs.cache.service.START" />
             </intent-filter>
         </service>
 
@@ -710,6 +735,7 @@
                 <action android:name="com.google.android.gms.herrevad.services.LightweightNetworkQualityAndroidService.START" />
                 <action android:name="com.google.android.gms.auth.api.credentials.service.START" />
                 <action android:name="com.google.android.gms.gass.START" />
+                <action android:name="com.google.android.gms.audit.service.START" />
             </intent-filter>
         </service>
     </application>
