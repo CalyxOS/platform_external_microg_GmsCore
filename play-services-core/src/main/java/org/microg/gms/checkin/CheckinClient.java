@@ -49,6 +49,7 @@ public class CheckinClient {
     private static final List<String> TODO_LIST_STRING = new ArrayList<String>(); // TODO
     private static final List<CheckinRequest.Checkin.Statistic> TODO_LIST_CHECKIN = new ArrayList<CheckinRequest.Checkin.Statistic>(); // TODO
     private static final String SERVICE_URL = "https://android.clients.google.com/checkin";
+    public static boolean brandSpoof = true;
 
     public static CheckinResponse request(CheckinRequest request) throws IOException {
         HttpURLConnection connection = (HttpURLConnection) new URL(SERVICE_URL).openConnection();
@@ -88,19 +89,18 @@ public class CheckinClient {
                 .androidId(checkinInfo.androidId)
                 .checkin(new CheckinRequest.Checkin.Builder()
                         .build(new CheckinRequest.Checkin.Build.Builder()
-                                .bootloader(build.bootloader)
-                                .brand(build.brand)
+                                .bootloader(brandSpoof ? "c2f2-0.2-5799621" : build.bootloader)
+                                .brand(brandSpoof ? "google" : build.brand)
                                 .clientId("android-google")
-                                .device(build.device)
-                                .fingerprint(build.fingerprint)
-                                .hardware(build.hardware)
-                                .manufacturer(build.manufacturer)
-                                .model(build.model)
+                                .device(brandSpoof ? "generic" : build.device)
+                                .fingerprint(brandSpoof ? "google/coral/coral:10/QD1A.190821.007/5831595:user/release-keys" : build.fingerprint)
+                                .hardware(brandSpoof ? "coral" : build.hardware)
+                                .manufacturer(brandSpoof ? "Google" : build.manufacturer)
+                                .model(brandSpoof ? "mainline" : build.model)
                                 .otaInstalled(false) // TODO?
-                                //.packageVersionCode(Constants.MAX_REFERENCE_VERSION)
-                                .product(build.product)
-                                .radio(build.radio)
-                                .sdkVersion(build.sdk)
+                                .product(brandSpoof ? "coral" : build.product)
+                                .radio(brandSpoof ? "" : build.radio)
+                                .sdkVersion(brandSpoof ? 29 : build.sdk)
                                 .time(build.time / 1000)
                                 .build())
                         .cellOperator(phoneInfo.cellOperator)
