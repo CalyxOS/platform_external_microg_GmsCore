@@ -52,6 +52,7 @@ import org.microg.gms.auth.AuthConstants;
 import org.microg.gms.auth.AuthManager;
 import org.microg.gms.auth.AuthRequest;
 import org.microg.gms.auth.AuthResponse;
+import org.microg.gms.checkin.CheckinClient;
 import org.microg.gms.checkin.CheckinManager;
 import org.microg.gms.checkin.LastCheckinInfo;
 import org.microg.gms.common.HttpFormClient;
@@ -157,6 +158,8 @@ public class LoginActivity extends AssistantActivity {
         super.onNextButtonClicked();
         state++;
         if (state == 1) {
+            LastCheckinInfo.ClearCheckinInfo(this);
+            CheckinClient.brandSpoof = true;
             init();
         } else if (state == -1) {
             setResult(RESULT_CANCELED);
