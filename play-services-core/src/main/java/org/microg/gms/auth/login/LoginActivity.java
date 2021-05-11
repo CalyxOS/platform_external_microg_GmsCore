@@ -152,7 +152,7 @@ public class LoginActivity extends AssistantActivity {
         } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             init();
         } else {
-            setMessage(R.string.spoof_auth_before_connect);
+            setMessage(R.string.auth_before_connect);
             setSpoofButtonText(R.string.brand_spoof_button);
             setBackButtonText(android.R.string.cancel);
             setNextButtonText(R.string.auth_sign_in);

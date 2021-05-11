@@ -16,5 +16,4 @@
 -->
 <resources>
     <string name="brand_spoof_button">Alt Sign in</string>
-    <string name="spoof_auth_before_connect">"An app on your device is trying to sign in to a Google account.\n\nIf this was intentional, use the <b>Sign in</b> button to connect to Google’s sign-in page, if not, press <b>Cancel</b> to go back to the application that caused this dialog to show up.\n\nTry using the <b>Alt Sign in</b> button if you’ve had issues signing in previously."</string>
 </resources>
