@@ -200,12 +200,15 @@ public class GcmPrefs implements SharedPreferences.OnSharedPreferenceChangeListe
             case PREF_NETWORK_MOBILE:
             case PREF_NETWORK_ROAMING:
                 learntMobile *= 0.95;
+                Log.d("GmsGcmPrefs", "learntMobile now: " + learntMobile);
                 break;
             case PREF_NETWORK_WIFI:
                 learntWifi *= 0.95;
+                Log.d("GmsGcmPrefs", "learntWifi now: " + learntWifi);
                 break;
             default:
                 learntOther *= 0.95;
+                Log.d("GmsGcmPrefs", "learntOther now: " + learntOther);
                 break;
         }
         updateLearntValues();
