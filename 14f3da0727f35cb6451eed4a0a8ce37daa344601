@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3325cfb2_b1298c99",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-05-31T19:57:40Z",
+      "side": 1,
+      "message": "Builds. May not want it to be enabled for all configs, or by default. Could add a separate buildtype.\n\nThoughts?\n\nShould send upstream too",
+      "revId": "14f3da0727f35cb6451eed4a0a8ce37daa344601",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
