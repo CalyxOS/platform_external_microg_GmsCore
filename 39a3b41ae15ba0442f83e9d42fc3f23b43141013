@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "79591383_3b4ef844",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-02T17:22:13Z",
+      "side": 1,
+      "message": "Based on discussion, thought I\u0027d do a quick upload here for further discussion if any / and send it upstream if it works ok.",
+      "revId": "39a3b41ae15ba0442f83e9d42fc3f23b43141013",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
