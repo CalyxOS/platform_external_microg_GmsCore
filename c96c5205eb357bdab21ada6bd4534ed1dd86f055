@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "00164abc_909ccd6c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-03T21:40:00Z",
+      "side": 1,
+      "message": "https://github.com/microg/GmsCore/pull/1478",
+      "revId": "c96c5205eb357bdab21ada6bd4534ed1dd86f055",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
