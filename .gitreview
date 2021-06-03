@@ -1,0 +1,5 @@
+[gerrit]
+host=review.calyxos.org
+port=29418
+project=CalyxOS/platform_external_microg_GmsCore
+defaultbranch=android11-qpr1
