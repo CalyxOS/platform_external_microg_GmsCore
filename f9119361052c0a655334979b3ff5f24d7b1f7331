@@ -16,6 +16,29 @@
       "message": "Clear checkin info function was removed?",
       "revId": "f9119361052c0a655334979b3ff5f24d7b1f7331",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "782925aa_e68b596b",
+        "filename": "play-services-core/src/main/java/org/microg/gms/checkin/CheckinClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2021-06-03T21:57:49Z",
+      "side": 1,
+      "message": "Could be private and final unless there may be a future use outside the class?",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 11
+      },
+      "revId": "f9119361052c0a655334979b3ff5f24d7b1f7331",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
