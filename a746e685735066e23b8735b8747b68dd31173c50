@@ -35,6 +35,24 @@
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "be3fe94b_ab483496",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-03T21:54:31Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "bfb6a8ed_2984479b",
+      "revId": "a746e685735066e23b8735b8747b68dd31173c50",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2c3d6f0c_0f83d581",
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "yeah, I originally kept it in in case there would be any scenarios we wouldn\u0027t spoof (or the variable would be set to false)",
       "parentUuid": "2c3d6f0c_0f83d581",
+      "revId": "a746e685735066e23b8735b8747b68dd31173c50",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "91a358dc_42a9c826",
+        "filename": "play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-03T21:54:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d61db9a4_266b48fc",
       "revId": "a746e685735066e23b8735b8747b68dd31173c50",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
