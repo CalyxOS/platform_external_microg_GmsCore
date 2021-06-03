@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b5684872_0f862d03",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-03T21:28:20Z",
+      "side": 1,
+      "message": "Reverts don\u0027t get Change-Ids with the default commit hook, that\u0027s why you see the change-id outside the commit message above.\n\nThat\u0027s allow for this repo because we pull in external commits that may not always have Change-Ids\n\nFixed now, I updated https://review.calyxos.org/c/CalyxOS/platform_external_microg_GmsCore/+/3454",
+      "revId": "7d99968a4437e1724a4dfcd56beb2d20bd2a706e",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
