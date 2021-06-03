@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40cbc904_77d7cd4c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-03T13:41:36Z",
+      "side": 1,
+      "message": "In some ways this is good, it always spoofs now, meaning that Google gets even less info than it used to.",
+      "revId": "a746e685735066e23b8735b8747b68dd31173c50",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c3d6f0c_0f83d581",
+        "filename": "play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-03T13:41:36Z",
+      "side": 1,
+      "message": "no-op, could be removed.",
+      "revId": "a746e685735066e23b8735b8747b68dd31173c50",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
