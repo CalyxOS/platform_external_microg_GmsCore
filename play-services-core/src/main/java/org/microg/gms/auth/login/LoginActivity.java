@@ -156,6 +156,7 @@ public class LoginActivity extends AssistantActivity {
         super.onNextButtonClicked();
         state++;
         if (state == 1) {
+            LastCheckinInfo.clear(this);
             init();
         } else if (state == -1) {
             setResult(RESULT_CANCELED);
