@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0626bda7_e25dd1d4",
+        "filename": "play-services-core/src/main/java/org/microg/gms/checkin/CheckinClient.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-03T13:43:21Z",
+      "side": 0,
+      "message": "Can leave this in.",
+      "revId": "7d99968a4437e1724a4dfcd56beb2d20bd2a706e",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
