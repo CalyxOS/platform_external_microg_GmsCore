@@ -18,6 +18,23 @@
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bfb6a8ed_2984479b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-03T16:11:53Z",
+      "side": 1,
+      "message": "Best to wait for the refactor before we touch this again, but it could be useful to split this into two.\n\n1. Clear last checkin for login\n2. Spoof device info for checkin\n\n",
+      "revId": "a746e685735066e23b8735b8747b68dd31173c50",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "2c3d6f0c_0f83d581",
