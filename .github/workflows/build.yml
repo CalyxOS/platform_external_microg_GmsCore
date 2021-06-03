@@ -12,7 +12,9 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
           cache: 'gradle'
-      - run: ./gradlew --no-daemon build
+      - run: |
+          echo 'mapbox.key=dummy' > local.properties
+          ./gradlew --no-daemon build
         env:
           TERM: dumb
           JAVA_OPTS: -Xmx2048m
