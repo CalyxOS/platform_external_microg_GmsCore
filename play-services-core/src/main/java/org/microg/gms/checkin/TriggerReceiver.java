@@ -20,12 +20,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.provider.Settings;
 import android.util.Log;
 
 import androidx.legacy.content.WakefulBroadcastReceiver;
 
 import org.microg.gms.common.ForegroundServiceContext;
 
+import static android.os.Build.VERSION.SDK_INT;
+import static android.provider.Settings.Global.DEVICE_PROVISIONED;
 import static org.microg.gms.checkin.CheckinService.EXTRA_FORCE_CHECKIN;
 import static org.microg.gms.checkin.CheckinService.REGULAR_CHECKIN_INTERVAL;
 
@@ -36,6 +39,11 @@ public class TriggerReceiver extends WakefulBroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         try {
             boolean force = "android.provider.Telephony.SECRET_CODE".equals(intent.getAction());
+
+            if (!isProvisioned(context)) {
+                Log.d(TAG, "Ignoring " + intent + ": device not provisioned");
+                return;
+            }
 
             if (CheckinPrefs.get(context).isEnabled() || force) {
                 if (LastCheckinInfo.read(context).lastCheckin > System.currentTimeMillis() - REGULAR_CHECKIN_INTERVAL && !force) {
@@ -57,4 +65,15 @@ public class TriggerReceiver extends WakefulBroadcastReceiver {
             Log.w(TAG, e);
         }
     }
+
+    private boolean isProvisioned(Context context) {
+        try {
+            return SDK_INT < 17 ||
+                    Settings.Global.getInt(context.getContentResolver(), DEVICE_PROVISIONED) == 1;
+        } catch (Settings.SettingNotFoundException e) {
+            Log.w(TAG, "Error getting DEVICE_PROVISIONED setting", e);
+            return true;
+        }
+    }
+
 }
