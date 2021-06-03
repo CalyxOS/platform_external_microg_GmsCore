@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b72f0216_f7a74727",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-03T19:16:30Z",
+      "side": 1,
+      "message": "LGTM.\n\nCan test, merge and ship with everything else.",
+      "revId": "b10e86812a6541d03a70f0d16fb7e8c26ce21886",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
