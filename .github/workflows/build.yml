@@ -47,6 +47,8 @@ jobs:
             fi
           done
       - name: "Execute Gradle assemble"
-        run: "./gradlew assemble"
+        run: |
+          "echo 'mapbox.key=dummy' > local.properties"
+          "./gradlew assemble"
       - name: "Execute Gradle check"
         run: "./gradlew check"
