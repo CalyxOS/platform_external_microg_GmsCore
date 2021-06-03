@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "210386c1_f0a17a43",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-03T22:20:07Z",
+      "side": 1,
+      "message": "Will need rebasing for 3651: Refactor settings access to use a SettingsProvider | https://review.calyxos.org/c/CalyxOS/platform_external_microg_GmsCore/+/3651 later.",
+      "revId": "2a294f3d766164af323f68e319e3027b12d9f0c6",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
