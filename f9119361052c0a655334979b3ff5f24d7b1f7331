@@ -98,6 +98,30 @@
       },
       "revId": "f9119361052c0a655334979b3ff5f24d7b1f7331",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c8ea24d_6aba1500",
+        "filename": "play-services-core/src/main/java/org/microg/gms/checkin/CheckinClient.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-04T00:02:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc682b30_747cd924",
+      "range": {
+        "startLine": 52,
+        "startChar": 4,
+        "endLine": 52,
+        "endChar": 11
+      },
+      "revId": "f9119361052c0a655334979b3ff5f24d7b1f7331",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
