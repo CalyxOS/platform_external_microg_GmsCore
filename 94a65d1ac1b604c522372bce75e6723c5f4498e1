@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "61efd33b_8fb8080b",
+        "filename": "play-services-core/src/main/java/org/microg/gms/auth/login/LoginActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-04T00:11:34Z",
+      "side": 1,
+      "message": "Torsten added this method in the settings refactor so all we gotta do is call it.",
+      "revId": "94a65d1ac1b604c522372bce75e6723c5f4498e1",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
