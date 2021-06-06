@@ -33,6 +33,23 @@
       "message": "https://github.com/microg/GmsCore/pull/1487",
       "revId": "39a3b41ae15ba0442f83e9d42fc3f23b43141013",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "10614f83_ea31bc1e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-06T23:18:15Z",
+      "side": 1,
+      "message": "Merged upstream.",
+      "revId": "39a3b41ae15ba0442f83e9d42fc3f23b43141013",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
