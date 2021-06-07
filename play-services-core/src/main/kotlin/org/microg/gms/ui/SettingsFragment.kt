@@ -5,7 +5,6 @@
 
 package org.microg.gms.ui
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -13,9 +12,6 @@ import androidx.preference.Preference
 import com.google.android.gms.R
 import org.microg.gms.checkin.getCheckinServiceInfo
 import org.microg.gms.gcm.GcmDatabase
-import org.microg.gms.gcm.McsConstants.ACTION_RECONNECT
-import org.microg.gms.gcm.McsService
-import org.microg.gms.gcm.TriggerReceiver
 import org.microg.gms.gcm.getGcmServiceInfo
 import org.microg.gms.safetynet.getSafetyNetServiceInfo
 import org.microg.nlp.client.UnifiedLocationClient
@@ -60,30 +56,24 @@ class SettingsFragment : ResourceSettingsFragment() {
     }
 
     private suspend fun updateDetails() {
-        val context = requireContext()
-        val gcmServiceInfo = getGcmServiceInfo(context)
-        if (gcmServiceInfo.configuration.enabled) {
+        if (getGcmServiceInfo(requireContext()).configuration.enabled) {
             val database = GcmDatabase(context)
             val regCount = database.registrationList.size
-            // check if we are connected as we should be and re-connect if not
-            if (!McsService.isConnected(context)) {
-                context.sendBroadcast(Intent(ACTION_RECONNECT, null, context, TriggerReceiver::class.java))
-            }
             database.close()
             findPreference<Preference>(PREF_GCM)!!.summary = getString(R.string.service_status_enabled_short) + " - " + resources.getQuantityString(R.plurals.gcm_registered_apps_counter, regCount, regCount)
         } else {
             findPreference<Preference>(PREF_GCM)!!.setSummary(R.string.service_status_disabled_short)
         }
 
-        findPreference<Preference>(PREF_CHECKIN)!!.setSummary(if (getCheckinServiceInfo(context).configuration.enabled) R.string.service_status_enabled_short else R.string.service_status_disabled_short)
-        findPreference<Preference>(PREF_SNET)!!.setSummary(if (getSafetyNetServiceInfo(context).configuration.enabled) R.string.service_status_enabled_short else R.string.service_status_disabled_short)
+        findPreference<Preference>(PREF_CHECKIN)!!.setSummary(if (getCheckinServiceInfo(requireContext()).configuration.enabled) R.string.service_status_enabled_short else R.string.service_status_disabled_short)
+        findPreference<Preference>(PREF_SNET)!!.setSummary(if (getSafetyNetServiceInfo(requireContext()).configuration.enabled) R.string.service_status_enabled_short else R.string.service_status_disabled_short)
 
-        val backendCount = UnifiedLocationClient[context].getLocationBackends().size + UnifiedLocationClient[context].getGeocoderBackends().size
+        val backendCount = UnifiedLocationClient[requireContext()].getLocationBackends().size + UnifiedLocationClient[requireContext()].getGeocoderBackends().size
         findPreference<Preference>(PREF_UNIFIEDNLP)!!.summary = resources.getQuantityString(R.plurals.pref_unifiednlp_summary, backendCount, backendCount);
 
         findPreference<Preference>(PREF_EXPOSURE)?.isVisible = NearbyPreferencesIntegration.isAvailable
-        findPreference<Preference>(PREF_EXPOSURE)?.icon = NearbyPreferencesIntegration.getIcon(context)
-        findPreference<Preference>(PREF_EXPOSURE)?.summary = NearbyPreferencesIntegration.getExposurePreferenceSummary(context)
+        findPreference<Preference>(PREF_EXPOSURE)?.icon = NearbyPreferencesIntegration.getIcon(requireContext())
+        findPreference<Preference>(PREF_EXPOSURE)?.summary = NearbyPreferencesIntegration.getExposurePreferenceSummary(requireContext())
     }
 
     companion object {
