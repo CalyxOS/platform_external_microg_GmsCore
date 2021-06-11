@@ -53,7 +53,7 @@ class SettingsProvider : ContentProvider() {
                 "getSharedPreferences",
                 File::class.java,
                 Int::class.javaPrimitiveType
-            ).invoke(context, File("/system/etc/microg.xml"), MODE_PRIVATE) as SharedPreferences
+            ).invoke(context, File("/product/etc/microg.xml"), MODE_PRIVATE) as SharedPreferences
         } catch (ignored: Exception) {
             null
         }
