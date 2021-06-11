@@ -38,7 +38,7 @@ public class CheckinPrefs implements SharedPreferences.OnSharedPreferenceChangeL
             preferences = PreferenceManager.getDefaultSharedPreferences(context);
             preferences.registerOnSharedPreferenceChangeListener(this);
             try {
-                systemDefaultPreferences = (SharedPreferences) Context.class.getDeclaredMethod("getSharedPreferences", File.class, int.class).invoke(context, new File("/system/etc/microg.xml"), Context.MODE_PRIVATE);
+                systemDefaultPreferences = (SharedPreferences) Context.class.getDeclaredMethod("getSharedPreferences", File.class, int.class).invoke(context, new File("/product/etc/microg.xml"), Context.MODE_PRIVATE);
             } catch (Exception ignored) {
             }
             update();
