@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a5351793_e454aa88",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-06-29T10:53:48Z",
+      "side": 1,
+      "message": "Patch set 4: Standalone, without depending on the reverts.\n\nPatch set 5: Clean pick of upstream commit, depends on the reverts.\n\nUntested.",
+      "revId": "6e073273caa622e26071617240de09581c0e4e4c",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
