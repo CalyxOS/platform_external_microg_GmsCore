@@ -88,6 +88,8 @@ class SettingsProvider : ContentProvider() {
             CheckIn.SECURITY_TOKEN -> checkInPrefs.getLong(key, 0)
             CheckIn.VERSION_INFO -> checkInPrefs.getString(key, "") ?: ""
             CheckIn.DEVICE_DATA_VERSION_INFO -> checkInPrefs.getString(key, "") ?: ""
+
+            CheckIn.BRAND_SPOOF -> preferences.getBoolean(key, false)
             else -> throw IllegalArgumentException()
         }
     }
@@ -106,6 +108,9 @@ class SettingsProvider : ContentProvider() {
             if (key == CheckIn.ENABLED) {
                 // special case: not saved in checkInPrefs
                 updateCheckInEnabled(value as Boolean)
+            }
+            if (key == CheckIn.BRAND_SPOOF) {
+                preferences.edit().putBoolean(CheckIn.BRAND_SPOOF, value as Boolean).apply()
             }
             when (key) {
                 CheckIn.ANDROID_ID -> editor.putLong(key, value as Long)
