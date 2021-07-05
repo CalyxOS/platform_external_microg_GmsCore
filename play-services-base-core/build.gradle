@@ -9,9 +9,9 @@ apply plugin: 'signing'
 
 dependencies {
     api project(':play-services-basement')
+    api "androidx.lifecycle:lifecycle-service:$lifecycleVersion"
 
     implementation "androidx.annotation:annotation:$annotationVersion"
-    implementation "androidx.lifecycle:lifecycle-service:$lifecycleVersion"
 }
 
 android {
