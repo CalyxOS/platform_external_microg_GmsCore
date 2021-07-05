@@ -73,6 +73,8 @@ import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 import static android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT;
 import static org.microg.gms.auth.AuthPrefs.isAuthVisible;
+import static org.microg.gms.checkin.CheckinPrefs.isSpoofingEnabled;
+import static org.microg.gms.checkin.CheckinPrefs.setSpoofingEnabled;
 import static org.microg.gms.common.Constants.GMS_PACKAGE_NAME;
 import static org.microg.gms.common.Constants.GMS_VERSION_CODE;
 
@@ -162,13 +164,14 @@ public class LoginActivity extends AssistantActivity {
         super.onSpoofButtonClicked();
         state++;
         if (state == 1) {
-            PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean(SpoofButtonPreference, true).apply();
-            if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(LoginButtonPreference, true)) {
-                LastCheckinInfo.ClearCheckinInfo(this);
-                CheckinClient.brandSpoof = true;
-                PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean(LoginButtonPreference, true).apply();
+            if (!isSpoofingEnabled(this)) {
+                LastCheckinInfo.clear(this);
+                setSpoofingEnabled(this, true);
             }
             init();
+        } else if (state == -1) {
+            setResult(RESULT_CANCELED);
+            finish();
         }
     }
 
@@ -177,11 +180,9 @@ public class LoginActivity extends AssistantActivity {
         super.onNextButtonClicked();
         state++;
         if (state == 1) {
-            PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean(LoginButtonPreference, true).apply();
-            if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(SpoofButtonPreference, true)) {
-                LastCheckinInfo.ClearCheckinInfo(this);
-                CheckinClient.brandSpoof = false;
-                PreferenceManager.getDefaultSharedPreferences(this).edit().putBoolean(SpoofButtonPreference, true).apply();
+            if (isSpoofingEnabled(this)) {
+                LastCheckinInfo.clear(this);
+                setSpoofingEnabled(this, false);
             }
             init();
         } else if (state == -1) {
