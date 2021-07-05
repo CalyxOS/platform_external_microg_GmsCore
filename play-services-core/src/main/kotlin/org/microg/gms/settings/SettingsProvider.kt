@@ -88,6 +88,8 @@ class SettingsProvider : ContentProvider() {
             CheckIn.SECURITY_TOKEN -> checkInPrefs.getLong(key, 0)
             CheckIn.VERSION_INFO -> checkInPrefs.getString(key, "") ?: ""
             CheckIn.DEVICE_DATA_VERSION_INFO -> checkInPrefs.getString(key, "") ?: ""
+
+            CheckIn.BRAND_SPOOF -> checkInPrefs.getBoolean(key, false)
             else -> throw IllegalArgumentException()
         }
     }
@@ -114,6 +116,8 @@ class SettingsProvider : ContentProvider() {
                 CheckIn.SECURITY_TOKEN -> editor.putLong(key, value as Long)
                 CheckIn.VERSION_INFO -> editor.putString(key, value as String?)
                 CheckIn.DEVICE_DATA_VERSION_INFO -> editor.putString(key, value as String?)
+
+                CheckIn.BRAND_SPOOF -> editor.putBoolean(key, value as Boolean)
             }
         }
         editor.apply()
