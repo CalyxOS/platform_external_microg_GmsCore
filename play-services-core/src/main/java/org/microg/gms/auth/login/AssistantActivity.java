@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.StringRes;
@@ -38,9 +39,24 @@ public abstract class AssistantActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_assistant);
         formatTitle();
-        findViewById(R.id.spoof_button).setOnClickListener(v -> onSpoofButtonClicked());
-        findViewById(R.id.next_button).setOnClickListener(v -> onNextButtonClicked());
-        findViewById(R.id.back_button).setOnClickListener(v -> onBackButtonClicked());
+        findViewById(R.id.spoof_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onSpoofButtonClicked();
+            }
+        });
+        findViewById(R.id.next_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onNextButtonClicked();
+            }
+        });
+        findViewById(R.id.back_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackButtonClicked();
+            }
+        });
     }
 
     @SuppressLint("WrongViewCast")

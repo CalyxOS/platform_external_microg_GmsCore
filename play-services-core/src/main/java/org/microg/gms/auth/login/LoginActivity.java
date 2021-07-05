@@ -21,13 +21,14 @@ import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -36,6 +37,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.CookieManager;
 import android.webkit.JavascriptInterface;
+import android.webkit.ValueCallback;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -43,7 +45,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.StringRes;
-import androidx.preference.PreferenceManager;
 
 import com.google.android.gms.R;
 
@@ -58,7 +59,6 @@ import org.microg.gms.checkin.LastCheckinInfo;
 import org.microg.gms.common.HttpFormClient;
 import org.microg.gms.common.Utils;
 import org.microg.gms.people.PeopleManager;
-import org.microg.gms.ui.UtilsKt;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -148,6 +148,8 @@ public class LoginActivity extends AssistantActivity {
             } else {
                 retrieveRtToken(getIntent().getStringExtra(EXTRA_TOKEN));
             }
+        } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            init();
         } else {
             setMessage(R.string.spoof_auth_before_connect);
             setSpoofButtonText(R.string.brand_spoof_button);
@@ -332,7 +334,6 @@ public class LoginActivity extends AssistantActivity {
                             state = -2;
                         }
                     }
-
                     @Override
                     public void onException(Exception exception) {
                         Log.w(TAG, "onException", exception);
@@ -464,6 +465,11 @@ public class LoginActivity extends AssistantActivity {
         @JavascriptInterface
         public final int getBuildVersionSdk() {
             return SDK_INT;
+        }
+
+        @JavascriptInterface
+        public final void getDroidGuardResult(String s) {
+            Log.d(TAG, "JSBridge: getDroidGuardResult: " + s);
         }
 
         @JavascriptInterface
