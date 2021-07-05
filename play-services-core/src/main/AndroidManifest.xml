@@ -140,7 +140,8 @@
 
         <activity
             android:name="org.microg.nlp.ui.BackendSettingsActivity"
-            android:process=":ui" />
+            android:process=":ui"
+            tools:ignore="MissingClass" />
 
         <activity
             android:name="org.microg.gms.ui.PlacePickerActivity"
