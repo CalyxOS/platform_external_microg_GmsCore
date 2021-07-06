@@ -99,9 +99,6 @@ public class LoginActivity extends AssistantActivity {
     private ViewGroup authContent;
     private int state = 0;
 
-    private String SpoofButtonPreference = "spoofloginbutton";
-    private String LoginButtonPreference = "standardloginbutton";
-
     @SuppressLint("AddJavascriptInterface")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,25 +150,8 @@ public class LoginActivity extends AssistantActivity {
             init();
         } else {
             setMessage(R.string.auth_before_connect);
-            setSpoofButtonText(R.string.brand_spoof_button);
             setBackButtonText(android.R.string.cancel);
             setNextButtonText(R.string.auth_sign_in);
-        }
-    }
-
-    @Override
-    protected void onSpoofButtonClicked() {
-        super.onSpoofButtonClicked();
-        state++;
-        if (state == 1) {
-            if (!isSpoofingEnabled(this)) {
-                LastCheckinInfo.clear(this);
-                setSpoofingEnabled(this, true);
-            }
-            init();
-        } else if (state == -1) {
-            setResult(RESULT_CANCELED);
-            finish();
         }
     }
 
@@ -180,9 +160,9 @@ public class LoginActivity extends AssistantActivity {
         super.onNextButtonClicked();
         state++;
         if (state == 1) {
-            if (isSpoofingEnabled(this)) {
+            if (!isSpoofingEnabled(this)) {
                 LastCheckinInfo.clear(this);
-                setSpoofingEnabled(this, false);
+                setSpoofingEnabled(this, true);
             }
             init();
         } else if (state == -1) {
@@ -203,7 +183,6 @@ public class LoginActivity extends AssistantActivity {
     private void init() {
         setTitle(R.string.just_a_sec);
         setBackButtonText(null);
-        setSpoofButtonText(null);
         setNextButtonText(null);
         View loading = getLayoutInflater().inflate(R.layout.login_assistant_loading, authContent, false);
         authContent.removeAllViews();

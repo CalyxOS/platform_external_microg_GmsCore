@@ -39,12 +39,6 @@ public abstract class AssistantActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_assistant);
         formatTitle();
-        findViewById(R.id.spoof_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onSpoofButtonClicked();
-            }
-        });
         findViewById(R.id.next_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,19 +61,6 @@ public abstract class AssistantActivity extends Activity {
                     (int) (dpToPx(TITLE_MIN_HEIGHT) + (TITLE_WIDTH_FACTOR * widthPixels));
         } else {
             findViewById(R.id.title_container).getLayoutParams().height = dpToPx(TITLE_MIN_HEIGHT);
-        }
-    }
-
-    public void setSpoofButtonText(@StringRes int res) {
-        setSpoofButtonText(getText(res));
-    }
-
-    public void setSpoofButtonText(CharSequence text) {
-        if (text == null) {
-            findViewById(R.id.spoof_button).setVisibility(View.GONE);
-        } else {
-            findViewById(R.id.spoof_button).setVisibility(View.VISIBLE);
-            ((Button) findViewById(R.id.spoof_button)).setText(text);
         }
     }
 
@@ -107,10 +88,6 @@ public abstract class AssistantActivity extends Activity {
             findViewById(R.id.back_button).setVisibility(View.VISIBLE);
             ((Button) findViewById(R.id.back_button)).setText(text);
         }
-    }
-
-    protected void onSpoofButtonClicked() {
-
     }
 
     protected void onNextButtonClicked() {
