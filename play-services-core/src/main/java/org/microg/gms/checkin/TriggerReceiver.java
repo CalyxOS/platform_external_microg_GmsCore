@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.NetworkRequest;
+import android.provider.Settings;
 import android.util.Log;
 
 import androidx.legacy.content.WakefulBroadcastReceiver;
