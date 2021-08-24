@@ -22,14 +22,14 @@ object CheckinPrefs {
     @JvmStatic
     fun isSpoofingEnabled(context: Context): Boolean {
         val projection = arrayOf(CheckIn.BRAND_SPOOF)
-        return SettingsContract.getSettings(context, CheckIn.CONTENT_URI, projection) { c ->
+        return SettingsContract.getSettings(context, CheckIn.getContentUri(context), projection) { c ->
             c.getInt(0) != 0
         }
     }
 
     @JvmStatic
     fun setSpoofingEnabled(context: Context, enabled: Boolean) {
-        setSettings(context, CheckIn.CONTENT_URI) {
+        setSettings(context, CheckIn.getContentUri(context)) {
             put(CheckIn.BRAND_SPOOF, enabled)
         }
     }
