@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b3677238_e6e6e6f4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-13T18:30:51Z",
+      "side": 1,
+      "message": "This\u0027ll go in as individual commits, putting up a squash for easy review / testing.",
+      "revId": "d503d963027c7eba33f2d82cb83f31abb63b7a1d",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
