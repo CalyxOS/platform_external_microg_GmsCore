@@ -5,18 +5,13 @@
 
 package org.microg.gms.ui
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.preference.Preference
 import com.google.android.gms.R
 import org.microg.gms.checkin.getCheckinServiceInfo
 import org.microg.gms.gcm.GcmDatabase
-import org.microg.gms.gcm.McsConstants.ACTION_RECONNECT
-import org.microg.gms.gcm.McsService
-import org.microg.gms.gcm.TriggerReceiver
 import org.microg.gms.gcm.getGcmServiceInfo
 import org.microg.gms.safetynet.getSafetyNetServiceInfo
 import org.microg.nlp.client.UnifiedLocationClient
@@ -66,10 +61,6 @@ class SettingsFragment : ResourceSettingsFragment() {
         if (gcmServiceInfo.configuration.enabled) {
             val database = GcmDatabase(context)
             val regCount = database.registrationList.size
-            // check if we are connected as we should be and re-connect if not
-            if (!gcmServiceInfo.connected) {
-                context.sendBroadcast(Intent(ACTION_RECONNECT, null, context, TriggerReceiver::class.java))
-            }
             database.close()
             findPreference<Preference>(PREF_GCM)!!.summary = getString(R.string.service_status_enabled_short) + " - " + resources.getQuantityString(R.plurals.gcm_registered_apps_counter, regCount, regCount)
         } else {
