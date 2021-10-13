@@ -5,6 +5,7 @@
 
 package org.microg.gms.ui
 
+import android.content.Context
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -50,13 +51,13 @@ class SettingsFragment : ResourceSettingsFragment() {
 
     override fun onResume() {
         super.onResume()
+        val appContext = requireContext().applicationContext
         lifecycleScope.launchWhenResumed {
-            updateDetails()
+            updateDetails(appContext)
         }
     }
 
-    private suspend fun updateDetails() {
-        val context = requireContext()
+    private suspend fun updateDetails(context: Context) {
         val gcmServiceInfo = getGcmServiceInfo(context)
         if (gcmServiceInfo.configuration.enabled) {
             val database = GcmDatabase(context)
