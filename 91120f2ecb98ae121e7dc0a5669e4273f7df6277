@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0fb0b075_450f2d33",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-10-21T21:08:55Z",
+      "side": 1,
+      "message": "Rebased to be on top of squash temporarily for building apk",
+      "revId": "91120f2ecb98ae121e7dc0a5669e4273f7df6277",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
