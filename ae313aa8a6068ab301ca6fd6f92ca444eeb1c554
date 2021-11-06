@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5e27423c_10c0aecf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-11-06T17:38:15Z",
+      "side": 1,
+      "message": "See commit message.\n\nI did git diff grote/notice-push-connection-drops-faster - ignore the missing upstream changes (cast, exposure, will pull them in with the next tag)\n\n",
+      "revId": "ae313aa8a6068ab301ca6fd6f92ca444eeb1c554",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
