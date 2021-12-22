@@ -16,6 +16,24 @@
       "message": "Fixup",
       "revId": "ed88512db2aa4b3b42bc8244c025695a12f159a1",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "741fe31a_e0bea329",
+        "filename": "play-services-core/src/main/res/values/calyx_strings.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-12-22T23:30:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0434836_06cfcfa1",
+      "revId": "ed88512db2aa4b3b42bc8244c025695a12f159a1",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
