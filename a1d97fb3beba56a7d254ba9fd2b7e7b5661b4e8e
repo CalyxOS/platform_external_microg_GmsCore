@@ -16,6 +16,24 @@
       "message": "Fixup",
       "revId": "a1d97fb3beba56a7d254ba9fd2b7e7b5661b4e8e",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed8b19e4_40275e1f",
+        "filename": "settings.gradle",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-12-22T22:54:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8598309e_135abc90",
+      "revId": "a1d97fb3beba56a7d254ba9fd2b7e7b5661b4e8e",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
