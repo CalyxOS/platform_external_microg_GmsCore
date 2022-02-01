@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3dc2d17_49536827",
+        "filename": "play-services-core/src/main/java/org/microg/gms/safetynet/SafetyNetPrefs.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-02-01T16:22:22Z",
+      "side": 0,
+      "message": "Need to double check, deleted upstream?",
+      "revId": "ed7473d15c006cc7d8eb85c3e0eb03dfc99771ff",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}

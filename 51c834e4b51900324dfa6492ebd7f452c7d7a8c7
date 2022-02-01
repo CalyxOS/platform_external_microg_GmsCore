@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05bec0a4_b813be3d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-02-01T16:22:22Z",
+      "side": 1,
+      "message": "Need to check this conflict.",
+      "revId": "51c834e4b51900324dfa6492ebd7f452c7d7a8c7",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "de408714_1da4c92f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-02-01T16:22:22Z",
+      "side": 1,
+      "message": "Still need to go through the entire diff, but comments are for the conflicts.",
+      "revId": "51c834e4b51900324dfa6492ebd7f452c7d7a8c7",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6371b430_ae2ff5f8",
+        "filename": "build.gradle",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-02-01T16:22:22Z",
+      "side": 1,
+      "message": "The above conflicted, but I kept the upstream version since they\u0027re all newer than what we had before, and should match GmsCore.",
+      "revId": "51c834e4b51900324dfa6492ebd7f452c7d7a8c7",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dec9eac8_a7e91f9a",
+        "filename": "play-services-location-core/build.gradle",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-02-01T16:22:22Z",
+      "side": 1,
+      "message": "Kept these two the same as upstream.\n\nWe changed this in 6796: Use own sources of UnifiedNlp | https://review.calyxos.org/c/CalyxOS/platform_external_microg_GmsCore/+/6796",
+      "revId": "51c834e4b51900324dfa6492ebd7f452c7d7a8c7",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
