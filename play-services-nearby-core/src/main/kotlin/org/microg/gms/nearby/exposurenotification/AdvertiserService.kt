@@ -36,7 +36,7 @@ import java.util.*
 @TargetApi(21)
 @ForegroundServiceInfo("Exposure Notification")
 class AdvertiserService : LifecycleService() {
-    private val version = VERSION_1_0
+    private val version = VERSION_1_1
     private var advertising = false
     private var wantStartAdvertising = false
     private val advertiser: BluetoothLeAdvertiser?
@@ -147,7 +147,11 @@ class AdvertiserService : LifecycleService() {
                         .setTxPowerLevel(AdvertisingSetParameters.TX_POWER_LOW)
                         .setConnectable(false)
                         .build()
-                advertiser.startAdvertisingSet(params, data, null, null, null, setCallback as AdvertisingSetCallback)
+                try {
+                    advertiser.startAdvertisingSet(params, data, null, null, null, setCallback as AdvertisingSetCallback)
+                } catch (e: SecurityException) {
+                    Log.e(TAG, "Couldn't start advertising: Need android.permission.BLUETOOTH_ADVERTISE permission.", )
+                }
             } else {
                 nextSend = nextSend.coerceAtMost(180000)
                 val settings = Builder()
@@ -156,7 +160,11 @@ class AdvertiserService : LifecycleService() {
                         .setTxPowerLevel(ADVERTISE_TX_POWER_LOW)
                         .setConnectable(false)
                         .build()
-                advertiser.startAdvertising(settings, data, callback)
+                try {
+                    advertiser.startAdvertising(settings, data, callback)
+                } catch (e: SecurityException) {
+                    Log.e(TAG, "Couldn't start advertising.", )
+                }
             }
             synchronized(this) { advertising = true }
             sendingBytes = payload
@@ -204,9 +212,17 @@ class AdvertiserService : LifecycleService() {
         advertising = false
         if (Build.VERSION.SDK_INT >= 26) {
             wantStartAdvertising = true
-            advertiser?.stopAdvertisingSet(setCallback as AdvertisingSetCallback)
+            try {
+                advertiser?.stopAdvertisingSet(setCallback as AdvertisingSetCallback)
+            } catch (e: SecurityException) {
+                Log.i(TAG, "Tried calling stopAdvertisingSet without android.permission.BLUETOOTH_ADVERTISE permission.", )
+            }
         } else {
-            advertiser?.stopAdvertising(callback)
+            try {
+                advertiser?.stopAdvertising(callback)
+            } catch (e: SecurityException) {
+                Log.i(TAG, "stopAdvertising() failed with a SecurityException. Maybe some permissions are missing?", )
+            }
         }
         handler.postDelayed(startLaterRunnable, 1000)
     }
