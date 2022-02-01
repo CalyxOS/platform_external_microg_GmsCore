@@ -9,7 +9,7 @@ apply plugin: 'maven-publish'
 apply plugin: 'signing'
 
 dependencies {
-    api project(':play-services-basement')
+    api project(':play-services-basement-ktx')
     api "androidx.lifecycle:lifecycle-service:$lifecycleVersion"
 
     implementation "androidx.annotation:annotation:$annotationVersion"
