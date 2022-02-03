@@ -16,6 +16,24 @@
       "message": "Need to double check, deleted upstream?",
       "revId": "ed7473d15c006cc7d8eb85c3e0eb03dfc99771ff",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f674efcd_7c27aa84",
+        "filename": "play-services-core/src/main/java/org/microg/gms/safetynet/SafetyNetPrefs.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-02-03T17:33:30Z",
+      "side": 0,
+      "message": "Yes, deleted upstream.",
+      "parentUuid": "e3dc2d17_49536827",
+      "revId": "ed7473d15c006cc7d8eb85c3e0eb03dfc99771ff",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
