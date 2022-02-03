@@ -130,6 +130,12 @@ class ExposureDatabase private constructor(private val context: Context) : SQLit
             Log.d(TAG, "Get rid of isEnabled log entries")
             db.delete(TABLE_APP_LOG, "method = ?", arrayOf("isEnabled"));
         }
+        if (oldVersion == 11) {
+            Log.d(TAG, "Fixing invalid rssi values from version 11 with release 0.2.23")
+            // Setting the RSSI to -75. This is obviously not the correct value, but is still way better estimate
+            // than 0, based on the measurements shown in https://github.com/microg/GmsCore/issues/1655
+            db.execSQL("UPDATE $TABLE_ADVERTISEMENTS SET rssi = -75 WHERE rssi = 0 AND duration > 0")
+        }
         Log.d(TAG, "Finished database upgrade")
     }
 
@@ -181,7 +187,7 @@ class ExposureDatabase private constructor(private val context: Context) : SQLit
     }
 
     fun noteAdvertisement(rpi: ByteArray, aem: ByteArray, rssi: Int, timestamp: Long = Date().time) = writableDatabase.run {
-        val update = compileStatement("UPDATE $TABLE_ADVERTISEMENTS SET rssi = IFNULL(((rssi * duration) + (? * MIN(0, ? - timestamp - duration))) / MAX(duration, ? - timestamp), -100), duration = MAX(duration, ? - timestamp) WHERE rpi = ? AND timestamp > ? AND timestamp < ?").run {
+        val update = compileStatement("UPDATE $TABLE_ADVERTISEMENTS SET rssi = IFNULL(((rssi * duration) + (? * MAX(0, ? - timestamp - duration))) / MAX(duration, ? - timestamp), -100), duration = MAX(duration, ? - timestamp) WHERE rpi = ? AND timestamp > ? AND timestamp < ?").run {
             bindLong(1, rssi.toLong())
             bindLong(2, timestamp)
             bindLong(3, timestamp)
@@ -835,7 +841,7 @@ class ExposureDatabase private constructor(private val context: Context) : SQLit
 
     companion object {
         private const val DB_NAME = "exposure.db"
-        private const val DB_VERSION = 11
+        private const val DB_VERSION = 12
         private const val DB_SIZE_TOO_LARGE = 256L * 1024 * 1024
         private const val MAX_DELETE_TIME = 5000L
         private const val TABLE_ADVERTISEMENTS = "advertisements"
