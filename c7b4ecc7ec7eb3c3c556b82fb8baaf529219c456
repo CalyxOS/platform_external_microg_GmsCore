@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ed06c815_9e1113f7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-02-11T12:41:54Z",
+      "side": 1,
+      "message": "I need to build APK with this.",
+      "revId": "c7b4ecc7ec7eb3c3c556b82fb8baaf529219c456",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
