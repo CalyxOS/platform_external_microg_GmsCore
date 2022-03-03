@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f3af09db_4a164be8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-03-03T14:15:59Z",
+      "side": 1,
+      "message": "`adb install ./play-services-core/build/outputs/apk/withMapboxWithNearby/release/play-services-core-withMapbox-withNearby-release.apk` works",
+      "revId": "379f2aefe714a64ff5f64f0525f965cefcf544e0",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
