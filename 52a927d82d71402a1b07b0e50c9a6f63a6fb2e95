@@ -16,6 +16,23 @@
       "message": "I\u0027d rather not remove it entirely.",
       "revId": "52a927d82d71402a1b07b0e50c9a6f63a6fb2e95",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d9052f0_ef844d4c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-06-29T17:08:39Z",
+      "side": 1,
+      "message": "Could also revert the icon change to reduce diff against upstream",
+      "revId": "52a927d82d71402a1b07b0e50c9a6f63a6fb2e95",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
