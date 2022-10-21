@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "be77a185_2bfd973d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-10-21T21:32:43Z",
+      "side": 1,
+      "message": "14098: GmsCore: Allow MANAGE_USB | https://review.calyxos.org/c/CalyxOS/platform_prebuilts_calyx_microg/+/14098",
+      "revId": "9fb9aa65d32954cb5b4465d2789ed4e27a9964ed",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
