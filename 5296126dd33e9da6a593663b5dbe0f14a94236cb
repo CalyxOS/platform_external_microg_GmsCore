@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a63dda0f_5f65222a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-10-21T21:35:28Z",
+      "side": 1,
+      "message": "We can always revert this later if it turns out there\u0027s something that needs this.",
+      "revId": "5296126dd33e9da6a593663b5dbe0f14a94236cb",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
