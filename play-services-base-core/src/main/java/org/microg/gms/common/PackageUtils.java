@@ -39,13 +39,15 @@ import java.util.Map;
 import static android.os.Build.VERSION.SDK_INT;
 import static org.microg.gms.common.Constants.GMS_PACKAGE_NAME;
 import static org.microg.gms.common.Constants.GMS_PACKAGE_SIGNATURE_SHA1;
+import static org.microg.gms.common.Constants.GMS_SECONDARY_PACKAGE_SIGNATURE_SHA1;
 
 public class PackageUtils {
 
     private static final String GOOGLE_PLATFORM_KEY = GMS_PACKAGE_SIGNATURE_SHA1;
+    private static final String GOOGLE_PLATFORM_KEY_2 = GMS_SECONDARY_PACKAGE_SIGNATURE_SHA1;
     private static final String GOOGLE_APP_KEY = "24bb24c05e47e0aefa68a58a766179d9b613a600";
     private static final String GOOGLE_LEGACY_KEY = "58e1c4133f7441ec3d2c270270a14802da47ba0e"; // Seems to be no longer used.
-    private static final String[] GOOGLE_PRIMARY_KEYS = {GOOGLE_PLATFORM_KEY, GOOGLE_APP_KEY};
+    private static final String[] GOOGLE_PRIMARY_KEYS = {GOOGLE_PLATFORM_KEY, GOOGLE_PLATFORM_KEY_2, GOOGLE_APP_KEY};
 
     private static final Map<String, String> KNOWN_GOOGLE_PACKAGES;
 
@@ -70,6 +72,7 @@ public class PackageUtils {
         KNOWN_GOOGLE_PACKAGES.put("com.google.android.apps.dynamite", "519c5a17a60596e6fe5933b9cb4285e7b0e5eb7b");
         KNOWN_GOOGLE_PACKAGES.put("com.google.android.projection.gearhead", "9ca91f9e704d630ef67a23f52bf1577a92b9ca5d");
         KNOWN_GOOGLE_PACKAGES.put("com.google.stadia.android", "133aad3b3d3b580e286573c37f20549f9d3d1cce");
+        KNOWN_GOOGLE_PACKAGES.put("com.google.android.apps.kids.familylink", "88652b8464743e5ce80da0d4b890d13f9b1873df");
     }
 
     public static boolean isGooglePackage(Context context, String packageName) {
