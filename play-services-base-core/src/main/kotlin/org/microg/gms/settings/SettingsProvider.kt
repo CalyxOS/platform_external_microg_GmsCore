@@ -315,6 +315,8 @@ class SettingsProvider : ContentProvider() {
      * @return the current setting as [Int], because [ContentProvider] does not support [Boolean].
      */
     private fun getSettingsBoolean(key: String, def: Boolean): Int {
+        if (key == CheckIn.ENABLED || key == Gcm.ENABLE_GCM)
+            return listOf(preferences, null).getBooleanAsInt(key, true)
         return listOf(preferences, systemDefaultPreferences).getBooleanAsInt(key, def)
     }
 
