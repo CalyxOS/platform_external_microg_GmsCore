@@ -93,7 +93,11 @@ class SettingsProvider : ContentProvider() {
 
     private fun queryCheckIn(p: Array<out String>): Cursor = MatrixCursor(p).addRow(p) { key ->
         when (key) {
-            CheckIn.ENABLED -> getSettingsBoolean(key, false)
+            // [TEMP]
+            // Skip the systemPreferences check entirely, it no longer exists
+            // Report the value set by the user if available (i.e. if they turned it off)
+            // or true otherwise (as that has always been our default)
+            CheckIn.ENABLED -> preferences.getBooleanAsInt(key, true)
             CheckIn.ANDROID_ID -> checkInPrefs.getLong(key, 0)
             CheckIn.DIGEST -> checkInPrefs.getString(key, CheckIn.INITIAL_DIGEST)
                 ?: CheckIn.INITIAL_DIGEST
@@ -138,7 +142,8 @@ class SettingsProvider : ContentProvider() {
 
     private fun queryGcm(p: Array<out String>): Cursor = MatrixCursor(p).addRow(p) { key ->
         when (key) {
-            Gcm.ENABLE_GCM -> getSettingsBoolean(key, false)
+            // [TEMP] Same as CheckIn.ENABLED above
+            Gcm.ENABLE_GCM -> preferences.getBooleanAsInt(key, true)
             Gcm.FULL_LOG -> getSettingsBoolean(key, true)
             Gcm.CONFIRM_NEW_APPS -> getSettingsBoolean(key, false)
 
