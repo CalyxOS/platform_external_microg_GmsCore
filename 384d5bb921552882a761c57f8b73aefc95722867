@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ac94345_eec1ca9d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-11-02T12:01:32Z",
+      "side": 1,
+      "message": "Same as changing the default to `true` for either of these",
+      "revId": "384d5bb921552882a761c57f8b73aefc95722867",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
