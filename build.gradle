@@ -96,9 +96,9 @@ if (!ignoreGit) {
 }
 def ourVersionBase = gitVersionBase.substring(0, gitVersionBase.lastIndexOf('.'))
 def ourVersionMinor = Integer.parseInt(ourVersionBase.substring(ourVersionBase.lastIndexOf('.') + 1))
-def ourGmsVersionCode = gmsVersionCode * 1000 + ourVersionMinor * 2  + gitCommitCount + (gitDirty ? 1 : 0)
+def ourGmsVersionCode = gmsVersionCode * 1000 + ourVersionMinor * 2  + gitCommitCount + (gitDirty ? 1 : 0) + 12
 def ourGmsVersionName = "$ourVersionBase.$gmsVersionCode" + (gitCommitCount > 0 && !gitDirty ? "-$gitCommitCount" : "") + (gitDirty ? "-dirty" : "") + (gitCommitCount > 0 && !gitDirty ? " ($gitCommitId)" : "")
-def ourVendingVersionCode = 80000000 + vendingVersionCode * 100 + ourVersionMinor * 2  + gitCommitCount + (gitDirty ? 1 : 0)
+def ourVendingVersionCode = 80000000 + vendingVersionCode * 100 + ourVersionMinor * 2  + gitCommitCount + (gitDirty ? 1 : 0) + 12
 def ourVendingVersionName = "$ourVersionBase.$vendingVersionCode" + (gitCommitCount > 0 && !gitDirty ? "-$gitCommitCount" : "") + (gitDirty ? "-dirty" : "") + (gitCommitCount > 0 && !gitDirty ? " ($gitCommitId)" : "")
 logger.lifecycle('Starting build for GMS version {} ({})...', ourGmsVersionName, ourGmsVersionCode)
 
