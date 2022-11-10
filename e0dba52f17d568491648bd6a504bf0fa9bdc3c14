@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5c43d228_861f4271",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-11-10T11:42:03Z",
+      "side": 1,
+      "message": "Reverted only to reduce diff against upstream.",
+      "revId": "e0dba52f17d568491648bd6a504bf0fa9bdc3c14",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
