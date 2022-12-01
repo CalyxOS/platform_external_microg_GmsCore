@@ -16,6 +16,23 @@
       "message": "Sad but needed 😞",
       "revId": "cad3f423d8ccdfed005ae7d9240550d2b937f1ee",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbfef4d7_c66d7c5b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-12-01T20:31:11Z",
+      "side": 1,
+      "message": "* Before: 0.2.26.223616-36 (a7f2253) (223616138) -\u003e lower than current\n* Current: 0.2.25.223616-44 (fa13859) (223616144) -\u003e production, see version code.\n* After: 0.2.26.223616-37 (23ae934) (223616145) -\u003e higher than current",
+      "revId": "cad3f423d8ccdfed005ae7d9240550d2b937f1ee",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
