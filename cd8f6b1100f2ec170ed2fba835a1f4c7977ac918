@@ -52,7 +52,7 @@
       },
       "applicabilityExpressionResult": {},
       "submittabilityExpressionResult": {
-        "value": {"expression":{"expressionString":"label:Builds=MAX AND -label:Builds=MIN"},"status":"PASS","errorMessage":{"value":null},"passingAtoms":["label:Builds=MAX"],"failingAtoms":["label:Builds=MIN"]}
+        "value": {"expression":{"expressionString":"label:Builds=MAX AND -label:Builds=MIN"},"status":"FAIL","errorMessage":{"value":null},"passingAtoms":[],"failingAtoms":["label:Builds=MAX","label:Builds=MIN"]}
       },
       "overrideExpressionResult": {},
       "patchSetCommitId": "cd8f6b1100f2ec170ed2fba835a1f4c7977ac918",
@@ -77,7 +77,7 @@
       },
       "applicabilityExpressionResult": {},
       "submittabilityExpressionResult": {
-        "value": {"expression":{"expressionString":"label:Code-Review=MAX AND -label:Code-Review=MIN"},"status":"PASS","errorMessage":{"value":null},"passingAtoms":["label:Code-Review=MAX"],"failingAtoms":["label:Code-Review=MIN"]}
+        "value": {"expression":{"expressionString":"label:Code-Review=MAX AND -label:Code-Review=MIN"},"status":"FAIL","errorMessage":{"value":null},"passingAtoms":[],"failingAtoms":["label:Code-Review=MAX","label:Code-Review=MIN"]}
       },
       "overrideExpressionResult": {},
       "patchSetCommitId": "cd8f6b1100f2ec170ed2fba835a1f4c7977ac918",
@@ -102,7 +102,7 @@
       },
       "applicabilityExpressionResult": {},
       "submittabilityExpressionResult": {
-        "value": {"expression":{"expressionString":"label:Works=MAX AND -label:Works=MIN"},"status":"PASS","errorMessage":{"value":null},"passingAtoms":["label:Works=MAX"],"failingAtoms":["label:Works=MIN"]}
+        "value": {"expression":{"expressionString":"label:Works=MAX AND -label:Works=MIN"},"status":"FAIL","errorMessage":{"value":null},"passingAtoms":[],"failingAtoms":["label:Works=MAX","label:Works=MIN"]}
       },
       "overrideExpressionResult": {},
       "patchSetCommitId": "cd8f6b1100f2ec170ed2fba835a1f4c7977ac918",
