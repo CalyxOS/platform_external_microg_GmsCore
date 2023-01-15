@@ -48,7 +48,6 @@ import com.mapbox.mapboxsdk.location.modes.RenderMode
 import com.mapbox.mapboxsdk.maps.MapView
 import com.mapbox.mapboxsdk.maps.MapboxMap
 import com.mapbox.mapboxsdk.maps.Style
-import com.mapbox.mapboxsdk.maps.TelemetryDefinition
 import com.mapbox.mapboxsdk.plugins.annotation.*
 import com.mapbox.mapboxsdk.plugins.annotation.Annotation
 import com.mapbox.mapboxsdk.style.layers.Property.LINE_CAP_ROUND
@@ -144,8 +143,6 @@ class GoogleMapImpl(private val context: Context, var options: GoogleMapOptions)
         LibraryLoader.setLibraryLoader(MultiArchLoader(mapContext, context))
         runOnMainLooper {
             Mapbox.getInstance(mapContext, BuildConfig.MAPBOX_KEY, WellKnownTileServer.Mapbox)
-            var telemetry = Mapbox.getTelemetry()
-            telemetry?.setUserTelemetryRequestState(false)
         }
 
 
