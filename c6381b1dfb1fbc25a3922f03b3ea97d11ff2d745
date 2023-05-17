@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "32fed237_281e6d0e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2023-05-17T18:40:55Z",
+      "side": 1,
+      "message": "Makes microg invisible. Fixes Translate but Gmail and other apps don\u0027t work. Need to see if it can be made to exclude apps from being able to query instead",
+      "revId": "c6381b1dfb1fbc25a3922f03b3ea97d11ff2d745",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
