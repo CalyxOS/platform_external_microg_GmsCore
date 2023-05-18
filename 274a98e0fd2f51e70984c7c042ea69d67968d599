@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2782528_f62968b9",
+        "filename": "play-services-core/src/main/java/org/microg/gms/auth/AuthManagerServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2023-05-18T20:01:11Z",
+      "side": 1,
+      "message": "Should be conditional if possible",
+      "range": {
+        "startLine": 208,
+        "startChar": 15,
+        "endLine": 208,
+        "endChar": 19
+      },
+      "revId": "274a98e0fd2f51e70984c7c042ea69d67968d599",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
