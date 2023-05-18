@@ -22,6 +22,30 @@
       },
       "revId": "274a98e0fd2f51e70984c7c042ea69d67968d599",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6c82722_b4027a0b",
+        "filename": "play-services-core/src/main/java/org/microg/gms/auth/AuthManagerServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-05-18T22:55:03Z",
+      "side": 1,
+      "message": "Were you thinking based on package name? I vaguely remember seeing a setting for account access ages ago but I may be mistaken.",
+      "parentUuid": "b2782528_f62968b9",
+      "range": {
+        "startLine": 208,
+        "startChar": 15,
+        "endLine": 208,
+        "endChar": 19
+      },
+      "revId": "274a98e0fd2f51e70984c7c042ea69d67968d599",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
