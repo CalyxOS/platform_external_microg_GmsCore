@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "748deb21_7f220ba9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2023-05-18T20:04:35Z",
+      "side": 1,
+      "message": "https://android.googleapis.com/checkin is not implemented and seems important. One of many possible improvements",
+      "revId": "59a9dfac9ed26213351ef3291730bb3f1b236273",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
