@@ -204,9 +204,8 @@ public class AuthManagerServiceImpl extends IAuthManagerService.Stub {
     }
 
     @Override
-    public Bundle requestGoogleAccountsAccess(String packageName) throws RemoteException {
-        Log.w(TAG, "Not implemented: requestGoogleAccountsAccess(" + packageName + ")");
-        return null;
+    public boolean requestGoogleAccountsAccess(String packageName) throws RemoteException {
+        return true;
     }
 
     @Override

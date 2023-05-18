@@ -17,7 +17,7 @@ interface IAuthManagerService {
     Bundle getTokenWithAccount(in Account account, String scope, in Bundle extras) = 4;
     Bundle getAccounts(in Bundle extras) = 5;
     Bundle removeAccount(in Account account) = 6;
-    Bundle requestGoogleAccountsAccess(String packageName) = 7;
+    boolean requestGoogleAccountsAccess(String packageName) = 7;
     int hasCapabilities(in HasCababilitiesRequest request) = 8;
     GetHubTokenInternalResponse getHubToken(in GetHubTokenRequest request, in Bundle extras) = 9;
 }
