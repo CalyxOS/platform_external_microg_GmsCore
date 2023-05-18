@@ -22,6 +22,8 @@ import org.microg.gms.common.api.PendingGoogleApiCall;
 import org.microg.gms.safetynet.ISafetyNetCallbacksDefaultStub;
 import org.microg.gms.safetynet.SafetyNetGmsClient;
 
+import java.util.Map;
+
 /**
  * The main entry point for SafetyNet.
  */
@@ -52,6 +54,10 @@ public class SafetyNetClient extends GoogleApi<Api.ApiOptions.NoOptions> {
      * @param apiKey An Android API key obtained through the developer console.
      */
     public Task<SafetyNetApi.AttestationResponse> attest(byte[] nonce, String apiKey) {
+        return attest(nonce, null, null, apiKey);
+    }
+
+    public Task<SafetyNetApi.AttestationResponse> attest(byte[] nonce, String flow, Map<String, String> data, String apiKey) {
         return scheduleTask((PendingGoogleApiCall<SafetyNetApi.AttestationResponse, SafetyNetGmsClient>) (client, completionSource) -> {
             try {
                 client.attest(new ISafetyNetCallbacksDefaultStub() {
@@ -71,7 +77,7 @@ public class SafetyNetClient extends GoogleApi<Api.ApiOptions.NoOptions> {
                         });
                         completionSource.setResult(response);
                     }
-                }, nonce, apiKey);
+                }, nonce, flow, data, apiKey);
             } catch (Exception e) {
                 completionSource.setException(e);
             }
