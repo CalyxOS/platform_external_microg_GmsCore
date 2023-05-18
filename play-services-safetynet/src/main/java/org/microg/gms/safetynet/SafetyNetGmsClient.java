@@ -17,14 +17,16 @@ import org.microg.gms.common.GmsService;
 import org.microg.gms.common.api.ConnectionCallbacks;
 import org.microg.gms.common.api.OnConnectionFailedListener;
 
+import java.util.Map;
+
 public class SafetyNetGmsClient extends GmsClient<ISafetyNetService> {
     public SafetyNetGmsClient(Context context, ConnectionCallbacks callbacks, OnConnectionFailedListener connectionFailedListener) {
         super(context, callbacks, connectionFailedListener, GmsService.SAFETY_NET_CLIENT.ACTION);
         serviceId = GmsService.SAFETY_NET_CLIENT.SERVICE_ID;
     }
 
-    public void attest(ISafetyNetCallbacks callbacks, byte[] nonce, String apiKey) throws RemoteException {
-        getServiceInterface().attestWithApiKey(callbacks, nonce, apiKey);
+    public void attest(ISafetyNetCallbacks callbacks, byte[] nonce, String flow, Map<String, String> data, String apiKey) throws RemoteException {
+        getServiceInterface().attestWithApiKey(callbacks, nonce, flow, data, apiKey);
     }
 
     public void verifyWithRecaptcha(ISafetyNetCallbacks callbacks, String siteKey) throws RemoteException {

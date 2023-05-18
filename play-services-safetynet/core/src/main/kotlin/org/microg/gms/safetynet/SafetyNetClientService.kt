@@ -61,10 +61,10 @@ class SafetyNetClientServiceImpl(
     override fun getLifecycle(): Lifecycle = lifecycle
 
     override fun attest(callbacks: ISafetyNetCallbacks, nonce: ByteArray) {
-        attestWithApiKey(callbacks, nonce, DEFAULT_API_KEY)
+        attestWithApiKey(callbacks, nonce, null, null, DEFAULT_API_KEY)
     }
 
-    override fun attestWithApiKey(callbacks: ISafetyNetCallbacks, nonce: ByteArray?, apiKey: String) {
+    override fun attestWithApiKey(callbacks: ISafetyNetCallbacks, nonce: ByteArray?, flow: String?, data: Map<String, String>?, apiKey: String) {
         if (nonce == null) {
             callbacks.onAttestationData(Status(SafetyNetStatusCodes.DEVELOPER_ERROR, "Nonce missing"), null)
             return
@@ -96,8 +96,17 @@ class SafetyNetClientServiceImpl(
                     safetyNetData.currentTimeMs ?: 0
                 )
 
-                val data = mapOf("contentBinding" to attestation.payloadHashBase64)
-                val dg = withContext(Dispatchers.IO) { DroidGuardResultCreator.getResults(context, "attest", data) }
+                var flow = flow
+                if (flow == null) {
+                    flow = "attest"
+                }
+
+                var data = data
+                if (data == null) {
+                    data = mapOf("contentBinding" to attestation.payloadHashBase64)
+                }
+
+                val dg = withContext(Dispatchers.IO) { DroidGuardResultCreator.getResults(context, flow, data) }
                 attestation.setDroidGuardResult(dg)
                 val jwsResult = withContext(Dispatchers.IO) { attestation.attest(apiKey) }
 

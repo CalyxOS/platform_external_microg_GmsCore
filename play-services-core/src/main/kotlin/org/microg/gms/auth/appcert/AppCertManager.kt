@@ -16,6 +16,9 @@ import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.Volley
 import com.google.android.gms.BuildConfig
+import com.google.android.gms.droidguard.DroidGuardClient
+import com.google.android.gms.safetynet.SafetyNet
+import com.google.android.gms.tasks.await
 import kotlinx.coroutines.CompletableDeferred
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -24,6 +27,7 @@ import org.microg.gms.checkin.LastCheckinInfo
 import org.microg.gms.common.Constants
 import org.microg.gms.common.PackageUtils
 import org.microg.gms.droidguard.core.DroidGuardResultCreator
+import org.microg.gms.fido.core.digest
 import org.microg.gms.gcm.GcmConstants
 import org.microg.gms.gcm.GcmDatabase
 import org.microg.gms.gcm.RegisterRequest
@@ -73,8 +77,16 @@ class AppCertManager(private val context: Context) {
                         "dg_sdkVersion" to Build.VERSION.SDK_INT.toString()
                 )
                 val droidGuardResult = try {
-                    DroidGuardResultCreator.getResults(context, "devicekey", data)
+                    DroidGuardClient.init(context, "attest").await()
+                    val response = SafetyNet.getClient(context).attest(
+                        Random.nextBytes(32),
+                        "devicekey",
+                        data,
+                        "AIzaSyDqVnJBjE5ymo--oBJt3On7HQx9xNm1RHA"
+                    ).await()
+                    response.jwsResult
                 } catch (e: Exception) {
+                    Log.w(TAG, e)
                     null
                 }
                 val token = completeRegisterRequest(context, GcmDatabase(context), RegisterRequest().build(context)
@@ -121,10 +133,12 @@ class AppCertManager(private val context: Context) {
 
                     override fun getHeaders(): Map<String, String> {
                         return mapOf(
-                                "User-Agent" to "GoogleAuth/1.4 (${Build.DEVICE} ${Build.ID}); gzip",
-                                "content-type" to "application/octet-stream",
-                                "app" to "com.google.android.gms",
-                                "device" to androidId.toString(16)
+                            "app" to "com.google.android.gms",
+                            "content-type" to "application/octet-stream",
+                            "device" to androidId.toString(16),
+                            "gmscoreflow" to "3", // AUTH_NETWORK_REQUEST_APP_CERT_REQ(3)
+                            "gmsversion" to BuildConfig.VERSION_CODE.toString(),
+                            "user-agent" to "GoogleAuth/1.4 (${Build.DEVICE} ${Build.ID}); gzip"
                         )
                     }
                 })
