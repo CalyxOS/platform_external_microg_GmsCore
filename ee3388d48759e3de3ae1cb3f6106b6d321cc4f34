@@ -16,6 +16,23 @@
       "message": "Not yet tested",
       "revId": "ee3388d48759e3de3ae1cb3f6106b6d321cc4f34",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "951e5f51_a8742e25",
+        "filename": "play-services-core/src/main/kotlin/org/microg/gms/gcm/GcmPrefs.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000003
+      },
+      "writtenOn": "2023-05-19T20:13:28Z",
+      "side": 1,
+      "message": "Need to check this, but it may be that this won\u0027t have an effect, if the system limits us to alarms every 15min and doesn\u0027t allow smaller intervals.\n\n@Tommy did you check if this really works?",
+      "revId": "ee3388d48759e3de3ae1cb3f6106b6d321cc4f34",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
