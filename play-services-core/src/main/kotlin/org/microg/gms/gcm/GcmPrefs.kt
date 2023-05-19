@@ -38,8 +38,8 @@ data class GcmPrefs(
         const val PREF_NETWORK_ROAMING = Gcm.NETWORK_ROAMING
         const val PREF_NETWORK_OTHER = Gcm.NETWORK_OTHER
 
-        private const val MIN_INTERVAL = 5 * 60 * 1000 // 5 minutes
-        private const val MAX_INTERVAL = 30 * 60 * 1000 // 30 minutes
+        private const val MIN_INTERVAL = 2 * 60 * 1000 // 2 minutes
+        private const val MAX_INTERVAL = 10 * 60 * 1000 // 10 minutes
 
         @JvmStatic
         fun get(context: Context): GcmPrefs {
