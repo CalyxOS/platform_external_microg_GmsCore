@@ -55,6 +55,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "b12f492c_d23b585f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-05-22T18:56:32Z",
+      "side": 1,
+      "message": "Also to be clear, it wouldn\u0027t have a negative effect on *everyone\u0027s* battery life. Existing users would still have their existing learned timeouts. New users\u0027 timeouts would be learned higher over time (fairly quickly from my experience, likely within a day or two), unless the network type was deemed incapable of handling the higher timeouts.",
+      "parentUuid": "974ac5a5_474828f2",
+      "revId": "ee3388d48759e3de3ae1cb3f6106b6d321cc4f34",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "951e5f51_a8742e25",
         "filename": "play-services-core/src/main/kotlin/org/microg/gms/gcm/GcmPrefs.kt",
         "patchSetId": 1
