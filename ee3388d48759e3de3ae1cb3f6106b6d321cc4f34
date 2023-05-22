@@ -37,6 +37,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "974ac5a5_474828f2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-05-22T18:48:22Z",
+      "side": 1,
+      "message": "How about 5 and 15? (My bluejay on stock has settled on 15min.)",
+      "parentUuid": "6f100e4c_07d05961",
+      "revId": "ee3388d48759e3de3ae1cb3f6106b6d321cc4f34",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "951e5f51_a8742e25",
         "filename": "play-services-core/src/main/kotlin/org/microg/gms/gcm/GcmPrefs.kt",
         "patchSetId": 1
