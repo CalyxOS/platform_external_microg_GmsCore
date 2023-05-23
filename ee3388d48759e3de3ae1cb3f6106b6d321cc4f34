@@ -73,6 +73,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "1f0a6207_5f53a231",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-05-23T14:50:57Z",
+      "side": 1,
+      "message": "It\u0027d eventually have an effect as people\u0027s timeouts reset, due to connection issues and such.\n\n5 and 15 could be worth a try, however that would affect everyone, given it puts a cap on the higher end.\n\nI was going to say that maybe as a test APK, but people can already just manually set the timeouts.\n\nJust as I wrote that I was going to add what if the max is configurable but eh maybe that\u0027s also too much.\n\nWhat we really need is a better algorithm, and whatever else we\u0027re missing to make sure connection failures happen less frequently than they do now.",
+      "parentUuid": "b12f492c_d23b585f",
+      "revId": "ee3388d48759e3de3ae1cb3f6106b6d321cc4f34",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "951e5f51_a8742e25",
         "filename": "play-services-core/src/main/kotlin/org/microg/gms/gcm/GcmPrefs.kt",
         "patchSetId": 1
