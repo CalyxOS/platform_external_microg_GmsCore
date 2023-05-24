@@ -163,6 +163,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c5f5c6d4_1051c0f2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-05-24T14:03:23Z",
+      "side": 1,
+      "message": "\u003e We can just ask affected users to adjust their heartbeat interval manually for now.\n\nYeah that sounds good. Many already do that anyways.\n\n\u003e Signal\u0027s background connection reconnects after about 90 seconds \n\nSo if we dropped microG minimum down to 2 minutes from 5, anyone having frequent connection issues may have a better experience at the expense of battery life.\n\nFor anyone only occasionally having issues ideally it doesn\u0027t take too long to go high again (and then they stay there).\n\n\n\nA smarter algorithm could temporarily go down to a lower duration if there\u0027s too many failures recently. But we should discuss and pen that down a bit first before we go about making changes, I think.",
+      "parentUuid": "f2b7c153_cc1e1471",
+      "revId": "ee3388d48759e3de3ae1cb3f6106b6d321cc4f34",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "951e5f51_a8742e25",
         "filename": "play-services-core/src/main/kotlin/org/microg/gms/gcm/GcmPrefs.kt",
         "patchSetId": 1
