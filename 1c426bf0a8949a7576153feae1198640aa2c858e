@@ -16,6 +16,24 @@
       "message": "Note for follow up change upstream\n```\n2023-05-17 14:00:51.806  4913-4943  Ads                     com.tesco.grocery.view               W  #007 Could not call remote method. @2\n                                                                                                    com.google.android.gms.internal.ads.zzchr: com.google.android.gms.dynamite.DynamiteModule$LoadingException: Failed to instantiate module class: com.google.android.gms.ads.measurement.DynamiteMeasurementManager\n                                                                                                    \tat com.google.android.gms.internal.ads.zzchs.zzb(SourceFile:2)\n                                                                                                    \tat com.google.android.gms.internal.ads.zzbvl.run(SourceFile:11)\n                                                                                                    \tat java.lang.Thread.run(Thread.java:1012)\n                                                                                                    Caused by: com.google.android.gms.dynamite.DynamiteModule$LoadingException: Failed to instantiate module class: com.google.android.gms.ads.measurement.DynamiteMeasurementManager\n                                                                                                    \tat com.google.android.gms.dynamite.DynamiteModule.instantiate(SourceFile:26)\n                                                                                                    \tat com.google.android.gms.internal.ads.zzchs.zzb(SourceFile:5)\n                                                                                                    \tat com.google.android.gms.internal.ads.zzbvl.run(SourceFile:11) \n                                                                                                    \tat java.lang.Thread.run(Thread.java:1012) \n                                                                                                    Caused by: java.lang.InstantiationException: java.lang.Class\u003ccom.google.android.gms.ads.measurement.DynamiteMeasurementManager\u003e cannot be instantiated\n                                                                                                    \tat java.lang.Class.newInstance(Native Method)\n                                                                                                    \tat com.google.android.gms.dynamite.DynamiteModule.instantiate(SourceFile:2)\n                                                                                                    \tat com.google.android.gms.internal.ads.zzchs.zzb(SourceFile:5) \n                                                                                                    \tat com.google.android.gms.internal.ads.zzbvl.run(SourceFile:11) \n                                                                                                    \tat java.lang.Thread.run(Thread.java:1012) \n```",
       "revId": "1c426bf0a8949a7576153feae1198640aa2c858e",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d4ec48a_9bcb4a3c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-05-24T22:43:20Z",
+      "side": 1,
+      "message": "\u003e Note for follow up change upstream\n\nWhich change? or do you mean just comments on this change\n\n\u003e com.tesco.grocery.view\n\nGuessing this helps the tesco app work? Or still not even with this?",
+      "parentUuid": "eb7e6f08_d99627a5",
+      "revId": "1c426bf0a8949a7576153feae1198640aa2c858e",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
