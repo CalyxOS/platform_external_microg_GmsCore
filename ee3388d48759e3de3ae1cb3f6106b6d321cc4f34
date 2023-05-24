@@ -109,6 +109,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5825299b_a3070072",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-05-24T13:38:16Z",
+      "side": 1,
+      "message": "It is necessary to be cautious because lately while there have been reports about issues with notifications, there haven\u0027t been that many reports. It is safe to assume that for the most part it works.\n\nThere are issues with certain apps such as Telegram, but that is app-specific, AFAIK microG receives that notification in time.\n\n\nWe can\u0027t make such a change for the entire userbase without more thought.\n\nThe testing is appreciated, part 3 isn\u0027t needed though because we last talked about going from (5,30) now to (5,15).\n\nIt can also just be a test APK for those who report issues for a start.",
+      "parentUuid": "a434d1da_7005b35e",
+      "revId": "ee3388d48759e3de3ae1cb3f6106b6d321cc4f34",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "951e5f51_a8742e25",
         "filename": "play-services-core/src/main/kotlin/org/microg/gms/gcm/GcmPrefs.kt",
         "patchSetId": 1
