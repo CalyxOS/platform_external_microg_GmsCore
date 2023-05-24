@@ -181,6 +181,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5731313c_1055fcdf",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-05-24T14:15:33Z",
+      "side": 1,
+      "message": "Like you said, an algorithm can help with frequent issues, but not random ones. Even the most stable networks will have an issue with a TCP connection sometimes -- it\u0027s normal, just the way it is. The algorithmic guessing game is fine to an extent, but the max interval should be reasonable enough that if you do get an important call/message during a random drop, you\u0027re guaranteed to be notified within a reasonable max period of time. Again, there is always a chance to reach the max regardless of how stable the network ordinarily is.\n\nSo, I think of it like this: what\u0027s the maximum worst-case scenario delay that would be acceptable?\n\nIn my opinion: 30 minutes max is completely unreasonable for just about anybody, even for very rare occasions. 15 minutes is at least an improvement, but still not reasonable at all for my own personal expectations. 5 minutes is a reasonable max for me personally, and *if* it weren\u0027t harsh on battery life, I think it would be a great choice for any users who rely on receiving messages in a timely manner. But again, its impact on battery life would absolutely be a factor to consider.",
+      "parentUuid": "c5f5c6d4_1051c0f2",
+      "revId": "ee3388d48759e3de3ae1cb3f6106b6d321cc4f34",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "951e5f51_a8742e25",
         "filename": "play-services-core/src/main/kotlin/org/microg/gms/gcm/GcmPrefs.kt",
         "patchSetId": 1
