@@ -199,6 +199,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7150dc79_fb4158d0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-05-24T14:32:39Z",
+      "side": 1,
+      "message": "That\u0027s a good way to frame it, I agree with all of that, especially that the higher the max, the worse it becomes you miss something.\n\nFor calls (Signal / WhatsApp / etc), even a few minutes can be bad.",
+      "parentUuid": "5731313c_1055fcdf",
+      "revId": "ee3388d48759e3de3ae1cb3f6106b6d321cc4f34",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "951e5f51_a8742e25",
         "filename": "play-services-core/src/main/kotlin/org/microg/gms/gcm/GcmPrefs.kt",
         "patchSetId": 1
