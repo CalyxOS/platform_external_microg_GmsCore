@@ -145,6 +145,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f2b7c153_cc1e1471",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-05-24T13:56:35Z",
+      "side": 1,
+      "message": "(This is without microG obviously. That\u0027s a much better experience, battery aside, for users who take our advice and use encrypted calls/messages.)",
+      "parentUuid": "1dc8484a_ce6c0ed3",
+      "revId": "ee3388d48759e3de3ae1cb3f6106b6d321cc4f34",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "951e5f51_a8742e25",
         "filename": "play-services-core/src/main/kotlin/org/microg/gms/gcm/GcmPrefs.kt",
         "patchSetId": 1
