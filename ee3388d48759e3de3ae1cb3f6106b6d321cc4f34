@@ -91,6 +91,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "a434d1da_7005b35e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-05-24T13:33:32Z",
+      "side": 1,
+      "message": "I\u0027m skeptical about needing a better algorithm and I don\u0027t think it\u0027s necessary to be so cautious about this change, but I can do some testing to see what the impact is on battery life if that would help us finally get some movement on this issue.\n\n1. Vanilla CalyxOS, fresh install, no extra apps, connected to Wi-Fi with microG intervals all set manually at 30 minutes.\n2. Vanilla CalyxOS, fresh install, no extra apps, connected to Wi-Fi with microG intervals all set manually at 15 minutes.\n3. Vanilla CalyxOS, fresh install, no extra apps, connected to Wi-Fi with microG intervals all set manually at 5 minutes.\n\nAll on the same device.",
+      "parentUuid": "1f0a6207_5f53a231",
+      "revId": "ee3388d48759e3de3ae1cb3f6106b6d321cc4f34",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "951e5f51_a8742e25",
         "filename": "play-services-core/src/main/kotlin/org/microg/gms/gcm/GcmPrefs.kt",
         "patchSetId": 1
