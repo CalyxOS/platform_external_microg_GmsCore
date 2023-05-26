@@ -46,6 +46,30 @@
       },
       "revId": "274a98e0fd2f51e70984c7c042ea69d67968d599",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5473d1a9_d86836eb",
+        "filename": "play-services-core/src/main/java/org/microg/gms/auth/AuthManagerServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2023-05-26T17:46:22Z",
+      "side": 1,
+      "message": "Yeah, there\u0027s some mechanisms in this class already. Could maybe be something similar or otherwise need to verify who calls this and see if there\u0027s any danger in them being given a value of true always",
+      "parentUuid": "d6c82722_b4027a0b",
+      "range": {
+        "startLine": 208,
+        "startChar": 15,
+        "endLine": 208,
+        "endChar": 19
+      },
+      "revId": "274a98e0fd2f51e70984c7c042ea69d67968d599",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
