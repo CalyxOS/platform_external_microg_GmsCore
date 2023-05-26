@@ -217,6 +217,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "578d8458_5c94f7df",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-05-26T12:44:32Z",
+      "side": 1,
+      "message": "lynx, TQ2A.230505.002.23409032 otatest 23409033\n\nLooks like margin-of-error differences in this test, oddly showing that microG used less battery with 15min than with 30min.\n\nThis was a very simple test: reset device, connect to Wi-Fi, change microG intervals, screenshot battery level, start a timer, leave device alone, and at the end, take screenshots of battery stats and pull out relevant info.\n\nTest 1:\n    * Manual interval 30min\n    * Tested for 23hr11min\n    * Clock timer for 24hr, but woke device earlier so ended it early.\n    * Battery Start: 85%\n    * Battery End: 76%\n    * Battery Drain: 9%\n    * Battery Stats Top Usage:\n        * Device: 412.0 mAh\n        * \u003croot\u003e: 6.9 mAh\n        * Android System: 4.4 mAh\n        * com.android.launcher3: 2.1 mAh\n        * System UI: 1.1 mAh\n        * microG Serves Core Usage: 0.6 mAh\n            * Consumed (measured): 0.6 3.6%\n            * Consumed (modeled): 0.3 2.2%\n            * CPU (measured): 0.1 2.1%\n                * CPU - background: 0.1\n            * CPU (modeled): 0.1 1.5%\n                * CPU - background: 0.1\n            * System services (measured): 0.0 12.5%\n            * System services (modeled): 0.0 12.5%\n            * Mobile radio (measured): 0.0 0.0%\n            * Mobile radio (modeled): 0.0 0.0%\n            * Wi-Fi: 0.1 2.0%\n                * Wi-Fi - background: 0.1\n            * Wakelock: 0.1 1.6%\n            * Anything not listed was 0.0 or 0.0 0.0%\n    * microG Connected since [forgot to check]\n\nTest 2:\n    * Manual interval 15min\n    * Tested for 23hr11min\n    * Clock timer for 23hr11min; it went off and I looked at stats.\n    * Battery Start: 77%\n    * Battery End: 68%\n    * Battery Drain: 9%\n    * Battery Stats Top Usage:\n        * Device: 386.0 mAh\n        * \u003croot\u003e: 6.6 mAh\n        * Android System: 3.1 mAh\n        * com.android.deskclock: 0.8 mAh\n        * System UI: 0.5 mAh\n        * org.fdroid.fdroid 0.3 mAh\n        * microG Serves Core Usage: 0.2 mAh\n            * Consumed (measured): 0.2 1.1%\n            * Consumed (modeled): 0.2 1.3%\n            * CPU (measured): 0.0 0.5%\n            * CPU (modeled): 0.0 0.6%\n            * System services (measured): 0.0 18.5%\n            * System services (modeled): 0.0 18.5%\n            * Mobile radio (measured): 0.0 0.0%\n            * Mobile radio (modeled): 0.0 0.0%\n            * Wi-Fi: 0.1 2.9%\n                * Wi-Fi - foreground: 0.1\n            * Wakelock: 0.0 0.5%\n            * Anything not listed was 0.0 or 0.0 0.0%\n    * microG \"Connected since 22 hours ago\"",
+      "parentUuid": "7150dc79_fb4158d0",
+      "revId": "ee3388d48759e3de3ae1cb3f6106b6d321cc4f34",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "951e5f51_a8742e25",
         "filename": "play-services-core/src/main/kotlin/org/microg/gms/gcm/GcmPrefs.kt",
         "patchSetId": 1
