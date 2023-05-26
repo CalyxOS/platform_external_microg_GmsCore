@@ -70,6 +70,30 @@
       },
       "revId": "274a98e0fd2f51e70984c7c042ea69d67968d599",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4bb4bca1_914a9413",
+        "filename": "play-services-core/src/main/java/org/microg/gms/auth/AuthManagerServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-05-26T18:24:34Z",
+      "side": 1,
+      "message": "https://developers.google.com/android/reference/com/google/android/gms/auth/GoogleAuthUtil#public-static-boolean-requestgoogleaccountsaccess-context-context\n\nFrom that it\u0027d be harmless security wise to just `return true`, unless we add additional logic elsewhere.\n\nUntil this actually sets up something\n\nThe return type change is also reflected above.",
+      "parentUuid": "5473d1a9_d86836eb",
+      "range": {
+        "startLine": 208,
+        "startChar": 15,
+        "endLine": 208,
+        "endChar": 19
+      },
+      "revId": "274a98e0fd2f51e70984c7c042ea69d67968d599",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
