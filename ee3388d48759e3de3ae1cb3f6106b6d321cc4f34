@@ -235,6 +235,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "abb81e86_9728b00c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-05-26T12:51:51Z",
+      "side": 1,
+      "message": "Was the timer running on the device itself? If so, I\u0027d propose changing that and not having anything else on the device to not let it affect this.\n\nWe could also have a simple setup with ntfy to deliver test notifications at random intervals, given that all it takes is a curl to send it.\n\nAlso, can you post the details on gitlab issue as that\u0027s better to search and track things longer term than a gerrit change.",
+      "parentUuid": "578d8458_5c94f7df",
+      "revId": "ee3388d48759e3de3ae1cb3f6106b6d321cc4f34",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "951e5f51_a8742e25",
         "filename": "play-services-core/src/main/kotlin/org/microg/gms/gcm/GcmPrefs.kt",
         "patchSetId": 1
