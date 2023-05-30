@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "dda44017_f1311168",
+        "filename": "play-services-location/core/build.gradle",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-05-30T00:21:59Z",
+      "side": 1,
+      "message": "TODO",
+      "revId": "ed5b26c75060994ecebaeaec0cd0cd15593a9cf0",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
