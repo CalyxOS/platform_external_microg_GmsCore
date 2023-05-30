@@ -8,7 +8,8 @@
     package="org.microg.gms.recaptcha.core">
 
     <application>
-        <service android:name="org.microg.gms.recaptcha.RecaptchaService">
+        <service android:name="org.microg.gms.recaptcha.RecaptchaService"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.android.gms.recaptcha.service.START" />
             </intent-filter>
