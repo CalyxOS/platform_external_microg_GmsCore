@@ -16,6 +16,23 @@
       "message": "TODO",
       "revId": "ed5b26c75060994ecebaeaec0cd0cd15593a9cf0",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a8d754c_6c308ede",
+        "filename": "play-services-maps-core-mapbox/build.gradle",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-05-30T00:22:40Z",
+      "side": 1,
+      "message": "Upstream removed this. We don\u0027t need to keep it, we originally wanted to have an error if key wasn\u0027t set.",
+      "revId": "ed5b26c75060994ecebaeaec0cd0cd15593a9cf0",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
