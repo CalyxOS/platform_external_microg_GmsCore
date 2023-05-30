@@ -25,6 +25,8 @@ dependencies {
 }
 
 android {
+    namespace 'org.microg.gms.location.core'
+
     compileSdkVersion androidCompileSdk
     buildToolsVersion "$androidBuildVersionTools"
 
@@ -35,7 +37,7 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = 1.8
-        targetCompatibility = 1.8
+        sourceCompatibility = 17
+        targetCompatibility = 17
     }
 }

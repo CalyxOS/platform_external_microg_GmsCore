@@ -1,4 +1,6 @@
 android {
+    namespace 'com.google.android.gms'
+
     signingConfigs {
         calyx {
             // Generated from our microG key

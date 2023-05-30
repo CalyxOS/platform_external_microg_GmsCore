@@ -6,11 +6,16 @@
 apply plugin: 'com.android.library'
 
 android {
+    namespace 'com.google.android.gms.iid'
+
     compileSdkVersion androidCompileSdk
     buildToolsVersion "$androidBuildVersionTools"
 
+    buildFeatures {
+        aidl = true
+    }
+
     defaultConfig {
-        versionName version
         minSdkVersion androidMinSdk
         targetSdkVersion androidTargetSdk
     }

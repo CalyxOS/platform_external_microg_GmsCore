@@ -17,11 +17,12 @@
 apply plugin: 'com.android.library'
 
 android {
+    namespace 'org.microg.gms'
+
     compileSdkVersion androidCompileSdk
     buildToolsVersion "$androidBuildVersionTools"
 
     defaultConfig {
-        versionName version
         minSdkVersion androidMinSdk
         targetSdkVersion androidTargetSdk
     }
@@ -31,7 +32,7 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
-    lintOptions {
+    lint {
         disable 'InvalidPackage'
     }
 }

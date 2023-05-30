@@ -57,7 +57,7 @@ class PushNotificationFragment : Fragment(R.layout.push_notification_fragment) {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        menu.add(0, MENU_ADVANCED, 0, R.string.menu_advanced)
+        menu.add(0, MENU_ADVANCED, 0, org.microg.gms.base.core.R.string.menu_advanced)
         super.onCreateOptionsMenu(menu, inflater)
     }
 

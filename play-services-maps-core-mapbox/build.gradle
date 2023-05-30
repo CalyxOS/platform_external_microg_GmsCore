@@ -48,11 +48,16 @@ def mapboxKey() {
 }
 
 android {
+    namespace 'org.microg.gms.maps.mapbox'
+
     compileSdkVersion androidCompileSdk
     buildToolsVersion "$androidBuildVersionTools"
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     defaultConfig {
-        versionName version
         minSdkVersion androidMinSdk
         targetSdkVersion androidTargetSdk
         buildConfigField "String", "MAPBOX_KEY", "\"${mapboxKey()}\""
@@ -66,10 +71,6 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
 
-    lintOptions {
-        disable 'GradleCompatible'
-    }
-
     buildTypes {
         release {
             minifyEnabled true
@@ -80,6 +81,10 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lint {
+        disable 'GradleCompatible'
     }
 }
 
