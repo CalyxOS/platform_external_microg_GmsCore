@@ -11,13 +11,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.preference.Preference
 import com.google.android.gms.R
-import org.microg.gms.checkin.CheckinPrefs
+import org.microg.gms.checkin.CheckinPreferences
 import org.microg.gms.gcm.GcmDatabase
+import org.microg.gms.gcm.GcmPrefs
 import org.microg.gms.gcm.getGcmServiceInfo
 import org.microg.gms.safetynet.SafetyNetPreferences
-import org.microg.nlp.client.GeocodeClient
-import org.microg.nlp.client.LocationClient
-import org.microg.nlp.client.UnifiedLocationClient
 import org.microg.tools.ui.ResourceSettingsFragment
 
 class SettingsFragment : ResourceSettingsFragment() {
@@ -36,8 +34,8 @@ class SettingsFragment : ResourceSettingsFragment() {
             findNavController().navigate(requireContext(), R.id.openSafetyNetSettings)
             true
         }
-        findPreference<Preference>(PREF_UNIFIEDNLP)!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            findNavController().navigate(requireContext(), R.id.openUnifiedNlpSettings)
+        findPreference<Preference>(PREF_LOCATION)!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            findNavController().navigate(requireContext(), R.id.openLocationSettings)
             true
         }
         findPreference<Preference>(PREF_EXPOSURE)?.onPreferenceClickListener = Preference.OnPreferenceClickListener {
@@ -54,14 +52,7 @@ class SettingsFragment : ResourceSettingsFragment() {
     override fun onResume() {
         super.onResume()
         val context = requireContext()
-        lifecycleScope.launchWhenResumed {
-            updateDetails(context)
-        }
-    }
-
-    private suspend fun updateDetails(context: Context) {
-        val gcmServiceInfo = getGcmServiceInfo(context)
-        if (gcmServiceInfo.configuration.enabled) {
+        if (GcmPrefs.get(requireContext()).isEnabled) {
             val database = GcmDatabase(context)
             val regCount = database.registrationList.size
             database.close()
@@ -70,18 +61,11 @@ class SettingsFragment : ResourceSettingsFragment() {
             findPreference<Preference>(PREF_GCM)!!.setSummary(R.string.service_status_disabled_short)
         }
 
-        findPreference<Preference>(PREF_CHECKIN)!!.setSummary(if (CheckinPrefs.isEnabled(context)) R.string.service_status_enabled_short else R.string.service_status_disabled_short)
-        findPreference<Preference>(PREF_SNET)!!.setSummary(if (SafetyNetPreferences.isEnabled(context)) R.string.service_status_enabled_short else R.string.service_status_disabled_short)
-
-        val backendCount = try {
-            LocationClient(context, lifecycle).getLocationBackends().size + GeocodeClient(context, lifecycle).getGeocodeBackends().size
-        } catch (e: Exception) {
-            0
-        }
-        findPreference<Preference>(PREF_UNIFIEDNLP)!!.summary = context.resources.getQuantityString(R.plurals.pref_unifiednlp_summary, backendCount, backendCount)
+        findPreference<Preference>(PREF_CHECKIN)!!.setSummary(if (CheckinPreferences.isEnabled(requireContext())) R.string.service_status_enabled_short else R.string.service_status_disabled_short)
+        findPreference<Preference>(PREF_SNET)!!.setSummary(if (SafetyNetPreferences.isEnabled(requireContext())) R.string.service_status_enabled_short else R.string.service_status_disabled_short)
 
         findPreference<Preference>(PREF_EXPOSURE)?.isVisible = NearbyPreferencesIntegration.isAvailable
-        findPreference<Preference>(PREF_EXPOSURE)?.icon = NearbyPreferencesIntegration.getIcon(context)
+        findPreference<Preference>(PREF_EXPOSURE)?.icon = NearbyPreferencesIntegration.getIcon(requireContext())
         findPreference<Preference>(PREF_EXPOSURE)?.summary = NearbyPreferencesIntegration.getExposurePreferenceSummary(context)
     }
 
@@ -89,7 +73,7 @@ class SettingsFragment : ResourceSettingsFragment() {
         const val PREF_ABOUT = "pref_about"
         const val PREF_GCM = "pref_gcm"
         const val PREF_SNET = "pref_snet"
-        const val PREF_UNIFIEDNLP = "pref_unifiednlp"
+        const val PREF_LOCATION = "pref_location"
         const val PREF_CHECKIN = "pref_checkin"
         const val PREF_EXPOSURE = "pref_exposure"
     }
