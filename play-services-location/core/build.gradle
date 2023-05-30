@@ -33,6 +33,10 @@ android {
     compileSdkVersion androidCompileSdk
     buildToolsVersion "$androidBuildVersionTools"
 
+    buildFeatures {
+        buildConfig = true
+    }
+
     defaultConfig {
         versionName version
         minSdkVersion androidMinSdk
