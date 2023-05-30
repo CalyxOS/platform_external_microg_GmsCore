@@ -253,6 +253,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "95fc142a_cd21c04d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-05-30T15:46:40Z",
+      "side": 1,
+      "message": "See https://gitlab.com/CalyxOS/calyxos/-/issues/1379#note_1410835285",
+      "parentUuid": "abb81e86_9728b00c",
+      "revId": "ee3388d48759e3de3ae1cb3f6106b6d321cc4f34",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "951e5f51_a8742e25",
         "filename": "play-services-core/src/main/kotlin/org/microg/gms/gcm/GcmPrefs.kt",
         "patchSetId": 1
