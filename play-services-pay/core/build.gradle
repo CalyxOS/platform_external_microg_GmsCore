@@ -19,6 +19,8 @@ dependencies {
 }
 
 android {
+    namespace 'org.microg.gms.pay.core'
+
     compileSdkVersion androidCompileSdk
     buildToolsVersion "$androidBuildVersionTools"
 
