@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "20b3af54_5f07ee7b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-05-30T19:05:16Z",
+      "side": 1,
+      "message": "I\u0027d be a bit worried about diverging this much from upstream.\n\nShould send it as PR and see if we get a response / comments.",
+      "revId": "66b9de1ed8c8f31ed9a2f4a183a7b2a708a3c49c",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
