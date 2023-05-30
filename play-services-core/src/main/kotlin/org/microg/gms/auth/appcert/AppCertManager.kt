@@ -110,7 +110,8 @@ class AppCertManager(private val context: Context) {
                     }
 
                     override fun deliverError(error: VolleyError) {
-                        Log.d(TAG, "Error: ${Base64.encodeToString(error.networkResponse.data, 2)}")
+                        if (error.networkResponse != null)
+                            Log.d(TAG, "Error: ${Base64.encodeToString(error.networkResponse.data, 2)}")
                         deviceKeyCacheTime = 0
                         deferredResponse.complete(null)
                     }
