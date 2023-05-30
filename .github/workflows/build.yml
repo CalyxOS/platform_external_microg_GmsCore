@@ -9,12 +9,6 @@ jobs:
         with:
           fetch-depth: 0
           path: GmsCore
-      - name: Checkout UnifiedNlp
-        uses: actions/checkout@v2
-        with:
-          repository: CalyxOS/platform_external_microg_UnifiedNlp
-          fetch-depth: 0
-          path: UnifiedNlp
       - name: Build GmsCore
         working-directory: GmsCore
         run: |
