@@ -269,6 +269,24 @@
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c60db42e_92db1851",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-05-30T16:10:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95fc142a_cd21c04d",
+      "revId": "ee3388d48759e3de3ae1cb3f6106b6d321cc4f34",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "951e5f51_a8742e25",
@@ -300,6 +318,24 @@
       "side": 1,
       "message": "No, I haven\u0027t gotten microG to compile yet.\n\nThe other day a user was having trouble with notifications and claimed 5 minutes didn\u0027t help, but 2 minutes did. It could be a coincidence.",
       "parentUuid": "951e5f51_a8742e25",
+      "revId": "ee3388d48759e3de3ae1cb3f6106b6d321cc4f34",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0e4e45a8_d18bcc2e",
+        "filename": "play-services-core/src/main/kotlin/org/microg/gms/gcm/GcmPrefs.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-05-30T16:10:28Z",
+      "side": 1,
+      "message": "Done, more details at https://gitlab.com/CalyxOS/calyxos/-/issues/1379#note_1410835285",
+      "parentUuid": "e341b073_214c96ab",
       "revId": "ee3388d48759e3de3ae1cb3f6106b6d321cc4f34",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
