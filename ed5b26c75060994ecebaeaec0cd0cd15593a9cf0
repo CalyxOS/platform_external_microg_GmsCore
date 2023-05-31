@@ -1,6 +1,23 @@
 {
   "comments": [
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "547ddacc_496c947a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-05-31T14:33:22Z",
+      "side": 1,
+      "message": "I can\u0027t get the new location features to do anything other than try and fail to request location from Mozilla, since we are not providing an API key. If there\u0027s an on-device storage of Wi-Fi hotspots / cellular towers, it\u0027s not working, either.\n\nSee https://gitlab.com/CalyxOS/calyxos/-/issues/1693#note_1412744091 and the following comments.",
+      "revId": "ed5b26c75060994ecebaeaec0cd0cd15593a9cf0",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dda44017_f1311168",
