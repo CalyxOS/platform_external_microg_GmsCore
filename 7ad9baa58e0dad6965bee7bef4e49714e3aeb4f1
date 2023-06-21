@@ -50,6 +50,24 @@
       "message": "extra `)`",
       "revId": "7ad9baa58e0dad6965bee7bef4e49714e3aeb4f1",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "29f5ccc6_a94232df",
+        "filename": "play-services-tapandpay/core/src/main/AndroidManifest.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2023-06-21T23:09:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e960e93d_b4cabeb3",
+      "revId": "7ad9baa58e0dad6965bee7bef4e49714e3aeb4f1",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
