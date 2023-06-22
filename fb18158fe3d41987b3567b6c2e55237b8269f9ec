@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa1251f5_a1deb739",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 6
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-06-22T09:25:37Z",
+      "side": 1,
+      "message": "FYI this repo is merged, so this commit won\u0027t have any effect, we\u0027ll just get it when it\u0027s merged upstream and we merge that.",
+      "revId": "fb18158fe3d41987b3567b6c2e55237b8269f9ec",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
