@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "70370903_c2c81250",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-06-23T19:57:46Z",
+      "side": 1,
+      "message": "This still lets you set a higher interval (20/30 minutes) manually, which is fine.",
+      "revId": "9362d8be18838f534caef31184401221a39bdef1",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
