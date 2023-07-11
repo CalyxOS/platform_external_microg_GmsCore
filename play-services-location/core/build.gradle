@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2020, microG Project Team
+ * SPDX-FileCopyrightText: 2023 microG Project Team
  * SPDX-License-Identifier: Apache-2.0
  */
 
@@ -9,19 +9,21 @@ apply plugin: 'kotlin-android'
 dependencies {
     api project(':play-services-location')
     implementation project(':play-services-base-core')
+    implementation project(':play-services-location-core-base')
 
-    runtimeOnly("org.microg.nlp:service:$nlpVersion") {
-        exclude group: 'org.microg', module: 'safe-parcel'
-    }
-    api("org.microg.nlp:client:$nlpVersion") {
-        exclude group: 'org.microg', module: 'safe-parcel'
-    }
+    implementation "androidx.lifecycle:lifecycle-service:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigationVersion"
+    implementation "androidx.preference:preference-ktx:$preferenceVersion"
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion"
-    implementation "androidx.lifecycle:lifecycle-service:$lifecycleVersion"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
+
+    implementation "com.android.volley:volley:$volleyVersion"
+
+    compileOnly project(':play-services-maps')
 }
 
 android {
@@ -32,6 +34,11 @@ android {
         versionName version
         minSdkVersion androidMinSdk
         targetSdkVersion androidTargetSdk
+        buildConfigField "String", "ICHNAEA_KEY", "\"${localProperties.get("ichnaea.key", "")}\""
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
     }
 
     compileOptions {
