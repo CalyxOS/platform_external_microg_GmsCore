@@ -50,6 +50,24 @@
       "message": "Upstream removed this. We don\u0027t need to keep it, we originally wanted to have an error if key wasn\u0027t set.",
       "revId": "ed5b26c75060994ecebaeaec0cd0cd15593a9cf0",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3f0443ec_17dfa714",
+        "filename": "play-services-maps-core-mapbox/build.gradle",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-07-11T19:01:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a8d754c_6c308ede",
+      "revId": "ed5b26c75060994ecebaeaec0cd0cd15593a9cf0",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
