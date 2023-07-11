@@ -31,6 +31,7 @@ dependencies {
     implementation project(':play-services-location-core')
     withNearbyImplementation project(':play-services-nearby-core')
     implementation project(':play-services-oss-licenses-core')
+    implementation project(':play-services-pay-core')
     implementation project(':play-services-recaptcha-core')
     implementation project(':play-services-safetynet-core')
     implementation project(':play-services-tapandpay-core')
@@ -53,19 +54,6 @@ dependencies {
     implementation project(':play-services-recaptcha')
     implementation project(':play-services-safetynet')
     implementation project(':play-services-tasks-ktx')
-
-    runtimeOnly("org.microg.nlp:geocode-v1:$nlpVersion") {
-        exclude group: 'org.microg', module: 'safe-parcel'
-    }
-    runtimeOnly("org.microg.nlp:location-v2:$nlpVersion") {
-        exclude group: 'org.microg', module: 'safe-parcel'
-    }
-    runtimeOnly("org.microg.nlp:location-v3:$nlpVersion") {
-        exclude group: 'org.microg', module: 'safe-parcel'
-    }
-    implementation("org.microg.nlp:ui:$nlpVersion") {
-        exclude group: 'org.microg', module: 'safe-parcel'
-    }
 
     withMapboxImplementation project(':play-services-maps-core-mapbox')
     withVtmImplementation project(':play-services-maps-core-vtm')
@@ -100,6 +88,13 @@ android {
 
         multiDexEnabled true
         multiDexKeepProguard file('multidex-keep.pro')
+
+        buildConfigField "String", "SAFETYNET_KEY", "\"${localProperties.get("safetynet.key", "")}\""
+        buildConfigField "String", "RECAPTCHA_SITE_KEY", "\"${localProperties.get("recaptcha.siteKey", "")}\""
+        buildConfigField "String", "RECAPTCHA_SECRET", "\"${localProperties.get("recaptcha.secret", "")}\""
+        buildConfigField "String", "RECAPTCHA_ENTERPRISE_PROJECT_ID", "\"${localProperties.get("recaptchaEnterpreise.projectId", "")}\""
+        buildConfigField "String", "RECAPTCHA_ENTERPRISE_SITE_KEY", "\"${localProperties.get("recaptchaEnterpreise.siteKey", "")}\""
+        buildConfigField "String", "RECAPTCHA_ENTERPRISE_API_KEY", "\"${localProperties.get("recaptchaEnterpreise.apiKey", "")}\""
 
         ndk {
             abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"

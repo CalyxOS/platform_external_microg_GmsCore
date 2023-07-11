@@ -21,6 +21,10 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PermissionInfo;
+import android.content.pm.ResolveInfo;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -47,13 +51,17 @@ public class MultiConnectionKeeper {
 
     public synchronized static MultiConnectionKeeper getInstance(Context context) {
         if (INSTANCE == null)
-            INSTANCE = new MultiConnectionKeeper(context);
+            INSTANCE = new MultiConnectionKeeper(context.getApplicationContext());
         return INSTANCE;
     }
 
     public synchronized boolean bind(String action, ServiceConnection connection) {
-        Log.d(TAG, "bind(" + action + ", " + connection + ")");
+        return bind(action, connection, false);
+    }
+
+    public synchronized boolean bind(String action, ServiceConnection connection, boolean requireMicrog) {
         Connection con = connections.get(action);
+        Log.d(TAG, "bind(" + action + ", " + connection + ", " + requireMicrog + ") has=" + (con != null));
         if (con != null) {
             if (!con.forwardsConnection(connection)) {
                 con.addConnectionForward(connection);
@@ -61,11 +69,12 @@ public class MultiConnectionKeeper {
                     con.bind();
             }
         } else {
-            con = new Connection(action);
+            con = new Connection(action, requireMicrog);
             con.addConnectionForward(connection);
             con.bind();
             connections.put(action, con);
         }
+        Log.d(TAG, "bind() : bound=" + con.isBound());
         return con.isBound();
     }
 
@@ -74,15 +83,20 @@ public class MultiConnectionKeeper {
         Connection con = connections.get(action);
         if (con != null) {
             con.removeConnectionForward(connection);
-            if (!con.hasForwards() && con.isBound()) {
-                con.unbind();
-                connections.remove(action);
+            if (con.isBound()) {
+                if (!con.hasForwards()) {
+                    con.unbind();
+                    connections.remove(action);
+                } else {
+                    Log.d(TAG, "Not unbinding for " + connection + ": has pending other bindings on action " + action);
+                }
             }
         }
     }
 
     public class Connection {
         private final String actionString;
+        private final boolean requireMicrog;
         private final Set<ServiceConnection> connectionForwards = new HashSet<ServiceConnection>();
         private boolean bound = false;
         private boolean connected = false;
@@ -116,7 +130,12 @@ public class MultiConnectionKeeper {
         };
 
         public Connection(String actionString) {
+            this(actionString, false);
+        }
+
+        public Connection(String actionString, boolean requireMicrog) {
             this.actionString = actionString;
+            this.requireMicrog = requireMicrog;
         }
 
         @SuppressLint("InlinedApi")
@@ -125,24 +144,45 @@ public class MultiConnectionKeeper {
             Intent gmsIntent = new Intent(actionString).setPackage(GMS_PACKAGE_NAME);
             Intent selfIntent = new Intent(actionString).setPackage(context.getPackageName());
             Intent intent;
-            if (context.getPackageManager().resolveService(gmsIntent, 0) == null) {
+            ResolveInfo resolveInfo;
+            if ((resolveInfo = context.getPackageManager().resolveService(gmsIntent, 0)) == null) {
                 Log.w(TAG, "No GMS service found for " + actionString);
                 if (context.getPackageManager().resolveService(selfIntent, 0) != null) {
-                    Log.d(TAG, "Found service for "+actionString+" in self package, using it instead");
+                    Log.d(TAG, "Found service for " + actionString + " in self package, using it instead");
                     intent = selfIntent;
                 } else {
                     return;
                 }
+            } else if (requireMicrog && !isMicrog(resolveInfo)) {
+                Log.w(TAG, "GMS service found for " + actionString + " but looks not like microG");
+                if (context.getPackageManager().resolveService(selfIntent, 0) != null) {
+                    Log.d(TAG, "Found service for " + actionString + " in self package, using it instead");
+                    intent = selfIntent;
+                } else {
+                    intent = gmsIntent;
+                }
             } else {
                 intent = gmsIntent;
             }
-            int flags = Context.BIND_AUTO_CREATE;
+            int flags = Context.BIND_AUTO_CREATE | Context.BIND_DEBUG_UNBIND;
             if (SDK_INT >= ICE_CREAM_SANDWICH) {
                 flags |= Context.BIND_ADJUST_WITH_ACTIVITY;
             }
             bound = context.bindService(intent, serviceConnection, flags);
+            Log.d(TAG, "Connection(" + actionString + ") :  bind() : bindService=" + bound);
             if (!bound) {
                 context.unbindService(serviceConnection);
+            }
+        }
+
+        public boolean isMicrog(ResolveInfo resolveInfo) {
+            if (resolveInfo == null || resolveInfo.serviceInfo == null) return false;
+            if (resolveInfo.serviceInfo.name.startsWith("org.microg.")) return true;
+            try {
+                PermissionInfo info = context.getPackageManager().getPermissionInfo("org.microg.gms.EXTENDED_ACCESS", 0);
+                return info.packageName.equals(resolveInfo.serviceInfo.packageName);
+            } catch (PackageManager.NameNotFoundException e) {
+                return false;
             }
         }
 
