@@ -31,6 +31,11 @@ import java.io.File
  */
 class SettingsProvider : ContentProvider() {
 
+    companion object {
+        private const val SYSTEM_DEFAULT_PREFS_FILE = "/product/etc/microg.xml"
+        private const val CALYX_PREFS_VERSION_KEY = "calyx_prefs_version"
+    }
+
     private val preferences: SharedPreferences by lazy {
         PreferenceManager.getDefaultSharedPreferences(context)
     }
@@ -43,13 +48,43 @@ class SettingsProvider : ContentProvider() {
                 "getSharedPreferences",
                 File::class.java,
                 Int::class.javaPrimitiveType
-            ).invoke(context, File("/product/etc/microg.xml"), MODE_PRIVATE) as SharedPreferences
+            ).invoke(context, File(SYSTEM_DEFAULT_PREFS_FILE), MODE_PRIVATE) as SharedPreferences
         } catch (ignored: Exception) {
             null
         }
     }
 
+    /**
+     * Establish default preferences for existing CalyxOS installs, based on the values
+     * previously contained in the system default preferences XML above.
+     */
+    private fun maybeMigratePreferences() {
+        // Do not even bother with this if the system default preferences file still exists.
+        if (File(SYSTEM_DEFAULT_PREFS_FILE).exists()) {
+            return
+        }
+
+        val version = preferences.getInt(CALYX_PREFS_VERSION_KEY, 0)
+
+        if (version == 0) {
+            val appHasDefinitelyRunBefore = preferences.all.size != 0
+            val editor = preferences.edit()
+
+            if (appHasDefinitelyRunBefore) {
+                if (!preferences.contains(CheckIn.ENABLED)) {
+                    editor.putBoolean(CheckIn.ENABLED, true)
+                }
+                if (!preferences.contains(Gcm.ENABLE_GCM)) {
+                    editor.putBoolean(Gcm.ENABLE_GCM, true)
+                }
+            }
+            editor.putInt(CALYX_PREFS_VERSION_KEY, 1)
+            editor.apply()
+        }
+    }
+
     override fun onCreate(): Boolean {
+        maybeMigratePreferences()
         return true
     }
 
