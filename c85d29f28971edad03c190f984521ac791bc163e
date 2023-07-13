@@ -18,6 +18,23 @@
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "248bff4d_96942ad8",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-07-13T16:53:12Z",
+      "side": 1,
+      "message": "Going to hold till latest upstream is in at least. Also gives us time to test and think this through further.",
+      "revId": "c85d29f28971edad03c190f984521ac791bc163e",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "746a43cf_a393e319",
