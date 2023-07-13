@@ -16,6 +16,40 @@
       "message": "I don\u0027t mind if we use this, if we adapt it for the stable6 approach, or if we just abandon it. It worked in some quick testing but I would want to do more than just quick testing if we did use it.",
       "revId": "c85d29f28971edad03c190f984521ac791bc163e",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "746a43cf_a393e319",
+        "filename": "play-services-base/core/src/main/kotlin/org/microg/gms/settings/SettingsProvider.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-07-13T16:45:35Z",
+      "side": 1,
+      "message": "For stable, this part has to get removed.",
+      "revId": "c85d29f28971edad03c190f984521ac791bc163e",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "06c59b92_eaf20e5f",
+        "filename": "play-services-base/core/src/main/kotlin/org/microg/gms/settings/SettingsProvider.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-07-13T16:45:35Z",
+      "side": 1,
+      "message": "Does this run on boot, automatically, without ever launching microG from the launcher (or Settings) ?\n\nhttps://github.com/microg/UnifiedNlp/pull/197 was done in the getter (which would be here, part 1) so that it always ran.",
+      "revId": "c85d29f28971edad03c190f984521ac791bc163e",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
