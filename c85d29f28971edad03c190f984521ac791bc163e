@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "824f2a74_a651ab61",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-07-13T15:45:46Z",
+      "side": 1,
+      "message": "I don\u0027t mind if we use this, if we adapt it for the stable6 approach, or if we just abandon it. It worked in some quick testing but I would want to do more than just quick testing if we did use it.",
+      "revId": "c85d29f28971edad03c190f984521ac791bc163e",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
