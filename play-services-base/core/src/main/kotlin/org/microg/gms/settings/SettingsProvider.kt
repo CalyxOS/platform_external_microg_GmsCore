@@ -37,6 +37,10 @@ private const val SETTINGS_PREFIX = "org.microg.gms.settings."
  */
 class SettingsProvider : ContentProvider() {
 
+    companion object {
+        private const val CALYX_PREFS_VERSION_KEY = "calyx_prefs_version"
+    }
+
     private val preferences: SharedPreferences by lazy {
         PreferenceManager.getDefaultSharedPreferences(context)
     }
@@ -60,8 +64,67 @@ class SettingsProvider : ContentProvider() {
     private val metaDataPreferences: SharedPreferences by lazy {
         MetaDataPreferences(context!!, SETTINGS_PREFIX)
     }
+    private val appHasAnyPreferences: Boolean
+        get() = preferences.all.size != 0 || checkInPrefs.all.size != 0 ||
+            unifiedNlpPreferences.all.size != 0
+
+    /**
+     * Establish default preferences for existing installs, based on the values
+     * previously contained in the system default preferences XML.
+     */
+    private fun maybeMigratePreferences() {
+        val version = preferences.getInt(CALYX_PREFS_VERSION_KEY, 0)
+
+        if (version == 0) {
+            val editor = preferences.edit()
+            val appHasDefinitelyRunBefore = appHasAnyPreferences
+            if (appHasDefinitelyRunBefore) {
+                preferences.putBooleanIfMissing(editor, CheckIn.ENABLED, true)
+                preferences.putBooleanIfMissing(editor, Gcm.ENABLE_GCM, true)
+
+                // We want to know if the user has overridden any prior defaults.
+                val nlpPrefsWithoutDefaults = listOf(unifiedNlpPreferences, preferences)
+
+                // A unique set as default to know for certain there was no string set present.
+                val missingSet = setOf("")
+
+                val locationBackends = nlpPrefsWithoutDefaults.getStringSetCompat(
+                    "location_backends", missingSet)
+                if (locationBackends === missingSet) {
+                    // The user did not alter the location backends, which means that MLS and
+                    // location learning (DejaVu) would have been enabled via the system defaults.
+                    preferences.putBooleanIfMissing(editor, Location.WIFI_MLS, true)
+                    preferences.putBooleanIfMissing(editor, Location.CELL_MLS, true)
+                    preferences.putBooleanIfMissing(editor, Location.WIFI_LEARNING, true)
+                    preferences.putBooleanIfMissing(editor, Location.CELL_LEARNING, true)
+                }
+
+                val geocoderBackends = nlpPrefsWithoutDefaults.getStringSetCompat(
+                    "geocoder_backends", missingSet)
+                if (geocoderBackends === missingSet) {
+                    // The user did not alter the address lookup backends, which means that
+                    // the Nominatim geocoder would have been enabled via the system defaults.
+                    preferences.putBooleanIfMissing(editor, Location.GEOCODER_NOMINATIM, true)
+                }
+
+                // Note that if the user *had* altered one or both of these sets of backends,
+                // the existing fallback behavior would continue as usual. We don't migrate that.
+            }
+            editor.putInt(CALYX_PREFS_VERSION_KEY, 1)
+            editor.apply()
+        }
+    }
+
+    private fun SharedPreferences.putBooleanIfMissing(
+        editor: SharedPreferences.Editor,
+        key: String,
+        value: Boolean
+    ) {
+        if (!contains(key)) editor.putBoolean(key, value)
+    }
 
     override fun onCreate(): Boolean {
+        maybeMigratePreferences()
         return true
     }
 
