@@ -21,8 +21,8 @@ dependencies {
     implementation project(':play-services-maps')
     implementation project(':play-services-base-core')
     implementation project(':play-services-location')
-    implementation("org.maplibre.gl:android-sdk:10.0.0")
-    implementation("org.maplibre.gl:android-plugin-annotation-v9:1.0.0") {
+    implementation("org.maplibre.gl:android-sdk:10.2.0")
+    implementation("org.maplibre.gl:android-plugin-annotation-v9:2.0.0") {
         exclude group: 'com.google.android.gms'
     }
     implementation 'org.maplibre.gl:android-sdk-turf:5.9.0'
@@ -40,8 +40,14 @@ def execResult(...args) {
 }
 
 android {
+    namespace "org.microg.gms.maps.mapbox"
+
     compileSdkVersion androidCompileSdk
     buildToolsVersion "$androidBuildVersionTools"
+
+    buildFeatures {
+        buildConfig = true
+    }
 
     defaultConfig {
         versionName version
@@ -62,16 +68,13 @@ android {
         disable 'GradleCompatible'
     }
 
-    buildTypes {
-        release {
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = 1.8
     }
 }
 
