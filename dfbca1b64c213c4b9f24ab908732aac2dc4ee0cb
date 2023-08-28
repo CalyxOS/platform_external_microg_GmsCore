@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fc32f368_45d288fe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-08-28T18:11:03Z",
+      "side": 1,
+      "message": "https://review.calyxos.org/c/CalyxOS/platform_external_microg_GmsCore/+/18869",
+      "revId": "dfbca1b64c213c4b9f24ab908732aac2dc4ee0cb",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
