@@ -8,7 +8,10 @@
 
 package com.google.android.gms.fido.fido2.api.common;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import com.google.android.gms.common.internal.safeparcel.SafeParcelableSerializer;
+import org.microg.gms.common.Hide;
 import org.microg.gms.common.PublicApi;
 import org.microg.gms.utils.ToStringHelper;
 
@@ -20,24 +23,30 @@ import java.util.Arrays;
 @PublicApi
 public class AuthenticatorErrorResponse extends AuthenticatorResponse {
     @Field(2)
+    @NonNull
     private ErrorCode errorCode;
     @Field(3)
+    @Nullable
     private String errorMessage;
+    @Field(4)
+    private int internalErrorCode;
 
     private AuthenticatorErrorResponse() {
     }
 
-    @PublicApi(exclude = true)
-    public AuthenticatorErrorResponse(ErrorCode errorCode, String errorMessage) {
+    @Hide
+    public AuthenticatorErrorResponse(@NonNull ErrorCode errorCode, @Nullable String errorMessage) {
         this.errorCode = errorCode;
         this.errorMessage = errorMessage;
     }
 
     @Override
+    @NonNull
     public byte[] getClientDataJSON() {
         throw new UnsupportedOperationException();
     }
 
+    @NonNull
     public ErrorCode getErrorCode() {
         return errorCode;
     }
@@ -46,11 +55,13 @@ public class AuthenticatorErrorResponse extends AuthenticatorResponse {
         return errorCode.getCode();
     }
 
+    @Nullable
     public String getErrorMessage() {
         return errorMessage;
     }
 
     @Override
+    @NonNull
     public byte[] serializeToBytes() {
         return SafeParcelableSerializer.serializeToBytes(this);
     }
@@ -63,15 +74,18 @@ public class AuthenticatorErrorResponse extends AuthenticatorResponse {
         AuthenticatorErrorResponse that = (AuthenticatorErrorResponse) o;
 
         if (errorCode != null ? !errorCode.equals(that.errorCode) : that.errorCode != null) return false;
-        return errorMessage != null ? errorMessage.equals(that.errorMessage) : that.errorMessage == null;
+        if (errorMessage != null ? !errorMessage.equals(that.errorMessage) : that.errorMessage != null) return false;
+        if (internalErrorCode != that.internalErrorCode) return false;
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return Arrays.hashCode(new Object[]{errorCode, errorMessage});
+        return Arrays.hashCode(new Object[]{errorCode, errorMessage, internalErrorCode});
     }
 
     @Override
+    @NonNull
     public String toString() {
         return ToStringHelper.name("AuthenticatorErrorResponse")
                 .value(errorCode.name())
@@ -79,6 +93,7 @@ public class AuthenticatorErrorResponse extends AuthenticatorResponse {
                 .end();
     }
 
+    @NonNull
     public static AuthenticatorErrorResponse deserializeFromBytes(byte[] serializedBytes) {
         return SafeParcelableSerializer.deserializeFromBytes(serializedBytes, CREATOR);
     }

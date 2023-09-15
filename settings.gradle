@@ -4,6 +4,7 @@ def sublude(name) {
   project(projectName).projectDir = file(name.substring(1).replace(':', '/'))
 }
 
+include ':fake-signature'
 include ':safe-parcel-processor'
 
 include ':play-services-ads'
@@ -22,6 +23,7 @@ include ':play-services-clearcut'
 include ':play-services-drive'
 include ':play-services-droidguard'
 include ':play-services-fido'
+include ':play-services-games'
 include ':play-services-gcm'
 include ':play-services-gmscompliance'
 include ':play-services-iid'
@@ -31,6 +33,7 @@ include ':play-services-measurement-base'
 include ':play-services-nearby'
 include ':play-services-oss-licenses'
 include ':play-services-pay'
+include ':play-services-phenotype'
 include ':play-services-places'
 include ':play-services-places-placereport'
 include ':play-services-recaptcha'
