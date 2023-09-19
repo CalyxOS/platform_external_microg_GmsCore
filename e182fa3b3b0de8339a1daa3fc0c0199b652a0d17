@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "822d5fe6_360dbd6d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-09-19T07:45:48Z",
+      "side": 1,
+      "message": "New tag is up",
+      "revId": "e182fa3b3b0de8339a1daa3fc0c0199b652a0d17",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
