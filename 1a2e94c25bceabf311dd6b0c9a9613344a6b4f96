@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "024397f8_60b73989",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-09-19T22:37:55Z",
+      "side": 1,
+      "message": "Need to make sure to build with nearby.",
+      "revId": "1a2e94c25bceabf311dd6b0c9a9613344a6b4f96",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
