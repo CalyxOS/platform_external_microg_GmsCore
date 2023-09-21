@@ -16,6 +16,24 @@
       "message": "Need to make sure to build with nearby.",
       "revId": "1a2e94c25bceabf311dd6b0c9a9613344a6b4f96",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f4be11c1_992e8b98",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-09-21T11:54:48Z",
+      "side": 1,
+      "message": "It\u0027s included by default, and also verified in the built apk.",
+      "parentUuid": "024397f8_60b73989",
+      "revId": "1a2e94c25bceabf311dd6b0c9a9613344a6b4f96",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
