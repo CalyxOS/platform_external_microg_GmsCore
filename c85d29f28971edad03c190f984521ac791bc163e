@@ -88,6 +88,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "ef5132e9_c2beb537",
+        "filename": "play-services-base/core/src/main/kotlin/org/microg/gms/settings/SettingsProvider.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-11-01T21:05:52Z",
+      "side": 1,
+      "message": "1. if device registration has occurred. There should be an id, and also a last registered value\n2. If any apps have registered for cloud messaging.",
+      "parentUuid": "c5b194c2_55f1d9b4",
+      "revId": "c85d29f28971edad03c190f984521ac791bc163e",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "06c59b92_eaf20e5f",
         "filename": "play-services-base/core/src/main/kotlin/org/microg/gms/settings/SettingsProvider.kt",
         "patchSetId": 1
