@@ -71,6 +71,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "c5b194c2_55f1d9b4",
+        "filename": "play-services-base/core/src/main/kotlin/org/microg/gms/settings/SettingsProvider.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-11-01T21:03:39Z",
+      "side": 1,
+      "message": "Also check if registration has occurred, which is probably stored somewhere else. If it has occurred, the app has definitely been run before. It would be a good way to ensure users whose microG was registered will definitely not be impacted negatively.",
+      "revId": "c85d29f28971edad03c190f984521ac791bc163e",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "06c59b92_eaf20e5f",
         "filename": "play-services-base/core/src/main/kotlin/org/microg/gms/settings/SettingsProvider.kt",
         "patchSetId": 1
