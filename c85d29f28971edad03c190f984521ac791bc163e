@@ -67,6 +67,24 @@
       "message": "Does this run on boot, automatically, without ever launching microG from the launcher (or Settings) ?\n\nhttps://github.com/microg/UnifiedNlp/pull/197 was done in the getter (which would be here, part 1) so that it always ran.",
       "revId": "c85d29f28971edad03c190f984521ac791bc163e",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e849f10_62ff4570",
+        "filename": "play-services-base/core/src/main/kotlin/org/microg/gms/settings/SettingsProvider.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-11-01T20:05:32Z",
+      "side": 1,
+      "message": "I believe it did, but I would test again if we want to try this.",
+      "parentUuid": "06c59b92_eaf20e5f",
+      "revId": "c85d29f28971edad03c190f984521ac791bc163e",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
