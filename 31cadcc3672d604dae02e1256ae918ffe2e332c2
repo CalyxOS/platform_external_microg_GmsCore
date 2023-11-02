@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cba24637_9971fc45",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-11-02T17:16:00Z",
+      "side": 1,
+      "message": "Oddly, with this change, com.google.android.gms_preferences.xml only contains calyx_prefs_version after a new install, not exposure_last_cleanup like it usually does. A reboot or restart of microG does cause exposure_last_cleanup to appear, but this is odd. Should check into this.",
+      "revId": "31cadcc3672d604dae02e1256ae918ffe2e332c2",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
