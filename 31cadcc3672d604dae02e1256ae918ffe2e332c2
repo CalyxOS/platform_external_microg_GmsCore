@@ -86,6 +86,23 @@
       "parentUuid": "467b244a_48703212",
       "revId": "31cadcc3672d604dae02e1256ae918ffe2e332c2",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d6a00497_004e230d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-11-02T21:26:25Z",
+      "side": 1,
+      "message": "With this, /product/etc/microg.xml can be removed (a separate change)\n\n(Adding this comment because I don\u0027t want to forget)",
+      "revId": "31cadcc3672d604dae02e1256ae918ffe2e332c2",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
