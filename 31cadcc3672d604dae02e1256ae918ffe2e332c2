@@ -34,6 +34,23 @@
       "parentUuid": "cba24637_9971fc45",
       "revId": "31cadcc3672d604dae02e1256ae918ffe2e332c2",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "467b244a_48703212",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-11-02T19:01:12Z",
+      "side": 1,
+      "message": "Without a corresponding SUW change, new installs with this change will have location features off if /product/etc/microg.xml is not present. (Existing installs should migrate okay.) Still doing full testing though.",
+      "revId": "31cadcc3672d604dae02e1256ae918ffe2e332c2",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
