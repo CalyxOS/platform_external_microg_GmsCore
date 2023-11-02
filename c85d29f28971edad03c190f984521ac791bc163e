@@ -87,6 +87,42 @@
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "283fd04b_ab9422d6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-11-02T17:12:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa41952b_60bfd43d",
+      "revId": "c85d29f28971edad03c190f984521ac791bc163e",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a340e86a_311da5f4",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-11-02T17:12:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ab2941e8_fd802d09",
+      "revId": "c85d29f28971edad03c190f984521ac791bc163e",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "746a43cf_a393e319",
@@ -100,6 +136,24 @@
       "writtenOn": "2023-07-13T16:45:35Z",
       "side": 1,
       "message": "For stable, this part has to get removed.",
+      "revId": "c85d29f28971edad03c190f984521ac791bc163e",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "86aee918_9b9e47db",
+        "filename": "play-services-base/core/src/main/kotlin/org/microg/gms/settings/SettingsProvider.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-11-02T17:12:10Z",
+      "side": 1,
+      "message": "Done, it was never needed anyway.",
+      "parentUuid": "746a43cf_a393e319",
       "revId": "c85d29f28971edad03c190f984521ac791bc163e",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
@@ -141,6 +195,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "7643a4a8_faa67b7e",
+        "filename": "play-services-base/core/src/main/kotlin/org/microg/gms/settings/SettingsProvider.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-11-02T17:12:10Z",
+      "side": 1,
+      "message": "OK.\n\n1. checkInPrefs contains device ID and last check-in time, so now we also check if checkInPrefs has any preferences set. (On new installs at migration time, it does not.)\n2. Apps can\u0027t have registered for cloud messaging if checkInPrefs is empty, so I think 1 is enough. Checking app registrations separately isn\u0027t easily possible from here (it\u0027s in a database, not a prefs file).\n\nWe check unifiedNlpPreferences too, since it is also empty on a new install.",
+      "parentUuid": "ef5132e9_c2beb537",
+      "revId": "c85d29f28971edad03c190f984521ac791bc163e",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "06c59b92_eaf20e5f",
         "filename": "play-services-base/core/src/main/kotlin/org/microg/gms/settings/SettingsProvider.kt",
         "patchSetId": 1
@@ -170,6 +242,24 @@
       "side": 1,
       "message": "I believe it did, but I would test again if we want to try this.",
       "parentUuid": "06c59b92_eaf20e5f",
+      "revId": "c85d29f28971edad03c190f984521ac791bc163e",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "22fad82b_ba6d93ae",
+        "filename": "play-services-base/core/src/main/kotlin/org/microg/gms/settings/SettingsProvider.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-11-02T17:12:10Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "1e849f10_62ff4570",
       "revId": "c85d29f28971edad03c190f984521ac791bc163e",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
