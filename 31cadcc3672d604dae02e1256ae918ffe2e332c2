@@ -103,6 +103,24 @@
       "message": "With this, /product/etc/microg.xml can be removed (a separate change)\n\n(Adding this comment because I don\u0027t want to forget)",
       "revId": "31cadcc3672d604dae02e1256ae918ffe2e332c2",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "344ecda7_418a8bfe",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-11-03T10:04:50Z",
+      "side": 1,
+      "message": "Also important and forgot to mention: the old UnifiedNlp pref fallback behavior was tested as working by manually placing location_backends and geocoder_backends sets (/product/etc/microg.xml as a reference) in /data/user/0/com.google.android.gms/shared_prefs/unified_nlp.xml. Can likely even just copy the whole /product/etc/microg.xml to that location.\n\nSo:\n6. Upgrade from a build prior to this change and the corresponding SUW change, where microG was never opened, but before upgrading, copy unified_nlp.xml over. After upgrading, location prefs won\u0027t be added to preferences xml as they otherwise would.\n7. Same but with the backends sets empty or just one missing.\n\n^ I would want to verify these again since I didn\u0027t properly document verifying them. Bonus if it was from an actual older microG to be fully real world.",
+      "parentUuid": "a47deb77_38950484",
+      "revId": "31cadcc3672d604dae02e1256ae918ffe2e332c2",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
