@@ -123,6 +123,24 @@
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "a706584b_1e1beeac",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-11-03T14:42:50Z",
+      "side": 1,
+      "message": "I did some real-world tests *instead* of 6 and 7 and it was fine. Since we can\u0027t edit comments, I\u0027ll start the numbering from 8. (For testing, make sure the upgrade doesn\u0027t have /product/etc/microg.xml!):\n\n8. Begin with a build that has the microG prebuilt with UnifiedNlp, with commit 42edb30c38c264e00f51bd51f55c4935fc1e214f. Manually install the apks in the backends folder. Don\u0027t open microG Settings. Upgrade. There will still be no unified_nlp.xml or stored location settings, just as before the upgrade, and there will be no location settings in the main prefs. Open microG Settings. All the Location settings (except hotspot) should be on.\n9. Begin with the same build as 8. This time, turn the backends off. Upgrade, and the unified_nlp.xml will still be present with empty sets, just as before the upgrade. The main prefs will have no location settings. Open microG Settings, and the new location settings should all be off.\n10. Begin with the same build as 8. This time, turn the backends off and on again. Upgrade, and the unified_nlp.xml will still be present with filled-in sets, just as before the upgrade. The main prefs will have no location settings. Open microG settings, and the new location settings (except hotspot) should all be on, using the unified_nlp.xml values as fallback. (If you were to delete unified_nlp.xml at this point, the location settings would all turn off. This is confirmed, as long as /product/etc/microg.xml is gone.)\n11. Same as above test, but only turn off one of Deja Vu / MLS. After upgrade, the toggles should reflect that choice. (If you were to delete unified_nlp.xml at this point, the location settings would all turn off. This is confirmed, as long as /product/etc/microg.xml is gone.)\n\nSo I\u0027ve done tests 1-5 and 8-11, and all have worked as expected.\n\nThere\u0027s obviously a lot of other permutations possible but I don\u0027t foresee any issues.",
+      "parentUuid": "344ecda7_418a8bfe",
+      "revId": "31cadcc3672d604dae02e1256ae918ffe2e332c2",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "543a76ac_8f965111",
@@ -154,6 +172,24 @@
       "side": 1,
       "message": "If the user had a UnifiedNlp-enabled version of microG and they ever modified the location or geocoder backend toggles in microG Settings, doing so would have created a string set preference in either unified_nlp.xml or the main preferences xml, for location_backends and/or geocoder_backends. Those preferences, if set before, still exist in newer microG versions and continue to act as fallback values, with or without this change. I refer to them as \"fallback\" because they are the defaults in the event that the new *_mls, *_learning, wifi_moving prefs have not been set.\n\nIf the user did *not* make changes, then there will be no such string sets, so it will match missingSet (default) and use the values specified in the migration.",
       "parentUuid": "543a76ac_8f965111",
+      "revId": "31cadcc3672d604dae02e1256ae918ffe2e332c2",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d81554b5_c988f2b9",
+        "filename": "play-services-base/core/src/main/kotlin/org/microg/gms/settings/SettingsProvider.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-11-03T14:42:50Z",
+      "side": 1,
+      "message": "To put it another way, the quirk is that, for our convenience, if the user didn\u0027t mess with the backends, we go ahead and do a migration which turns on our defaults according to microG\u0027s *new* location scheme, if the new scheme\u0027s prefs are missing too. So, missing UnifiedNlp location backends + missing new prefs means turn it all on, except hotspot; missing geocoder backends + missing new pref means turn on Nominatim.\n\nBut if the user *did* mess with the backends, what they did is still used as a fallback. Upstream can do a formal migration of those at some point if they want, but we don\u0027t need to.",
+      "parentUuid": "a9e452cd_38df1f8f",
       "revId": "31cadcc3672d604dae02e1256ae918ffe2e332c2",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
