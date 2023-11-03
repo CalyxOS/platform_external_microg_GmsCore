@@ -141,6 +141,24 @@
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "9aaedd95_66b198ec",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-11-03T14:47:58Z",
+      "side": 1,
+      "message": "Mistake in number 8\u0027s description: There *will* be location settings in the main prefs after upgrade when microG Settings has not been opened and SUW is all defaults, and that\u0027s how it should be; that\u0027s what our migration is meant to do. Double-checked that this is what happens. \n\n(Gerrit comments may not the best place to write things like this.)",
+      "parentUuid": "a706584b_1e1beeac",
+      "revId": "31cadcc3672d604dae02e1256ae918ffe2e332c2",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "543a76ac_8f965111",
