@@ -121,6 +121,23 @@
       "parentUuid": "a47deb77_38950484",
       "revId": "31cadcc3672d604dae02e1256ae918ffe2e332c2",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "543a76ac_8f965111",
+        "filename": "play-services-base/core/src/main/kotlin/org/microg/gms/settings/SettingsProvider.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-11-03T10:33:01Z",
+      "side": 1,
+      "message": "What do you mean here? We won\u0027t have `microg.xml` anymore, so there\u0027d be no fallback.",
+      "revId": "31cadcc3672d604dae02e1256ae918ffe2e332c2",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
