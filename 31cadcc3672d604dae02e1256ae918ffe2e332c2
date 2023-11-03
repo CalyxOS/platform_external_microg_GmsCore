@@ -138,6 +138,24 @@
       "message": "What do you mean here? We won\u0027t have `microg.xml` anymore, so there\u0027d be no fallback.",
       "revId": "31cadcc3672d604dae02e1256ae918ffe2e332c2",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a9e452cd_38df1f8f",
+        "filename": "play-services-base/core/src/main/kotlin/org/microg/gms/settings/SettingsProvider.kt",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-11-03T13:27:43Z",
+      "side": 1,
+      "message": "If the user had a UnifiedNlp-enabled version of microG and they ever modified the location or geocoder backend toggles in microG Settings, doing so would have created a string set preference in either unified_nlp.xml or the main preferences xml, for location_backends and/or geocoder_backends. Those preferences, if set before, still exist in newer microG versions and continue to act as fallback values, with or without this change. I refer to them as \"fallback\" because they are the defaults in the event that the new *_mls, *_learning, wifi_moving prefs have not been set.\n\nIf the user did *not* make changes, then there will be no such string sets, so it will match missingSet (default) and use the values specified in the migration.",
+      "parentUuid": "543a76ac_8f965111",
+      "revId": "31cadcc3672d604dae02e1256ae918ffe2e332c2",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
