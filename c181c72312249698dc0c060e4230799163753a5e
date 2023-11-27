@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e58e4c83_0771c3a7",
+        "filename": ".github/workflows/build.yml",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-11-27T20:34:04Z",
+      "side": 1,
+      "message": "Can also set MAPBOX_VECTOR_TILES_KEY",
+      "revId": "c181c72312249698dc0c060e4230799163753a5e",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
