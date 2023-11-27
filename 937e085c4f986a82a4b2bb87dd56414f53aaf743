@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "db82594d_9bf52a40",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-11-27T20:40:41Z",
+      "side": 1,
+      "message": "TODO: vending apk now that it\u0027s moved here",
+      "revId": "937e085c4f986a82a4b2bb87dd56414f53aaf743",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
