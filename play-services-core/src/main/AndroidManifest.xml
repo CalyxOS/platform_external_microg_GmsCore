@@ -17,6 +17,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <permission
+        android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"
+        android:label="@string/perm_gsf_read_gservices_label"
+        android:protectionLevel="normal" />
+    <permission
         android:name="com.google.android.c2dm.permission.RECEIVE"
         android:label="@string/perm_c2dm_receive_label"
         android:permissionGroup="android.permission-group.NETWORK"
@@ -481,6 +485,28 @@
             </intent-filter>
         </activity>
 
+        <service
+            android:name="org.microg.gms.games.GamesService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.games.service.START" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name="org.microg.gms.games.GamesConnectService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.games.internal.connect.service.START" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name="org.microg.gms.games.GamesConfigurationService"
+            android:exported="false" />
+
         <!-- Chimera -->
         <provider
             android:name="org.microg.gms.chimera.ServiceProvider"
@@ -493,9 +519,9 @@
             android:authorities="com.google.android.gms.fonts"
             android:exported="true" />
 
-        <!-- microG Settings shown in Launcher -->
+        <!-- microG Settings activity -->
         <activity
-            android:name="org.microg.gms.ui.SettingsActivity"
+            android:name="org.microg.gms.ui.MainSettingsActivity"
             android:icon="@mipmap/ic_app_settings"
             android:label="@string/gms_settings_name"
             android:process=":ui"
@@ -511,7 +537,6 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter>
@@ -522,6 +547,22 @@
             </intent-filter>
         </activity>
 
+        <!-- microG Settings activity-alias shown in Launcher -->
+        <activity-alias
+            android:name="org.microg.gms.ui.SettingsActivity"
+            android:icon="@mipmap/ic_app_settings"
+            android:label="@string/gms_settings_name"
+            android:roundIcon="@mipmap/ic_app_settings"
+            android:process=":ui"
+            android:targetActivity="org.microg.gms.ui.MainSettingsActivity"
+            android:taskAffinity="org.microg.gms.settings">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
         <activity
             android:name="org.microg.gms.ui.SettingsDashboardActivity"
             android:icon="@mipmap/ic_app_settings"
@@ -529,6 +570,15 @@
             android:process=":ui"
             android:roundIcon="@mipmap/ic_app_settings"
             android:taskAffinity="org.microg.gms.settings" />
+
+        <!-- microG Settings activity-alias for Google settings compatibility -->
+        <activity-alias
+            android:name="com.google.android.gms.app.settings.GoogleSettingsLink"
+            android:process=":ui"
+            android:exported="true"
+            android:targetActivity="org.microg.gms.ui.MainSettingsActivity"
+            android:taskAffinity="org.microg.gms.settings">
+        </activity-alias>
 
         <activity
             android:name="org.microg.gms.ui.AskPushPermission"

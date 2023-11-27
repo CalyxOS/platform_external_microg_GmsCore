@@ -90,13 +90,15 @@ class AuthSignInActivity : AppCompatActivity() {
     }
 
     private fun getDisplayName(account: Account): String? {
-        val cursor = DatabaseHelper(this).getOwner(account.name)
+        val databaseHelper = DatabaseHelper(this)
+        val cursor = databaseHelper.getOwner(account.name)
         return try {
             if (cursor.moveToNext()) {
                 cursor.getColumnIndex("display_name").takeIf { it >= 0 }?.let { cursor.getString(it) }.takeIf { !it.isNullOrBlank() }
             } else null
         } finally {
             cursor.close()
+            databaseHelper.close()
         }
     }
 
@@ -149,7 +151,12 @@ class AuthSignInActivity : AppCompatActivity() {
                 openAddAccount()
             } else {
                 lifecycleScope.launchWhenStarted {
-                    signIn(accounts[position])
+                    try {
+                        signIn(accounts[position])
+                    } catch (e: Exception) {
+                        Log.w(TAG, e)
+                        finishResult(CommonStatusCodes.INTERNAL_ERROR)
+                    }
                 }
             }
         }
@@ -168,7 +175,12 @@ class AuthSignInActivity : AppCompatActivity() {
             binding.button1.isEnabled = false
             binding.button2.isEnabled = false
             lifecycleScope.launchWhenStarted {
-                signIn(account)
+                try {
+                    signIn(account)
+                } catch (e: Exception) {
+                    Log.w(TAG, e)
+                    finishResult(CommonStatusCodes.INTERNAL_ERROR)
+                }
             }
         }
         setContentView(binding.root)
