@@ -33,6 +33,23 @@
       "message": "Matching upstream pull request https://github.com/microg/GmsCore/pull/2082",
       "revId": "9e909b219e3823e040b69bee1923e21020079f59",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5d5e02a2_c31230ff",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2023-11-29T18:08:00Z",
+      "side": 1,
+      "message": "This fixes everything related to FIDO/Webauthn (so, not just passkey creation, but also authentication, and also security keys and device-as-security-key). These require presenting the registration or authentication activity to proceed, so they\u0027re not functional in Android 14 without this.",
+      "revId": "9e909b219e3823e040b69bee1923e21020079f59",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
