@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4369c8d7_870cafd7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000065
+      },
+      "writtenOn": "2023-12-05T14:55:33Z",
+      "side": 1,
+      "message": "Tried using `AccountManager` to get google accounts and open their concering sync settings page using undocumented `android.settings.ACCOUNT_SYNC_SETTINGS` intent but that didn\u0027t worked.\n\nLater I stumbled on same logic in Chromium\u0027s sign in menu option that has a comment saying the undocumented method stopped working after Android 8.0+.\n\nRef: https://github.com/chromium/chromium/blob/main/chrome/browser/ui/android/signin/java/src/org/chromium/chrome/browser/ui/signin/SigninUtils.java",
+      "revId": "0e95a926f2439a13381a252ebd05c2374097fcbe",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
