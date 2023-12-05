@@ -26,6 +26,10 @@ class SettingsFragment : ResourceSettingsFragment() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
 
+        findPreference<Preference>(PREF_ACCOUNTS)!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            findNavController().navigate(requireContext(), R.id.accountManagerFragment)
+            true
+        }
         findPreference<Preference>(PREF_CHECKIN)!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
             findNavController().navigate(requireContext(), R.id.openCheckinSettings)
             true
@@ -121,6 +125,7 @@ class SettingsFragment : ResourceSettingsFragment() {
         const val PREF_SNET = "pref_snet"
         const val PREF_LOCATION = "pref_location"
         const val PREF_CHECKIN = "pref_checkin"
+        const val PREF_ACCOUNTS = "pref_accounts"
     }
 
     init {
