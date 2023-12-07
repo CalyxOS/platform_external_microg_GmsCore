@@ -18,8 +18,9 @@
 
     <!-- Base application theme -->
     <style name="Theme.Base" parent="Theme.AppCompat.DayNight.NoActionBar" />
+    <style name="Theme.Base.M3" parent="Theme.Material3.DayNight.NoActionBar" />
 
-    <!-- Application theme (overrideable per API levels as required) -->
+    <!-- Application theme (< API23) -->
     <style name="Theme.App" parent="Theme.Base" />
 
     <style name="Theme.LoginBlue" parent="Theme.LoginBlue.Base" />
