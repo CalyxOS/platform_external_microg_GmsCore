@@ -13,13 +13,16 @@ import android.text.format.DateUtils
 import android.util.Log
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.ListPreference
 import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
 import com.google.android.gms.R
+import org.microg.gms.checkin.CheckinManager
 import org.microg.gms.checkin.CheckinPreferences
+import org.microg.gms.checkin.LastCheckinInfo
 import org.microg.gms.checkin.getCheckinServiceInfo
 import org.microg.gms.profile.ProfileManager
 import org.microg.gms.profile.ProfileManager.PROFILE_AUTO
@@ -92,6 +95,20 @@ class DeviceRegistrationFragment : PreferenceFragmentCompat() {
         switchBarPreference.setOnPreferenceChangeListener { _, newValue ->
             val newStatus = newValue as Boolean
             CheckinPreferences.setEnabled(requireContext(), newStatus)
+            true
+        }
+
+        findPreference<Preference>("pref_device_registration_data")?.setOnPreferenceClickListener {
+            val checkInRequest = CheckinManager.getCheckinRequest(
+                it.context,
+                LastCheckinInfo.read(it.context)
+            )
+            AlertDialog.Builder(it.context)
+                .setTitle(R.string.pref_device_registration_data_title)
+                .setMessage(checkInRequest.toString())
+                .setPositiveButton(android.R.string.ok) { dialog, _ -> dialog.dismiss() }
+                .create()
+                .show()
             true
         }
     }

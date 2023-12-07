@@ -44,6 +44,10 @@
             android:key="pref_device_registration_android_id"
             android:title="@string/pref_device_registration_android_id"
             tools:summary="1953a59d1c1b7e4b" />
+        <Preference
+            android:key="pref_device_registration_data"
+            android:summary="@string/pref_device_registration_data_summary"
+            android:title="@string/pref_device_registration_data_title" />
     </PreferenceCategory>
     <PreferenceCategory android:layout="@layout/preference_category_no_label">
         <org.microg.gms.ui.TextPreference
