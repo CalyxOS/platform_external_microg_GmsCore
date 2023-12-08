@@ -16,6 +16,23 @@
       "message": "Unreadable right now",
       "revId": "06b9a355fce03cb74070f5a7dbdc8fca8047616a",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2e99102_998cf826",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000065
+      },
+      "writtenOn": "2023-12-08T08:08:26Z",
+      "side": 1,
+      "message": "Considering we want to do this for all the major preferences that shares the data, a good idea may be to have a simple activity with a textView. We can then pass the data to it and it can use GSON or something to convert that class to JSON to give a better human readable data?",
+      "revId": "06b9a355fce03cb74070f5a7dbdc8fca8047616a",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
