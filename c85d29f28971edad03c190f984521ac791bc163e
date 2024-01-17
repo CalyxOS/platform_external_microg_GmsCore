@@ -211,6 +211,24 @@
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3cbcad81_93433b00",
+        "filename": "play-services-base/core/src/main/kotlin/org/microg/gms/settings/SettingsProvider.kt",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2024-01-17T14:25:09Z",
+      "side": 1,
+      "message": "Ack, I\u0027m confident in this approach, but feel free to unresolve this comment chain if you have other thoughts",
+      "parentUuid": "7643a4a8_faa67b7e",
+      "revId": "c85d29f28971edad03c190f984521ac791bc163e",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "06c59b92_eaf20e5f",
