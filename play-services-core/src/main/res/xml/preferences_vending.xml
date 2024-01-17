@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ SPDX-FileCopyrightText: 2023, e Foundation
+  ~ SPDX-License-Identifier: Apache-2.0
+  -->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:title="@string/pref_vending_licensing_enable_switch"
+        android:key="vending_licensing"
+        android:persistent="false" />
+
+    <PreferenceCategory android:layout="@layout/preference_category_no_label">
+        <org.microg.gms.ui.TextPreference
+            android:icon="@drawable/ic_info_outline"
+            android:selectable="false"
+            android:summary="@string/pref_vending_license_enable_summary" />
+    </PreferenceCategory>
+</PreferenceScreen>
