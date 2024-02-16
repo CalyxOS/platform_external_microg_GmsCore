@@ -46,6 +46,7 @@ dependencies {
     implementation project(':play-services-core-proto')
 
     implementation project(':play-services-core:microg-ui-tools') // deprecated
+    implementation project(':play-services-base-core-package')
     implementation project(':play-services-api')
 
     implementation project(':play-services-appinvite')
@@ -74,6 +75,9 @@ dependencies {
     implementation "androidx.mediarouter:mediarouter:$mediarouterVersion"
     implementation "androidx.preference:preference-ktx:$preferenceVersion"
     implementation "androidx.webkit:webkit:$webkitVersion"
+
+    // Material Components
+    implementation 'com.google.android.material:material:1.9.0'
 
     // Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:$navigationVersion"
@@ -128,7 +132,7 @@ android {
     }
 
     lintOptions {
-        disable 'MissingTranslation', 'InvalidPackage', 'BatteryLife', 'ImpliedQuantity', 'MissingQuantity', 'InvalidWakeLockTag', 'UniquePermission'
+        disable 'MissingTranslation', 'GetLocales', 'InvalidPackage', 'BatteryLife', 'ImpliedQuantity', 'MissingQuantity', 'InvalidWakeLockTag', 'UniquePermission'
     }
 
     buildTypes {
@@ -146,6 +150,12 @@ android {
         "huawei" {
             dimension 'target'
             versionNameSuffix "-hw"
+        }
+        "huaweilh" {
+            dimension 'target'
+            versionNameSuffix "-lh"
+            versionCode appVersionCode - 1000
+            matchingFallbacks = ['huawei']
         }
         "hms" {
             dimension 'maps'
