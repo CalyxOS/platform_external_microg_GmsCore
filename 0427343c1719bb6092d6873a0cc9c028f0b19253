@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0fc0b71d_b7302ef3",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-02-16T20:24:21Z",
+      "side": 1,
+      "message": "A bunch more commits got merged right after.",
+      "revId": "0427343c1719bb6092d6873a0cc9c028f0b19253",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
