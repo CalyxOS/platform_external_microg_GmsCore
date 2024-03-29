@@ -7,6 +7,7 @@ package org.microg.gms.droidguard.core
 
 import android.content.Context
 import com.android.volley.NetworkResponse
+import com.android.volley.RequestQueue
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.RequestFuture
 import com.android.volley.toolbox.Volley
@@ -17,6 +18,7 @@ import okio.ByteString.Companion.of
 import org.microg.gms.droidguard.*
 import org.microg.gms.profile.Build
 import org.microg.gms.profile.ProfileManager
+import org.microg.gms.utils.singleInstanceOf
 import java.io.File
 import java.io.IOException
 import java.security.MessageDigest
@@ -29,7 +31,7 @@ class HandleProxyFactory(private val context: Context) {
     private val classMap = hashMapOf<String, Class<*>>()
     private val dgDb: DgDatabaseHelper = DgDatabaseHelper(context)
     private val version = VersionUtil(context)
-    private val queue = Volley.newRequestQueue(context)
+    private val queue = singleInstanceOf { Volley.newRequestQueue(context.applicationContext) }
 
     fun createHandle(packageName: String, flow: String?, callback: GuardCallback, request: DroidGuardResultsRequest?): HandleProxy {
         if (!DroidGuardPreferences.isLocalAvailable(context)) throw IllegalAccessException("DroidGuard should not be available locally")

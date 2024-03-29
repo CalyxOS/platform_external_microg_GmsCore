@@ -22,6 +22,7 @@ import org.microg.gms.settings.SettingsContract.DroidGuard
 import org.microg.gms.settings.SettingsContract.Exposure
 import org.microg.gms.settings.SettingsContract.Gcm
 import org.microg.gms.settings.SettingsContract.Location
+import org.microg.gms.settings.SettingsContract.Vending
 import org.microg.gms.settings.SettingsContract.Profile
 import org.microg.gms.settings.SettingsContract.SafetyNet
 import org.microg.gms.settings.SettingsContract.getAuthority
@@ -78,6 +79,7 @@ class SettingsProvider : ContentProvider() {
         DroidGuard.getContentUri(context!!) -> queryDroidGuard(projection ?: DroidGuard.PROJECTION)
         Profile.getContentUri(context!!) -> queryProfile(projection ?: Profile.PROJECTION)
         Location.getContentUri(context!!) -> queryLocation(projection ?: Location.PROJECTION)
+        Vending.getContentUri(context!!) -> queryVending(projection ?: Vending.PROJECTION)
         else -> null
     }
 
@@ -98,6 +100,7 @@ class SettingsProvider : ContentProvider() {
             DroidGuard.getContentUri(context!!) -> updateDroidGuard(values)
             Profile.getContentUri(context!!) -> updateProfile(values)
             Location.getContentUri(context!!) -> updateLocation(values)
+            Vending.getContentUri(context!!) -> updateVending(values)
             else -> return 0
         }
         return 1
@@ -200,6 +203,7 @@ class SettingsProvider : ContentProvider() {
             Auth.TRUST_GOOGLE -> getSettingsBoolean(key, true)
             Auth.VISIBLE -> getSettingsBoolean(key, false)
             Auth.INCLUDE_ANDROID_ID -> getSettingsBoolean(key, true)
+            Auth.STRIP_DEVICE_NAME -> getSettingsBoolean(key, false)
             else -> throw IllegalArgumentException("Unknown key: $key")
         }
     }
@@ -212,6 +216,7 @@ class SettingsProvider : ContentProvider() {
                 Auth.TRUST_GOOGLE -> editor.putBoolean(key, value as Boolean)
                 Auth.VISIBLE -> editor.putBoolean(key, value as Boolean)
                 Auth.INCLUDE_ANDROID_ID -> editor.putBoolean(key, value as Boolean)
+                Auth.STRIP_DEVICE_NAME -> editor.putBoolean(key, value as Boolean)
                 else -> throw IllegalArgumentException("Unknown key: $key")
             }
         }
@@ -329,6 +334,27 @@ class SettingsProvider : ContentProvider() {
                 Location.CELL_MLS -> editor.putBoolean(key, value as Boolean)
                 Location.CELL_LEARNING -> editor.putBoolean(key, value as Boolean)
                 Location.GEOCODER_NOMINATIM -> editor.putBoolean(key, value as Boolean)
+                else -> throw IllegalArgumentException("Unknown key: $key")
+            }
+        }
+        editor.apply()
+    }
+
+    private fun queryVending(p: Array<out String>): Cursor = MatrixCursor(p).addRow(p) { key ->
+        when (key) {
+            Vending.LICENSING -> getSettingsBoolean(key, false)
+            Vending.BILLING -> getSettingsBoolean(key, false)
+            else -> throw IllegalArgumentException("Unknown key: $key")
+        }
+    }
+
+    private fun updateVending(values: ContentValues) {
+        if (values.size() == 0) return
+        val editor = preferences.edit()
+        values.valueSet().forEach { (key, value) ->
+            when (key) {
+                Vending.LICENSING -> editor.putBoolean(key, value as Boolean)
+                Vending.BILLING -> editor.putBoolean(key, value as Boolean)
                 else -> throw IllegalArgumentException("Unknown key: $key")
             }
         }

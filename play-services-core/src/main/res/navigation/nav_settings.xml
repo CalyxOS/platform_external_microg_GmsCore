@@ -24,6 +24,9 @@
             android:id="@+id/openSafetyNetSettings"
             app:destination="@id/safetyNetFragment" />
         <action
+            android:id="@+id/openVendingSettings"
+            app:destination="@id/vendingFragment" />
+        <action
             android:id="@+id/openMoreGoogleSettings"
             app:destination="@id/googleMoreFragment" />
         <action
@@ -40,6 +43,13 @@
         android:id="@+id/selfcheckFragment"
         android:name="org.microg.gms.ui.SelfCheckFragment"
         android:label="@string/self_check_title" />
+
+    <!-- Account -->
+
+    <fragment
+        android:id="@+id/accountManagerFragment"
+        android:name="org.microg.gms.ui.AccountsFragment"
+        android:label="@string/pref_accounts_title" />
 
     <!-- Device registration -->
 
@@ -133,6 +143,13 @@
             android:name="package"
             app:argType="string" />
     </fragment>
+
+    <!-- Play Store services -->
+
+    <fragment
+        android:id="@+id/vendingFragment"
+        android:name="org.microg.gms.ui.VendingFragment"
+        android:label="@string/service_name_vending" />
 
     <!-- More -->
 

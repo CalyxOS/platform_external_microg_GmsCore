@@ -8,7 +8,6 @@ package org.microg.gms.location.manager
 import android.Manifest
 import android.app.Activity
 import android.app.PendingIntent
-import android.app.PendingIntent.FLAG_MUTABLE
 import android.app.PendingIntent.FLAG_UPDATE_CURRENT
 import android.content.Context
 import android.content.Intent
@@ -17,6 +16,7 @@ import android.location.Location
 import android.os.*
 import android.os.Build.VERSION.SDK_INT
 import android.util.Log
+import androidx.core.app.PendingIntentCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.core.location.LocationListenerCompat
@@ -35,13 +35,14 @@ import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import org.microg.gms.location.*
+import org.microg.gms.location.core.BuildConfig
 import org.microg.gms.utils.IntentCacheManager
 import java.io.PrintWriter
 import kotlin.math.max
 import kotlin.math.min
 import android.location.LocationManager as SystemLocationManager
 
-class LocationManager(private val context: Context, private val lifecycle: Lifecycle) : LifecycleOwner {
+class LocationManager(private val context: Context, override val lifecycle: Lifecycle) : LifecycleOwner {
     private var coarsePendingIntent: PendingIntent? = null
     private val postProcessor by lazy { LocationPostProcessor() }
     private val lastLocationCapsule by lazy { LastLocationCapsule(context) }
@@ -54,8 +55,6 @@ class LocationManager(private val context: Context, private val lifecycle: Lifec
     private var activePermissionRequest: Deferred<Boolean>? = null
 
     val deviceOrientationManager = DeviceOrientationManager(context, lifecycle)
-
-    override fun getLifecycle(): Lifecycle = lifecycle
 
     var started: Boolean = false
         private set
@@ -147,7 +146,7 @@ class LocationManager(private val context: Context, private val lifecycle: Lifec
         }
         val intent = Intent(context, LocationManagerService::class.java)
         intent.action = LocationManagerService.ACTION_REPORT_LOCATION
-        coarsePendingIntent = PendingIntent.getService(context, 0, intent, (if (SDK_INT >= 31) FLAG_MUTABLE else 0) or FLAG_UPDATE_CURRENT)
+        coarsePendingIntent = PendingIntentCompat.getService(context, 0, intent, FLAG_UPDATE_CURRENT, true)
         lastLocationCapsule.start()
         requestManager.start()
     }
@@ -198,7 +197,7 @@ class LocationManager(private val context: Context, private val lifecycle: Lifec
             intent.putExtra(EXTRA_PENDING_INTENT, coarsePendingIntent)
             intent.putExtra(EXTRA_ENABLE, true)
             intent.putExtra(EXTRA_INTERVAL_MILLIS, networkInterval)
-            intent.putExtra(EXTRA_LOW_POWER, requestManager.granularity <= GRANULARITY_COARSE)
+            intent.putExtra(EXTRA_LOW_POWER, requestManager.granularity <= GRANULARITY_COARSE || requestManager.priority >= Priority.PRIORITY_LOW_POWER)
             intent.putExtra(EXTRA_WORK_SOURCE, requestManager.workSource)
             context.startService(intent)
         }
@@ -263,6 +262,21 @@ class LocationManager(private val context: Context, private val lifecycle: Lifec
         if (permissions.all { ContextCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED })
             return true
 
+        if (BuildConfig.FORCE_SHOW_BACKGROUND_PERMISSION.isNotEmpty()) permissions.add(BuildConfig.FORCE_SHOW_BACKGROUND_PERMISSION)
+
+        val permissionGranted = requestPermission(permissions)
+        if (BuildConfig.SHOW_NOTIFICATION_WHEN_NOT_PERMITTED) {
+            val clazz = runCatching { Class.forName("org.microg.gms.location.manager.AskPermissionNotificationActivity") }.getOrNull()
+            if (!permissionGranted) {
+                runCatching { clazz?.getDeclaredMethod("showLocationPermissionNotification", Context::class.java)?.invoke(null, context) }
+            } else {
+                runCatching { clazz?.getDeclaredMethod("hideLocationPermissionNotification", Context::class.java)?.invoke(null, context) }
+            }
+        }
+        return permissionGranted
+    }
+
+    private suspend fun requestPermission(permissions: List<String>): Boolean {
         val (completable, deferred) = activePermissionRequestLock.withLock {
             if (activePermissionRequest == null) {
                 val completable = CompletableDeferred<Boolean>()

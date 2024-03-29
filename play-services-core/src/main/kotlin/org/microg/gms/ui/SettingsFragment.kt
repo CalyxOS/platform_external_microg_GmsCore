@@ -15,6 +15,7 @@ import com.google.android.gms.R
 import org.microg.gms.checkin.CheckinPreferences
 import org.microg.gms.gcm.GcmDatabase
 import org.microg.gms.gcm.GcmPrefs
+import org.microg.gms.vending.VendingPreferences
 import org.microg.gms.safetynet.SafetyNetPreferences
 import org.microg.gms.ui.settings.SettingsProvider
 import org.microg.gms.ui.settings.getAllSettingsProviders
@@ -26,6 +27,10 @@ class SettingsFragment : ResourceSettingsFragment() {
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         super.onCreatePreferences(savedInstanceState, rootKey)
 
+        findPreference<Preference>(PREF_ACCOUNTS)!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            findNavController().navigate(requireContext(), R.id.accountManagerFragment)
+            true
+        }
         findPreference<Preference>(PREF_CHECKIN)!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
             findNavController().navigate(requireContext(), R.id.openCheckinSettings)
             true
@@ -42,11 +47,18 @@ class SettingsFragment : ResourceSettingsFragment() {
             findNavController().navigate(requireContext(), R.id.openLocationSettings)
             true
         }
-        findPreference<Preference>(PREF_ABOUT)!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            findNavController().navigate(requireContext(), R.id.openAbout)
+        findPreference<Preference>(PREF_VENDING)!!.onPreferenceClickListener = Preference.OnPreferenceClickListener {
+            findNavController().navigate(requireContext(), R.id.openVendingSettings)
             true
         }
-        findPreference<Preference>(PREF_ABOUT)!!.summary = getString(org.microg.tools.ui.R.string.about_version_str, AboutFragment.getSelfVersion(context))
+
+        findPreference<Preference>(PREF_ABOUT)!!.apply {
+            onPreferenceClickListener = Preference.OnPreferenceClickListener {
+                findNavController().navigate(requireContext(), R.id.openAbout)
+                true
+            }
+            summary = getString(org.microg.tools.ui.R.string.about_version_str, AboutFragment.getSelfVersion(context))
+        }
 
         for (entry in getAllSettingsProviders(requireContext()).flatMap { it.getEntriesStatic(requireContext()) }) {
             entry.createPreference()
@@ -121,6 +133,8 @@ class SettingsFragment : ResourceSettingsFragment() {
         const val PREF_SNET = "pref_snet"
         const val PREF_LOCATION = "pref_location"
         const val PREF_CHECKIN = "pref_checkin"
+        const val PREF_VENDING = "pref_vending"
+        const val PREF_ACCOUNTS = "pref_accounts"
     }
 
     init {
