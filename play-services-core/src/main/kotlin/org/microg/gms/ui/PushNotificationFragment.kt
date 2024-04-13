@@ -19,12 +19,15 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
 import com.google.android.gms.R
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.gson.GsonBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import org.microg.gms.checkin.CheckinPreferences
 import org.microg.gms.gcm.GcmDatabase
 import org.microg.gms.gcm.GcmPrefs
 import org.microg.gms.gcm.getGcmServiceInfo
+import org.microg.gms.gcm.mcs.DataMessageStanza
 
 class PushNotificationFragment : PreferenceFragmentCompat() {
     private lateinit var switchBarPreference: SwitchBarPreference
@@ -34,6 +37,7 @@ class PushNotificationFragment : PreferenceFragmentCompat() {
     private lateinit var pushAppsAll: Preference
     private lateinit var pushAppsNone: Preference
     private lateinit var database: GcmDatabase
+    private var lastReceivedMessageForRegApp: DataMessageStanza? = null
     private val handler = Handler()
     private val updateRunnable = Runnable { updateStatus() }
 
@@ -63,6 +67,26 @@ class PushNotificationFragment : PreferenceFragmentCompat() {
             GcmPrefs.setEnabled(requireContext(), newStatus)
             true
         }
+
+        findPreference<Preference>("pref_push_data")?.setOnPreferenceClickListener {
+            val gson = GsonBuilder()
+                .setPrettyPrinting()
+                .create()
+
+            val pushData = if (lastReceivedMessageForRegApp == null) {
+                getString(R.string.prefcat_push_apps_data_not_available)
+            } else {
+                gson.toJson(lastReceivedMessageForRegApp)
+            }
+
+            MaterialAlertDialogBuilder(it.context)
+                .setTitle(R.string.prefcat_push_apps_data_title)
+                .setMessage(pushData)
+                .setPositiveButton(android.R.string.ok) { dialog, _ -> dialog.dismiss() }
+                .create()
+                .show()
+            true
+        }
     }
 
     override fun onResume() {
@@ -86,6 +110,7 @@ class PushNotificationFragment : PreferenceFragmentCompat() {
         val appContext = requireContext().applicationContext
         lifecycleScope.launchWhenStarted {
             val statusInfo = getGcmServiceInfo(appContext)
+            lastReceivedMessageForRegApp = statusInfo.lastReceivedMessageForRegApp
             switchBarPreference.isChecked = statusInfo.configuration.enabled
             pushStatusCategory.isVisible = statusInfo != null && statusInfo.configuration.enabled
             pushStatus.summary = if (statusInfo != null && statusInfo.connected) {

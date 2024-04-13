@@ -13,6 +13,7 @@ import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.Serializable
+import org.microg.gms.gcm.mcs.DataMessageStanza
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
@@ -22,7 +23,7 @@ private const val ACTION_SERVICE_INFO_RESPONSE = "org.microg.gms.gcm.SERVICE_INF
 private const val EXTRA_SERVICE_INFO = "org.microg.gms.gcm.SERVICE_INFO"
 private const val TAG = "GmsGcmStatusInfo"
 
-data class ServiceInfo(val configuration: ServiceConfiguration, val connected: Boolean, val startTimestamp: Long, val learntMobileInterval: Int, val learntWifiInterval: Int, val learntOtherInterval: Int) : Serializable
+data class ServiceInfo(val configuration: ServiceConfiguration, val connected: Boolean, val startTimestamp: Long, val learntMobileInterval: Int, val learntWifiInterval: Int, val learntOtherInterval: Int, val lastReceivedMessageForRegApp: DataMessageStanza?) : Serializable
 
 data class ServiceConfiguration(val enabled: Boolean, val confirmNewApps: Boolean, val mobile: Int, val wifi: Int, val roaming: Int, val other: Int) : Serializable
 
@@ -40,7 +41,8 @@ class ServiceInfoReceiver : BroadcastReceiver() {
                     startTimestamp = McsService.getStartTimestamp(),
                     learntMobileInterval = prefs.learntMobileInterval,
                     learntWifiInterval = prefs.learntWifiInterval,
-                    learntOtherInterval = prefs.learntOtherInterval
+                    learntOtherInterval = prefs.learntOtherInterval,
+                    lastReceivedMessageForRegApp = McsService.lastReceivedMessageForRegApp
                 )
                 putExtra(EXTRA_SERVICE_INFO, info)
             }, null)
