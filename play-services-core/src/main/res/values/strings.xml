@@ -224,6 +224,9 @@ Please set up a password, PIN, or pattern lock screen."</string>
     <string name="prefcat_push_apps_registered_title">Registered apps</string>
     <string name="prefcat_push_apps_unregistered_title">Unregistered apps</string>
     <string name="prefcat_push_networks_title">Networks to use for push notifications</string>
+    <string name="prefcat_push_apps_data_title">Push notification data</string>
+    <string name="prefcat_push_apps_data_summary">Check data of last push notification received using cloud messaging</string>
+    <string name="prefcat_push_apps_data_not_available">No data available right now</string>
 
     <string name="safetynet_intro">Google SafetyNet is a device certification system, ensuring that the device is properly secured and compatible with Android CTS. Some applications use SafetyNet for security reasons or as a prerequisite for tamper-protection.\n\nmicroG GmsCore contains a free implementation of SafetyNet, but the official server requires SafetyNet requests to be signed using the proprietary DroidGuard system.</string>
     <string name="safetynet_enable_switch">Allow device attestation</string>
