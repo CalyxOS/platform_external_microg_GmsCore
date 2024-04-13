@@ -96,6 +96,10 @@ public class McsService extends Service implements Handler.Callback {
     // Likely if the main port 5228 is blocked by a firewall, the other 52xx are blocked as well
     public static final int[] SERVICE_PORTS = {5228, 443};
 
+    // Last push notification message for a registered app
+    @Nullable
+    public static DataMessageStanza lastReceivedMessageForRegApp = null;
+
     private static final int WAKELOCK_TIMEOUT = 5000;
     // On bad mobile network a ping can take >60s, so we wait for an ACK for 90s
     private static final int HEARTBEAT_ACK_AFTER_PING_TIMEOUT_MS = 90000;
@@ -541,6 +545,7 @@ public class McsService extends Service implements Handler.Callback {
     }
 
     private void handleAppMessage(DataMessageStanza msg) {
+        lastReceivedMessageForRegApp = msg;
         String packageName = msg.category;
         database.noteAppMessage(packageName, DataMessageStanza.ADAPTER.encodedSize(msg));
         GcmDatabase.App app = database.getApp(packageName);
