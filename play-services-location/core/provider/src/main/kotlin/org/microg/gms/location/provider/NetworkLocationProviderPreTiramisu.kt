@@ -17,6 +17,7 @@ import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
 import android.os.WorkSource
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.core.app.PendingIntentCompat
 import androidx.core.content.getSystemService
@@ -128,15 +129,20 @@ class NetworkLocationProviderPreTiramisu : AbstractLocationProviderPreTiramisu {
 
     private fun reportAgain() {
         // Report location again if it's recent enough
+        Log.d(TAG, "reportAgain: $lastReportedLocation")
         lastReportedLocation?.let {
             if (it.elapsedMillis + MIN_INTERVAL_MILLIS > SystemClock.elapsedRealtime() ||
                 it.elapsedMillis + (currentRequest?.interval ?: 0) > SystemClock.elapsedRealtime()) {
+                Log.d(TAG, "Reporting again: it.elapsedMillis=${it.elapsedMillis}, " +
+                    "currentRequest?.interval=${currentRequest?.interval}, " +
+                    "SystemClock.elapsedRealtime()=${SystemClock.elapsedRealtime()}")
                 reportLocationToSystem(it)
             }
         }
     }
 
     override fun reportLocationToSystem(location: Location) {
+        Log.d(TAG, "reportLocationToSystem: $location")
         handler.removeCallbacks(reportAgainRunnable)
         location.provider = LocationManager.NETWORK_PROVIDER
         location.extras?.remove(LOCATION_EXTRA_PRECISION)
