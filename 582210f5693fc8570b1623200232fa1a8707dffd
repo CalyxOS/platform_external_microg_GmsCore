@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d770b18e_98aa42d2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2024-05-07T21:20:42Z",
+      "side": 1,
+      "message": "Doesn\u0027t actually work yet and includes many debug lines used to figure out why.\n\nLeft a comment here: https://github.com/microg/GmsCore/commit/827a8b914cb3ef970ad81897672f4539a423fdcc#r141781679",
+      "revId": "582210f5693fc8570b1623200232fa1a8707dffd",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
