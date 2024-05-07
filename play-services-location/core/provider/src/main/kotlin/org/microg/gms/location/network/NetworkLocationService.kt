@@ -78,6 +78,9 @@ class NetworkLocationService : LifecycleService(), WifiDetailsCallback, CellDeta
     @GuardedBy("gpsLocationBuffer")
     private val gpsLocationBuffer = LinkedList<Location>()
 
+    @GuardedBy("lowAccuracyGpsLocationBuffer")
+    private val lowAccuracyGpsLocationBuffer = LinkedList<Location>()
+
     private var currentLocalMovingWifi: WifiDetails? = null
     private var lastLocalMovingWifiLocationCandidate: Location? = null
 
@@ -391,7 +394,21 @@ class NetworkLocationService : LifecycleService(), WifiDetailsCallback, CellDeta
                 elapsedRealtimeNanos = (old.elapsedRealtimeNanos.toDouble() * (1.0-pct) + new.elapsedRealtimeNanos.toDouble() * pct).toLong()
             }
         }
+        fun Location.isUnreasonableComparedTo(other: Location): Boolean {
+            if (distanceTo(other) > 2 * other.accuracy) {
+                Log.d(TAG, "Unreasonable location $this vs $other")
+                return true
+            }
+            return false
+        }
+        fun Location.reasonableOrNull(): Location? {
+            val gpsLocation = getGpsLocation(elapsedMillis, includeLowAccuracy = true) ?: return this
+            if (isUnreasonableComparedTo(gpsLocation)) return null
+            return this
+        }
         val location = synchronized(locationLock) {
+            lastCellLocation = lastCellLocation?.reasonableOrNull()
+            lastWifiLocation = lastWifiLocation?.reasonableOrNull()
             if (lastCellLocation == null && lastWifiLocation == null) return
             when {
                 // Only non-null
@@ -401,13 +418,16 @@ class NetworkLocationService : LifecycleService(), WifiDetailsCallback, CellDeta
                 lastCellLocation!!.elapsedMillis > lastWifiLocation!!.elapsedMillis + LOCATION_TIME_CLIFF_END_MS -> lastCellLocation
                 lastWifiLocation!!.elapsedMillis > lastCellLocation!!.elapsedMillis + LOCATION_TIME_CLIFF_START_MS -> lastWifiLocation
                 // Wifi out of cell range with higher precision
-                lastCellLocation!!.precision > lastWifiLocation!!.precision && lastWifiLocation!!.distanceTo(lastCellLocation!!) > 2 * lastCellLocation!!.accuracy -> lastCellLocation
+                lastCellLocation!!.precision > lastWifiLocation!!.precision && lastWifiLocation!!.isUnreasonableComparedTo(lastCellLocation!!) -> lastCellLocation
                 // Consider cliff start
                 lastCellLocation!!.elapsedMillis > lastWifiLocation!!.elapsedMillis + LOCATION_TIME_CLIFF_START_MS -> cliffLocations(lastWifiLocation, lastCellLocation)
                 else -> lastWifiLocation
             }
         } ?: return
-        if (location == lastLocation) return
+        if (location == lastLocation) {
+            Log.d(TAG, "location == lastLocation")
+            return
+        }
         if (lastLocation == lastWifiLocation && lastLocation.let { it != null && location.accuracy > it.accuracy } && !now) {
             Log.d(TAG, "Debounce inaccurate location update")
             handler.postDelayed({
@@ -419,6 +439,7 @@ class NetworkLocationService : LifecycleService(), WifiDetailsCallback, CellDeta
         synchronized(activeRequests) {
             for (request in activeRequests.toList()) {
                 try {
+                    Log.d(TAG, "Sending location $location")
                     request.send(this@NetworkLocationService, location)
                 } catch (e: Exception) {
                     Log.w(TAG, "Pending intent error $request")
@@ -429,27 +450,31 @@ class NetworkLocationService : LifecycleService(), WifiDetailsCallback, CellDeta
     }
 
     private fun onNewGpsLocation(location: Location) {
-        if (location.accuracy > GPS_PASSIVE_MIN_ACCURACY) return
-        synchronized(gpsLocationBuffer) {
-            if (gpsLocationBuffer.isNotEmpty() && gpsLocationBuffer.last.elapsedMillis < SystemClock.elapsedRealtime() - GPS_BUFFER_SIZE * GPS_PASSIVE_INTERVAL) {
-                gpsLocationBuffer.clear()
-            } else if (gpsLocationBuffer.size >= GPS_BUFFER_SIZE) {
-                gpsLocationBuffer.remove()
+        if (location.accuracy > GPS_PASSIVE_MIN_ACCURACY_LOW) return
+        val buffer = if (location.accuracy > GPS_PASSIVE_MIN_ACCURACY) lowAccuracyGpsLocationBuffer else gpsLocationBuffer
+        synchronized(buffer) {
+            if (buffer.isNotEmpty() && buffer.last.elapsedMillis < SystemClock.elapsedRealtime() - GPS_BUFFER_SIZE * GPS_PASSIVE_INTERVAL) {
+                buffer.clear()
+            } else if (buffer.size >= GPS_BUFFER_SIZE) {
+                buffer.remove()
             }
-            gpsLocationBuffer.offer(location)
+            buffer.offer(location)
         }
     }
 
-    private fun getGpsLocation(elapsedMillis: Long): Location? {
+    private fun getGpsLocation(elapsedMillis: Long, includeLowAccuracy: Boolean = false): Location? {
         if (elapsedMillis + GPS_BUFFER_SIZE * GPS_PASSIVE_INTERVAL < SystemClock.elapsedRealtime()) return null
-        synchronized(gpsLocationBuffer) {
-            if (gpsLocationBuffer.isEmpty()) return null
-            for (location in gpsLocationBuffer.descendingIterator()) {
-                if (location.elapsedMillis in (elapsedMillis - GPS_PASSIVE_INTERVAL)..(elapsedMillis + GPS_PASSIVE_INTERVAL)) return location
-                if (location.elapsedMillis < elapsedMillis) return null
+        fun getFromBuffer(buffer: LinkedList<Location>): Location? {
+            synchronized(buffer) {
+                if (buffer.isEmpty()) return null
+                for (location in buffer.descendingIterator()) {
+                    if (location.elapsedMillis in (elapsedMillis - GPS_PASSIVE_INTERVAL)..(elapsedMillis + GPS_PASSIVE_INTERVAL)) return location
+                    if (location.elapsedMillis < elapsedMillis) return null
+                }
             }
+            return null
         }
-        return null
+        return getFromBuffer(gpsLocationBuffer) ?: if (includeLowAccuracy) getFromBuffer(lowAccuracyGpsLocationBuffer) else null
     }
 
     override fun dump(fd: FileDescriptor?, writer: PrintWriter, args: Array<out String>?) {
@@ -463,6 +488,7 @@ class NetworkLocationService : LifecycleService(), WifiDetailsCallback, CellDeta
         writer.println("Ichnaea settings: endpoint=${settings.ichneaeEndpoint} contribute=${settings.ichnaeaContribute}")
         writer.println("Wifi scan cache size=${wifiScanCache.size()} hits=${wifiScanCache.hitCount()} miss=${wifiScanCache.missCount()} puts=${wifiScanCache.putCount()} evicts=${wifiScanCache.evictionCount()}")
         writer.println("GPS location buffer size=${gpsLocationBuffer.size} first=${gpsLocationBuffer.firstOrNull()?.elapsedMillis?.formatRealtime()} last=${gpsLocationBuffer.lastOrNull()?.elapsedMillis?.formatRealtime()}")
+        writer.println("Low-accuracy GPS location buffer size=${lowAccuracyGpsLocationBuffer.size} first=${lowAccuracyGpsLocationBuffer.firstOrNull()?.elapsedMillis?.formatRealtime()} last=${lowAccuracyGpsLocationBuffer.lastOrNull()?.elapsedMillis?.formatRealtime()}")
         cache.dump(writer)
         synchronized(activeRequests) {
             if (activeRequests.isNotEmpty()) {
@@ -478,6 +504,7 @@ class NetworkLocationService : LifecycleService(), WifiDetailsCallback, CellDeta
         const val GPS_BUFFER_SIZE = 60
         const val GPS_PASSIVE_INTERVAL = 1000L
         const val GPS_PASSIVE_MIN_ACCURACY = 25f
+        const val GPS_PASSIVE_MIN_ACCURACY_LOW = 10000f // 10 kilometers
         const val LOCATION_TIME_CLIFF_START_MS = 30000L
         const val LOCATION_TIME_CLIFF_END_MS = 60000L
         const val DEBOUNCE_DELAY_MS = 5000L
