@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8939d639_070d1c01",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2024-05-13T19:37:05Z",
+      "side": 1,
+      "message": "Still discussing this upstream, approach is being reworked or possibly abandoned: https://github.com/microg/GmsCore/pull/2367",
+      "revId": "cfc204e99770df2be133a4a1d235f6d81d40d61a",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
