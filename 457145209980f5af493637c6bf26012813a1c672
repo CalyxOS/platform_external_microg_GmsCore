@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6b13f454_e38d1568",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2024-05-20T14:15:12Z",
+      "side": 1,
+      "message": "Registartion should be Registration\n\nregistartion should be registration",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 85
+      },
+      "revId": "457145209980f5af493637c6bf26012813a1c672",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "40a85181_c33fb441",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2024-05-20T14:15:12Z",
+      "side": 1,
+      "message": "Registartion should be Registration, looks",
+      "revId": "457145209980f5af493637c6bf26012813a1c672",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
