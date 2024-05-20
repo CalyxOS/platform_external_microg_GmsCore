@@ -39,6 +39,24 @@
       "message": "Registartion should be Registration, looks",
       "revId": "457145209980f5af493637c6bf26012813a1c672",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5a025aa0_8b12d133",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2024-05-20T14:15:54Z",
+      "side": 1,
+      "message": "Sorry, ignore this extra comment, thought I got rid of it.\n\nPlanning to review the rest of the change later.",
+      "parentUuid": "40a85181_c33fb441",
+      "revId": "457145209980f5af493637c6bf26012813a1c672",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
