@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f07690af_4b0c7b9e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 7
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2024-05-21T13:35:42Z",
+      "side": 1,
+      "message": "This isn\u0027t the way upstream wants it, but in my testing with SatStat I don\u0027t think it could hurt, and it may help (that\u0027s the goal of course) in some situations.\n\nI could go either way when it comes to including or abandoning. It\u0027s tied up upstream right now.",
+      "revId": "1f21f7b54ef9abd6560655691665fb0a4060b324",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
