@@ -16,6 +16,23 @@
       "message": "This isn\u0027t the way upstream wants it, but in my testing with SatStat I don\u0027t think it could hurt, and it may help (that\u0027s the goal of course) in some situations.\n\nI could go either way when it comes to including or abandoning. It\u0027s tied up upstream right now.",
       "revId": "1f21f7b54ef9abd6560655691665fb0a4060b324",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "690e11df_bf23b0c0",
+        "filename": "play-services-location/core/provider/src/main/kotlin/org/microg/gms/location/network/NetworkLocationService.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2024-05-30T20:18:09Z",
+      "side": 1,
+      "message": "This line might be what is preventing the steps at https://gitlab.com/CalyxOS/calyxos/-/issues/2257#note_1929698556 from showing a fix for that problem. The GPS locations all become invalid after 60 seconds.\n\nLower-hanging fruit could be to ensure that remembered GPS locations are preferred over network locations, or at least preferred if they\u0027re too far off, too. Something like that.",
+      "revId": "1f21f7b54ef9abd6560655691665fb0a4060b324",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
