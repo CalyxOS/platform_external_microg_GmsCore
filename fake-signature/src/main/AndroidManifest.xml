@@ -6,6 +6,10 @@
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <permission
+        android:name="android.permission.FAKE_PACKAGE_SIGNATURE"
+        android:protectionLevel="signature" />
+
     <uses-permission android:name="android.permission.FAKE_PACKAGE_SIGNATURE" />
 
     <application>
