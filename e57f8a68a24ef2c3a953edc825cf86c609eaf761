@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a7f093a7_45195569",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2024-06-18T18:34:13Z",
+      "side": 1,
+      "message": "Probably can abandon since it didn\u0027t turn out to provide any meaningful difference in functionality?",
+      "revId": "e57f8a68a24ef2c3a953edc825cf86c609eaf761",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
