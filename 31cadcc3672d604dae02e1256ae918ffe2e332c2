@@ -159,6 +159,24 @@
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4b780dd4_3dbe5ad2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2024-07-03T13:18:35Z",
+      "side": 1,
+      "message": "See https://review.calyxos.org/c/CalyxOS/platform_prebuilts_calyx_microg/+/24151",
+      "parentUuid": "d6a00497_004e230d",
+      "revId": "31cadcc3672d604dae02e1256ae918ffe2e332c2",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "543a76ac_8f965111",
