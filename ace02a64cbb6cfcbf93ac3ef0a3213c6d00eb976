@@ -16,6 +16,23 @@
       "message": "I tested thoroughly in November. Since then, this has only been rebased. I\u0027d rather not do it all again.",
       "revId": "ace02a64cbb6cfcbf93ac3ef0a3213c6d00eb976",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d93d7b4b_8789f9f7",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 3
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2024-07-08T17:32:42Z",
+      "side": 1,
+      "message": "I didn\u0027t test everything all over again, but I did test two things, since `adb sync` made it pretty quick:\n1. In SUW, turn off microG Network Location, proceed, never open microG Settings, adb sync to change and reboot, check microG, location toggles are all off as expected.\n2. In SUW, keep microG Network Location on, proceed, never open microG Settings, adb sync to change and reboot, check microG, location toggles are on as expected, except hotspot.",
+      "revId": "ace02a64cbb6cfcbf93ac3ef0a3213c6d00eb976",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
