@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b908bd2b_e850d5c1",
+        "filename": "play-services-base/core/src/main/kotlin/org/microg/gms/settings/SettingsProvider.kt",
+        "patchSetId": 7
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1000065
+      },
+      "writtenOn": "2024-07-26T05:35:45Z",
+      "side": 1,
+      "message": "Where is this variable located? I am getting a build error.",
+      "range": {
+        "startLine": 96,
+        "startChar": 69,
+        "endLine": 96,
+        "endChar": 77
+      },
+      "revId": "8803a8372e3efe4a9308ca56874aaecfd3949ef8",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
