@@ -93,8 +93,8 @@ class SettingsProvider : ContentProvider() {
                 if (locationBackends === missingSet) {
                     // The user did not alter the location backends, which means that MLS and
                     // location learning (DejaVu) would have been enabled via the system defaults.
-                    preferences.putBooleanIfMissing(editor, Location.WIFI_MLS, true)
-                    preferences.putBooleanIfMissing(editor, Location.CELL_MLS, true)
+                    preferences.putBooleanIfMissing(editor, Location.WIFI_ICHNAEA, true)
+                    preferences.putBooleanIfMissing(editor, Location.CELL_ICHNAEA, true)
                     preferences.putBooleanIfMissing(editor, Location.WIFI_LEARNING, true)
                     preferences.putBooleanIfMissing(editor, Location.CELL_LEARNING, true)
                 }
