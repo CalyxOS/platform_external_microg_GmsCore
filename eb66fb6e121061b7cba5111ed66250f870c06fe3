@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cdb8a1eb_f28f3574",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000065
+      },
+      "writtenOn": "2024-10-15T10:12:34Z",
+      "side": 1,
+      "message": "Pushed for testing login in Aurora Store",
+      "revId": "eb66fb6e121061b7cba5111ed66250f870c06fe3",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
