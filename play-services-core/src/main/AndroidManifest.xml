@@ -402,6 +402,7 @@
             android:theme="@style/Theme.App.DayNight.Dialog.Alert.NoActionBar">
             <intent-filter>
                 <action android:name="com.google.android.gms.common.account.CHOOSE_ACCOUNT" />
+                <action android:name="com.google.android.gms.common.account.CHOOSE_ACCOUNT_USERTILE"/>
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
@@ -426,6 +427,13 @@
             android:exported="true"
             android:process=":ui"
             android:theme="@style/Theme.AppCompat.DayNight.Dialog" />
+
+        <activity
+            android:name="org.microg.gms.auth.AskPackageOverrideActivity"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:process=":ui"
+            android:theme="@style/Theme.App.Translucent" />
 
         <service
             android:name=".auth.GetToken"
@@ -509,6 +517,13 @@
                 <action android:name="com.google.android.gms.auth.api.identity.service.signin.START" />
             </intent-filter>
         </service>
+
+        <activity
+            android:name="org.microg.gms.auth.credentials.identity.IdentityFidoProxyActivity"
+            android:exported="false"
+            android:process=":ui"
+            android:theme="@style/Theme.App.Translucent"
+            android:excludeFromRecents="true"/>
 
         <activity
             android:theme="@style/Theme.AppCompat.Dialog.Alert"
@@ -596,9 +611,7 @@
             android:taskAffinity="org.microg.gms.settings">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-                <data
-                    android:host="exposure-notifications-rpis"
-                    android:scheme="x-gms-settings" />
+                <data android:scheme="x-gms-settings" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <intent-filter>
@@ -651,7 +664,7 @@
             android:name="org.microg.gms.ui.AskPushPermission"
             android:excludeFromRecents="true"
             android:process=":ui"
-            android:theme="@style/Theme.App.DayNight.Dialog.Alert.NoActionBar" />
+            android:theme="@style/Theme.App.Translucent" />
 
         <activity
             android:name="org.microg.gms.ui.GoogleMoreFragment$AsActivity"
@@ -855,6 +868,13 @@
             android:excludeFromRecents="true"
             android:theme="@style/Theme.App.Translucent"/>
 
+        <activity
+            android:name="com.google.android.gms.credential.manager.PasswordManagerActivity"
+            android:exported="true"
+            android:process=":ui"
+            android:excludeFromRecents="true"
+            android:theme="@style/Theme.Translucent"/>
+
         <service android:name="org.microg.gms.clearcut.ClearcutLoggerService">
             <intent-filter>
                 <action android:name="com.google.android.gms.clearcut.service.START" />
@@ -931,6 +951,12 @@
             </intent-filter>
         </service>
 
+        <service android:name="org.microg.gms.common.ClientTelemetryService">
+            <intent-filter>
+                <action android:name="com.google.android.gms.common.telemetry.service.START" />
+            </intent-filter>
+        </service>
+
         <service android:name="org.microg.gms.DummyService">
             <intent-filter>
                 <action android:name="com.google.android.contextmanager.service.ContextManagerService.START" />
@@ -969,7 +995,6 @@
                 <action android:name="com.google.android.gms.chromesync.service.START" />
                 <action android:name="com.google.android.gms.common.download.START" />
                 <action android:name="com.google.android.gms.common.service.START" />
-                <action android:name="com.google.android.gms.common.telemetry.service.START" />
                 <action android:name="com.google.android.gms.config.START" />
                 <action android:name="com.google.android.gms.constellation.service.START" />
                 <action android:name="com.google.android.gms.deviceconnection.service.START" />
