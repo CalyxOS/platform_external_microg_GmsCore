@@ -25,6 +25,7 @@ import android.net.NetworkRequest;
 import android.provider.Settings;
 import android.util.Log;
 
+import androidx.core.app.PendingIntentCompat;
 import androidx.legacy.content.WakefulBroadcastReceiver;
 
 import org.microg.gms.common.ForegroundServiceContext;
@@ -68,7 +69,7 @@ public class TriggerReceiver extends WakefulBroadcastReceiver {
                             .addCapability(NET_CAPABILITY_INTERNET)
                             .build();
                     Intent i = new Intent(context, TriggerReceiver.class);
-                    PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, i, FLAG_UPDATE_CURRENT);
+                    PendingIntent pendingIntent = PendingIntentCompat.getBroadcast(context, 0, i, FLAG_UPDATE_CURRENT, true);
                     cm.registerNetworkCallback(networkRequest, pendingIntent);
                 }
             } else {
