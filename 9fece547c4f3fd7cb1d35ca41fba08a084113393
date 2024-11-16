@@ -3,6 +3,23 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "18b00abf_b267bc5b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000109
+      },
+      "writtenOn": "2024-11-16T01:48:14Z",
+      "side": 1,
+      "message": "https://github.com/microg/GmsCore/issues/2625\nSeems like there\u0027s another regression with 0.3.4 👌\nBut seems like this time fix is in master so I suppose it\u0027s just a matter of merging those too\n\nhttps://github.com/microg/GmsCore/compare/v0.3.4.240913...master",
+      "revId": "9fece547c4f3fd7cb1d35ca41fba08a084113393",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "fb0e8929_443f0538",
         "filename": "play-services-location/core/base/build.gradle",
         "patchSetId": 1
