@@ -139,7 +139,7 @@ public class LoginActivity extends AssistantActivity {
             }
         });
         if(getIntent().hasExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE)){
-            Object tempObject = getIntent().getExtras().get("accountAuthenticatorResponse");
+            Object tempObject = getIntent().getExtras().get(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE);
             if (tempObject instanceof AccountAuthenticatorResponse) {
                 response = (AccountAuthenticatorResponse) tempObject;
             }
@@ -186,11 +186,12 @@ public class LoginActivity extends AssistantActivity {
     }
 
     public void loginCanceled() {
+        Log.d(TAG, "loginCanceled: ");
         setResult(RESULT_CANCELED);
         if (response != null) {
             response.onError(AccountManager.ERROR_CODE_CANCELED, "Canceled");
         }
-        finish();
+        if (SDK_INT >= LOLLIPOP) { finishAndRemoveTask(); } else finish();
     }
 
     @Override
@@ -383,7 +384,7 @@ public class LoginActivity extends AssistantActivity {
                         }
                         checkin(true);
                         returnSuccessResponse(account);
-                        finish();
+                        if (SDK_INT >= LOLLIPOP) { finishAndRemoveTask(); } else finish();
                     }
 
                     @Override
@@ -669,7 +670,7 @@ public class LoginActivity extends AssistantActivity {
         @JavascriptInterface
         public final void skipLogin() {
             Log.d(TAG, "JSBridge: skipLogin");
-            finish();
+            loginCanceled();
         }
 
         @JavascriptInterface

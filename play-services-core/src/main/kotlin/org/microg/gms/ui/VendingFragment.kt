@@ -16,7 +16,9 @@ import org.microg.gms.vending.VendingPreferences
 
 class VendingFragment : PreferenceFragmentCompat() {
     private lateinit var licensingEnabled: TwoStatePreference
+    private lateinit var licensingPurchaseFreeAppsEnabled: TwoStatePreference
     private lateinit var iapEnable: TwoStatePreference
+    private lateinit var assetDeliveryEnabled: TwoStatePreference
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.preferences_vending)
@@ -36,12 +38,36 @@ class VendingFragment : PreferenceFragmentCompat() {
             true
         }
 
+        licensingPurchaseFreeAppsEnabled = preferenceScreen.findPreference(PREF_LICENSING_PURCHASE_FREE_APPS_ENABLED) ?: licensingPurchaseFreeAppsEnabled
+        licensingPurchaseFreeAppsEnabled.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
+            val appContext = requireContext().applicationContext
+            lifecycleScope.launchWhenResumed {
+                if (newValue is Boolean) {
+                    VendingPreferences.setLicensingPurchaseFreeAppsEnabled(appContext, newValue)
+                }
+                updateContent()
+            }
+            true
+        }
+
         iapEnable = preferenceScreen.findPreference(PREF_IAP_ENABLED) ?: iapEnable
         iapEnable.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
             val appContext = requireContext().applicationContext
             lifecycleScope.launchWhenResumed {
                 if (newValue is Boolean) {
                     VendingPreferences.setBillingEnabled(appContext, newValue)
+                }
+                updateContent()
+            }
+            true
+        }
+
+        assetDeliveryEnabled = preferenceScreen.findPreference(PREF_ASSET_DELIVERY_ENABLED) ?: assetDeliveryEnabled
+        assetDeliveryEnabled.onPreferenceChangeListener = Preference.OnPreferenceChangeListener { _, newValue ->
+            val appContext = requireContext().applicationContext
+            lifecycleScope.launchWhenResumed {
+                if (newValue is Boolean) {
+                    VendingPreferences.setAssetDeliveryEnabled(appContext, newValue)
                 }
                 updateContent()
             }
@@ -58,12 +84,16 @@ class VendingFragment : PreferenceFragmentCompat() {
         val appContext = requireContext().applicationContext
         lifecycleScope.launchWhenResumed {
             licensingEnabled.isChecked = VendingPreferences.isLicensingEnabled(appContext)
+            licensingPurchaseFreeAppsEnabled.isChecked = VendingPreferences.isLicensingPurchaseFreeAppsEnabled(appContext)
             iapEnable.isChecked = VendingPreferences.isBillingEnabled(appContext)
+            assetDeliveryEnabled.isChecked = VendingPreferences.isAssetDeliveryEnabled(appContext)
         }
     }
 
     companion object {
         const val PREF_LICENSING_ENABLED = "vending_licensing"
+        const val PREF_LICENSING_PURCHASE_FREE_APPS_ENABLED = "vending_licensing_purchase_free_apps"
         const val PREF_IAP_ENABLED = "vending_iap"
+        const val PREF_ASSET_DELIVERY_ENABLED = "vending_asset_delivery"
     }
 }
