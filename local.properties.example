@@ -1,0 +1,6 @@
+# This serves as an example of a local.properties file for location services specification.
+# Mapbox requires an API key. To use it, replace the placeholder key here with an official key.
+# Positon requires an API key. To use it, replace the placeholder key here with an official key,
+# and remove example.lan.
+mapbox.key=pk.123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.-
+location.online-sources=[{"id": "positon", "name": "Positon", "url": "https://api.positon.xyz.example.lan/?key=01234567-89ab-cdef-0123-456789abcdef", "host": "positon.xyz", "terms": "https://positon.xyz/docs/privacy/", "import": true, "suggested": true},{"id": "beacondb", "name": "BeaconDB", "url": "https://api.beacondb.net/", "host": "beacondb.net", "terms": "https://beacondb.net/privacy/", "import": true, "allowContribute": true},{"id": "custom", "import": true}]
