@@ -52,6 +52,12 @@ class ProvisionService : LifecycleService() {
                 intent?.extras?.getBooleanOrNull("nominatim_enabled")?.let {
                     geocoderNominatim = it
                 }
+                intent?.extras?.apply {
+                    if (containsKey("online_source_id")) {
+                        // The provided online_source_id can be null in order to unset it.
+                        onlineSourceId = getString("online_source_id")
+                    }
+                }
             }
             // What else?
 
