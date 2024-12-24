@@ -931,6 +931,18 @@
             </intent-filter>
         </service>
 
+        <service android:name="org.microg.gms.auth.account.WorkAccountService">
+            <intent-filter>
+                <action android:name="com.google.android.gms.auth.account.workaccount.START" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/work_authenticator" />
+        </service>
+
         <service android:name="org.microg.gms.DummyService">
             <intent-filter>
                 <action android:name="com.google.android.contextmanager.service.ContextManagerService.START" />
