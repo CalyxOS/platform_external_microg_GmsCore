@@ -34,6 +34,24 @@
       "parentUuid": "6077c39f_9795ad6a",
       "revId": "d50c0748676e8ed735e08f6e1827b6791988a557",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "622333f7_0c02d57c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2024-12-26T16:31:06Z",
+      "side": 1,
+      "message": "Previously: Pulled locally, and pushed sometimes, e.g. https://github.com/CalyxOS/platform_external_microg_GmsCore/releases/tag/v0.3.0.233515\n\nI just pushed the few most recent v0.3.x tags to our fork.",
+      "parentUuid": "e279340c_7546bc1d",
+      "revId": "d50c0748676e8ed735e08f6e1827b6791988a557",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ],
   "submitRequirementResults": [
