@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f37e047_406f66ba",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2024-12-26T12:36:55Z",
+      "side": 1,
+      "message": "No test case handy, but security key as second factor worked in Chromium for Proton Mail via microG.",
+      "revId": "3e449b8bc34a25f7557a46770e47db0fd841d331",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
