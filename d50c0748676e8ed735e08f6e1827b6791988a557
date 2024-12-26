@@ -16,6 +16,24 @@
       "message": "Oddly, my app with this chain shows 0.3.0.240913-555 (1738d61) for the version, not 0.3.5[...]. Just noting that.",
       "revId": "d50c0748676e8ed735e08f6e1827b6791988a557",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e279340c_7546bc1d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2024-12-26T16:01:35Z",
+      "side": 1,
+      "message": "You need to pull upstream tags locally or we need to push them to our repository in order for version to show up properly. Not sure how we handled this previously @chirayu@calyxinstitute.org",
+      "parentUuid": "6077c39f_9795ad6a",
+      "revId": "d50c0748676e8ed735e08f6e1827b6791988a557",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ],
   "submitRequirementResults": [
