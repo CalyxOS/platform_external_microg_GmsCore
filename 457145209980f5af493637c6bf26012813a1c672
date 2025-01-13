@@ -200,6 +200,30 @@
       },
       "revId": "457145209980f5af493637c6bf26012813a1c672",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf484b1b_7b9521d4",
+        "filename": "play-services-core/src/main/java/org/microg/gms/checkin/CheckinManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000065
+      },
+      "writtenOn": "2025-01-13T07:38:30Z",
+      "side": 1,
+      "message": "Marking as resolved to not block this patch and adapt it as per upstream\u0027s requirement in a follow-up patch.",
+      "parentUuid": "0aae9f7b_11be6db4",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 87
+      },
+      "revId": "457145209980f5af493637c6bf26012813a1c672",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
