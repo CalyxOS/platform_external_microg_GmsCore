@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "93fbe142_bd0ef448",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2025-01-15T00:13:16Z",
+      "side": 1,
+      "message": "Something better should be done here top avoid repeating the recent issue, this also needs the location service properties now",
+      "revId": "e41170bfab000d83c791c0f3800775c0903393c1",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
