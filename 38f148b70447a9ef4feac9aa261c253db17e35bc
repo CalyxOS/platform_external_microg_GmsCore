@@ -1,5 +1,23 @@
 {
-  "comments": [],
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f27e9e4_793a2426",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-01-15T00:22:05Z",
+      "side": 1,
+      "message": "34527: [TMP] Manually increment version code | https://review.calyxos.org/c/CalyxOS/platform_external_microg_GmsCore/+/34527",
+      "revId": "38f148b70447a9ef4feac9aa261c253db17e35bc",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ],
   "submitRequirementResults": [
     {
       "submitRequirement": {
