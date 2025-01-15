@@ -16,6 +16,24 @@
       "message": "Something better should be done here top avoid repeating the recent issue, this also needs the location service properties now",
       "revId": "e41170bfab000d83c791c0f3800775c0903393c1",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5bde23a7_ed1aa907",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-01-15T21:11:45Z",
+      "side": 1,
+      "message": "Actually we don\u0027t even fail the build anymore. That\u0027d have caught this :-(",
+      "parentUuid": "93fbe142_bd0ef448",
+      "revId": "e41170bfab000d83c791c0f3800775c0903393c1",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
