@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e618f837_ac171614",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2025-01-22T21:02:39Z",
+      "side": 1,
+      "message": "How did it come back again? During a merge or something else?",
+      "revId": "333a532e30fb60bb5ad1a0979b85a9821714b653",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
