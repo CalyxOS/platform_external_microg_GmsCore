@@ -16,6 +16,24 @@
       "message": "How did it come back again? During a merge or something else?",
       "revId": "333a532e30fb60bb5ad1a0979b85a9821714b653",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "932d38b6_e2eaf9cd",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-01-23T11:03:20Z",
+      "side": 1,
+      "message": "This is a rebase on top of the latest upstream tag as part of moving the branch from staging/15 (and 14) to 15-qpr1\n\nWe usually merge during the cycle, and rebase every so often.",
+      "parentUuid": "e618f837_ac171614",
+      "revId": "333a532e30fb60bb5ad1a0979b85a9821714b653",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
