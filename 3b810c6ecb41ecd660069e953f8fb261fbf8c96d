@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "16155e75_3ba34803",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2025-04-07T14:18:34Z",
+      "side": 1,
+      "message": "```suggestion\nPushNotificationFragment: Allow viewing last push notification data\n\nIssue: calyxos#713\n```",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 2
+      },
+      "revId": "3b810c6ecb41ecd660069e953f8fb261fbf8c96d",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
