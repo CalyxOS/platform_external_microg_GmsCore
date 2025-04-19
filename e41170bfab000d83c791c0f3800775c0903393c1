@@ -34,6 +34,24 @@
       "parentUuid": "93fbe142_bd0ef448",
       "revId": "e41170bfab000d83c791c0f3800775c0903393c1",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "31516fb5_19f44c42",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-04-19T00:45:45Z",
+      "side": 1,
+      "message": "The solution to catch it for real is testing, since the keys could still be there but revoked or expired or something.",
+      "parentUuid": "5bde23a7_ed1aa907",
+      "revId": "e41170bfab000d83c791c0f3800775c0903393c1",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
