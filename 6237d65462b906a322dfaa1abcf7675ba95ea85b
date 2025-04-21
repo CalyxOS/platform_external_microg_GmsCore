@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "47f523da_4e176f2a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000065
+      },
+      "writtenOn": "2025-04-21T12:52:25Z",
+      "side": 1,
+      "message": "Rebased to fix merge conflict and updated gson",
+      "revId": "6237d65462b906a322dfaa1abcf7675ba95ea85b",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
