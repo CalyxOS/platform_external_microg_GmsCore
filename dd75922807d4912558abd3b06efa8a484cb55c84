@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "e05b9966_3e1c5f28",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-04-23T21:37:44Z",
+      "side": 1,
+      "message": "Hold, up for now, but will re-do after upstream merge as needed.",
+      "revId": "dd75922807d4912558abd3b06efa8a484cb55c84",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
