@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b46a2cfc_ef6f744a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-04-24T14:01:12Z",
+      "side": 1,
+      "message": "38631: Build: Merge branch \u0027master\u0027 of https://github.com/microg/GmsCore | https://review.calyxos.org/c/CalyxOS/lfs_prebuilts_calyx_microg/+/38631 privapp comment here.",
+      "revId": "95131f4149219b2ca7f76cb5ecf7a46b24324343",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
