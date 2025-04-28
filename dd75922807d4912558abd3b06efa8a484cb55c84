@@ -16,6 +16,24 @@
       "message": "Hold, up for now, but will re-do after upstream merge as needed.",
       "revId": "dd75922807d4912558abd3b06efa8a484cb55c84",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fd006254_e944f5c6",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-04-28T22:35:21Z",
+      "side": 1,
+      "message": "Before latest upstream tag: 0.3.6.250932-220 (6f92b0d) (250932232)\nAfter latest upstream tag: 0.3.7.250932-17 (6f92b0d) (250932031)\n\n:sob:\n\nOne way to \"fix\" this would be the next time there\u0027s a GMS version bump (which is the first part of the version code).\n\nThere was one in this tag, but I missed that.",
+      "parentUuid": "e05b9966_3e1c5f28",
+      "revId": "dd75922807d4912558abd3b06efa8a484cb55c84",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
