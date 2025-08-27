@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "02047404_33731e4b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000062
+      },
+      "writtenOn": "2025-08-27T12:17:34Z",
+      "side": 1,
+      "message": "Anything to worry about here? (This is for calyxos#3429.)",
+      "revId": "99552f6ff0d28291a8a2ca19eab9d61de22e4599",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    }
+  ]
+}
