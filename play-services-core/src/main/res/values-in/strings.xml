@@ -382,4 +382,8 @@
     <string name="pref_app_install_other_apps_note">Izin memungkinkan penginstalan aplikasi yang disediakan dari sumber lain.</string>
     <string name="pref_app_install_permission_instruction">Untuk memastikan bahwa aplikasi yang Anda instal berfungsi dengan baik, silakan berikan izin kepada microG Companion untuk menginstal aplikasi yang diunduh dari sumber lain.</string>
     <string name="prefcat_app_install_list_title">Aplikasi yang menggunakan App Installer</string>
+    <string name="service_name_device_attestation">Pengesahan Perangkat</string>
+    <string name="prefcat_device_attestation_apps_title">Aplikasi yang menggunakan Pengesahan Perangkat</string>
+    <string name="pref_device_attestation_app_allow_requests_title">Izinkan permintaan</string>
+    <string name="pref_device_attestation_app_allow_requests_summary">Izinkan aplikasi untuk meminta pengesahan perangkat</string>
 </resources>
