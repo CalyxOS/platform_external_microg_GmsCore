@@ -128,7 +128,7 @@
     <string name="self_check_name_perm_granted">Hệ thống cấp quyền giả mạo chữ ký:</string>
     <string name="self_check_name_fake_sig_perm">Hệ thống có hỗ trợ giả mạo chữ ký:</string>
     <string name="self_check_resolution_perm_granted">Đây là một chỉ báo mạnh cho thấy ROM hỗ trợ giả mạo chữ ký, nhưng cần thêm thao tác để kích hoạt nó. Vui lòng kiểm tra tài liệu để biết về các bước cần thiết.</string>
-    <string name="self_check_name_app_installed"><xliff:g example="F-Droid">%1$s</xliff:g> đã cài đặt: </string>
+    <string name="self_check_name_app_installed">Cài đặt <xliff:g example="F-Droid">%1$s</xliff:g>:</string>
     <string name="self_check_pkg_vending">Trợ lý MicroG / Cửa hàng Play</string>
     <string name="self_check_pkg_gsf">MicroG Services Framework</string>
     <string name="self_check_name_battery_optimizations">Tắt tối ưu hóa pin:</string>
@@ -178,7 +178,7 @@
     <string name="backup_disabled">Hiện tại không thể sao lưu</string>
     <string name="pref_vending_billing_category">Thanh toán Google Play</string>
     <string name="pref_vending_billing_note_experimental">Cảnh báo: Tính năng này đang trong giai đoạn thử nghiệm và có thể dẫn đến mất tiền.</string>
-    <string name="self_check_name_correct_sig"><xliff:g example="F-Droid">%1$s</xliff:g> có chữ ký chính xác: </string>
+    <string name="self_check_name_correct_sig"><xliff:g example="F-Droid">%1$s</xliff:g> có chữ kỹ đúng:</string>
     <string name="self_check_resolution_fake_sig_perm">ROM của bạn không có hỗ trợ gốc cho việc giả mạo chữ ký. Bạn vẫn có thể sử dụng Xposed hoặc các hệ thống khác để giả mạo chữ ký. Vui lòng kiểm tra tài liệu về ROM nào hỗ trợ giả mạo chữ ký và cách sử dụng MicroG trên ROM không được hỗ trợ.</string>
     <string name="self_check_resolution_correct_sig">Hoặc là <xliff:g example="F-Droid">%1$s</xliff:g> đã cài đặt không tương thích hoặc tính năng giả mạo chữ ký không hoạt động đối với nó. Vui lòng kiểm tra tài liệu về các ứng dụng và ROM nào tương thích.</string>
     <string name="prefcat_configuration">Cấu hình</string>
@@ -210,7 +210,7 @@
     <string name="pref_vending_billing_note_licensing">Một số ứng dụng có thể yêu cầu bạn cũng phải bật xác thực giấy phép để xác minh các giao dịch mua của bạn.</string>
     <string name="credentials_assisted_signin_description">Bạn có thể quản lý Đăng nhập bằng Google trong tài khoản Google của bạn.</string>
     <string name="pref_safetynet_test_cts_failed">Kiểm tra CTS không thành công</string>
-    <string name="self_check_cat_gms_packages">Các gói đã cài đặt</string>
+    <string name="self_check_cat_gms_packages">Cài đặt các gói</string>
     <string name="self_check_resolution_system_spoofs">Vui lòng kiểm tra tài liệu để biết những bước nào có thể được yêu cầu.</string>
     <string name="self_check_resolution_app_installed">Cài đặt ứng dụng <xliff:g example="F-Droid">%1$s</xliff:g> hoặc ứng dụng tương thích. Vui lòng kiểm tra tài liệu về ứng dụng nào tương thích.</string>
     <string name="self_check_pkg_gms">MicroG Services</string>
