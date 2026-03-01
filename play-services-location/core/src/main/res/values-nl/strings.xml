@@ -16,4 +16,5 @@
     <string name="location_settings_dialog_message_title_for_better_experience">Voor een betere ervaring kunt u de locatie van het apparaat inschakelen, die gebruikmaakt van de locatieservice van microG.</string>
     <string name="location_settings_dialog_message_title_to_continue">Om verder te gaan, schakel je de apparaatlocatie in. Deze maakt gebruik van de locatieservice van microG.</string>
     <string name="location_settings_dialog_message_details_start_paragraph">Uw apparaat moet aan de volgende eisen voldoen:</string>
+    <string name="service_name_location">Locactie</string>
 </resources>

@@ -2,4 +2,5 @@
 <resources>
     <string name="fido_nfc_prompt_body">Houd uw sleutel plat tegen de achterkant van uw apparaat totdat het stopt met trillen.</string>
     <string name="fido_transport_selection_biometric">Gebruik dit apparaat met schermvergrendeling</string>
+    <string name="fido_welcome_title">%1$s</string>
 </resources>
