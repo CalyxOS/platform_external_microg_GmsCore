@@ -10,8 +10,8 @@
     <string name="pref_location_cell_learning_enabled_title">Ghi nhớ từ GPS</string>
     <string name="pref_location_cell_learning_enabled_summary">Lưu trữ vị trí mạng di động cục bộ khi sử dụng GPS.</string>
     <string name="pref_location_app_force_coarse_summary">Luôn trả về vị trí không chính xác cho ứng dụng này, bỏ qua mức độ quyền của ứng dụng.</string>
-    <string name="location_settings_dialog_message_title_for_better_experience">Để có trải nghiệm tốt hơn, hãy bật chức năng định vị thiết bị và sử dụng dịch vụ định vị của MicroG</string>
-    <string name="location_settings_dialog_message_grant_permissions">Cấp quyền vị trí cho MicroG Services</string>
+    <string name="location_settings_dialog_message_title_for_better_experience">Để có trải nghiệm tốt hơn, hãy bật chức năng định vị thiết bị và sử dụng dịch vụ định vị của microG</string>
+    <string name="location_settings_dialog_message_grant_permissions">Cấp quyền vị trí cho microG Services</string>
     <string name="pref_location_custom_source_title">Tuỳ chỉnh</string>
     <string name="pref_location_source_title">Chọn dịch vụ định vị trực tuyến</string>
     <string name="pref_location_source_terms">Điều khoản/Quyền riêng tư</string>
@@ -35,11 +35,11 @@
     <string name="pref_location_app_force_coarse_title">Buộc vị trí không chính xác</string>
     <string name="fragment_location_apps_title">Ứng dụng có quyền truy cập vị trí</string>
     <string name="location_settings_dialog_message_details_start_paragraph">Thiết bị của bạn cần phải:</string>
-    <string name="location_settings_dialog_message_title_to_continue">Để có thể tiếp tục, hãy bật chức năng định vị thiết bị và sử dụng dịch vụ định vị của MicroG</string>
+    <string name="location_settings_dialog_message_title_to_continue">Để có thể tiếp tục, hãy bật chức năng định vị thiết bị và sử dụng dịch vụ định vị của microG</string>
     <string name="location_settings_dialog_message_location_services_gps_and_nlp">Sử dụng GPS, Wi‑Fi, dữ liệu di động và cảm biến</string>
     <string name="location_settings_dialog_message_details_end_paragraph">Để biết chi tiết, hãy vào phần cài đặt vị trí.</string>
     <string name="location_settings_dialog_btn_cancel">Không, cảm ơn</string>
-    <string name="location_settings_dialog_message_gls_consent">Sử dụng dịch vụ định vị MicroG; như một phần của dịch vụ này, MicroG có thể thu thập dữ liệu vị trí theo định kỳ và sử dụng dữ liệu này theo cách ẩn danh để cải thiện độ chính xác của vị trí và các dịch vụ dựa trên vị trí.</string>
+    <string name="location_settings_dialog_message_gls_consent">Sử dụng dịch vụ định vị microG; như một phần của dịch vụ này, microG có thể thu thập dữ liệu vị trí theo định kỳ và sử dụng dữ liệu này theo cách ẩn danh để cải thiện độ chính xác của vị trí và các dịch vụ dựa trên vị trí.</string>
     <string name="location_settings_dialog_btn_sure">ĐƯỢC RỒI</string>
     <string name="pref_location_custom_url_input_hint">URL dịch vụ tùy chỉnh</string>
     <string name="pref_location_custom_url_summary">Điều này cho phép thiết lập URL dịch vụ tùy chỉnh. Các giá trị không hợp lệ có thể khiến dịch vụ vị trí không phản hồi hoặc hoàn toàn không khả dụng.</string>
