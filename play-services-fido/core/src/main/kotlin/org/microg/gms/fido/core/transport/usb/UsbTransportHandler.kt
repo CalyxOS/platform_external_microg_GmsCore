@@ -17,20 +17,16 @@ import android.os.Bundle
 import android.util.Base64
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.RECEIVER_NOT_EXPORTED
 import com.google.android.gms.fido.fido2.api.common.*
-import com.upokecenter.cbor.CBORObject
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CompletableDeferred
-import kotlinx.coroutines.delay
 import org.microg.gms.fido.core.*
-import org.microg.gms.fido.core.protocol.*
-import org.microg.gms.fido.core.protocol.msgs.*
-import org.microg.gms.fido.core.transport.CtapConnection
 import org.microg.gms.fido.core.transport.Transport
 import org.microg.gms.fido.core.transport.TransportHandler
 import org.microg.gms.fido.core.transport.TransportHandlerCallback
 import org.microg.gms.fido.core.transport.usb.ctaphid.CtapHidConnection
-import org.microg.gms.fido.core.transport.usb.ctaphid.CtapHidMessageStatusException
 import org.microg.gms.utils.toBase64
 
 @RequiresApi(21)
@@ -112,7 +108,7 @@ class UsbTransportHandler(private val context: Context, callback: TransportHandl
                 deferred.complete(device)
             }
         }
-        context.registerReceiver(receiver, IntentFilter(UsbManager.ACTION_USB_DEVICE_ATTACHED))
+        ContextCompat.registerReceiver(context, receiver, IntentFilter(UsbManager.ACTION_USB_DEVICE_ATTACHED), RECEIVER_NOT_EXPORTED)
         invokeStatusChanged(TransportHandlerCallback.STATUS_WAITING_FOR_DEVICE)
         val device = deferred.await()
         context.unregisterReceiver(receiver)
@@ -141,7 +137,7 @@ class UsbTransportHandler(private val context: Context, callback: TransportHandl
         }
     }
 
-    override suspend fun start(options: RequestOptions, callerPackage: String, pinRequested: Boolean, pin: String?): AuthenticatorResponse {
+    override suspend fun start(options: RequestOptions, callerPackage: String, pinRequested: Boolean, pin: String?, userInfo: String?): AuthenticatorResponse {
         for (device in context.usbManager?.deviceList?.values.orEmpty()) {
             val iface = getCtapHidInterface(device) ?: continue
             try {

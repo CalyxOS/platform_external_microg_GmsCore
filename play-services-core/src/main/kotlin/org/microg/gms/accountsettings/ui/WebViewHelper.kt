@@ -9,13 +9,16 @@ import android.content.Intent
 import android.content.Intent.URI_INTENT_SCHEME
 import android.net.Uri
 import android.os.Build.VERSION.SDK_INT
+import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.webkit.CookieManager
+import android.webkit.ValueCallback
+import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
+import android.webkit.WebResourceResponse
 import android.webkit.WebSettings
 import android.webkit.WebView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.webkit.WebResourceErrorCompat
 import androidx.webkit.WebViewClientCompat
@@ -23,18 +26,30 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
+import org.microg.gms.auth.AuthConstants
 import org.microg.gms.auth.AuthManager
-import org.microg.gms.common.Constants
+import org.microg.gms.auth.login.LoginActivity
 import org.microg.gms.common.Constants.GMS_PACKAGE_NAME
 import org.microg.gms.common.PackageUtils
 import java.net.URLEncoder
-import java.util.*
+import java.util.Locale
+import androidx.core.net.toUri
 
 private const val TAG = "AccountSettingsWebView"
 
-class WebViewHelper(private val activity: AppCompatActivity, private val webView: WebView, private val allowedPrefixes: Set<String> = emptySet<String>()) {
+class WebViewHelper(private val activity: MainActivity, private val webView: WebView, private val allowedPrefixes: Set<String> = emptySet<String>()) {
+    private var saveUserAvatar = false
     fun openWebView(url: String?, accountName: String?, callingPackage: String? = null) {
-        prepareWebViewSettings(webView.settings)
+        prepareWebViewSettings(webView.settings, callingPackage)
+        webView.webChromeClient = object : WebChromeClient() {
+            override fun onShowFileChooser(
+                view: WebView?,
+                filePathCallback: ValueCallback<Array<Uri>>,
+                fileChooserParams: FileChooserParams
+            ): Boolean {
+                return activity.showFileChooser(fileChooserParams, filePathCallback)
+            }
+        }
         webView.webViewClient = object : WebViewClientCompat() {
             override fun onReceivedError(view: WebView, request: WebResourceRequest, error: WebResourceErrorCompat) {
                 Log.w(TAG, "Error loading: $error")
@@ -45,6 +60,25 @@ class WebViewHelper(private val activity: AppCompatActivity, private val webView
                 webView.visibility = View.VISIBLE
             }
 
+            override fun shouldInterceptRequest(view: WebView?, request: WebResourceRequest?): WebResourceResponse? {
+                if (SDK_INT >= 21) {
+                    val requestUrl = request?.url?.toString() ?: return super.shouldInterceptRequest(view, request)
+                    try {
+                        if (saveUserAvatar && isGoogleAvatarUrl(requestUrl)) {
+                            activity.updateLocalAccountAvatar(requestUrl, accountName)
+                            saveUserAvatar = false
+                        }
+                        val overrideUri = requestUrl.toUri()
+                        if (overrideUri.getQueryParameter("source-path") == "/profile-picture/updating") {
+                            saveUserAvatar = true
+                        }
+                    } catch (e: Exception) {
+                        Log.d(TAG, "shouldInterceptRequest: error", e)
+                    }
+                }
+                return super.shouldInterceptRequest(view, request)
+            }
+
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
                 Log.d(TAG, "Navigating to $url")
                 if (url.startsWith("intent:")) {
@@ -53,6 +87,7 @@ class WebViewHelper(private val activity: AppCompatActivity, private val webView
                         if (intent.`package` == GMS_PACKAGE_NAME || PackageUtils.isGooglePackage(activity, intent.`package`)) {
                             // Only allow to start Google packages
                             activity.startActivity(intent)
+                            return true
                         } else {
                             Log.w(TAG, "Ignoring request to start non-Google app")
                         }
@@ -61,10 +96,37 @@ class WebViewHelper(private val activity: AppCompatActivity, private val webView
                     }
                     return false
                 }
+                if (url.startsWith("sms:")) {
+                    try {
+                        val fixedUrl = url.replaceFirst("sms://", "sms:")
+                        val intent = Intent(Intent.ACTION_VIEW, fixedUrl.toUri())
+                        activity.startActivity(intent)
+                        return true
+                    } catch (e: Exception) {
+                        Log.w(TAG, "Failed to open SMS", e)
+                    }
+                    return false
+                }
+                val overrideUri = url.toUri()
+                if (overrideUri.path?.endsWith("/signin/identifier") == true) {
+                    val intent = Intent(activity, LoginActivity::class.java).apply { addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) }
+                    activity.startActivity(intent)
+                    return true
+                }
+                if (overrideUri.path?.endsWith("/Logout") == true) {
+                    val intent = Intent(Settings.ACTION_SYNC_SETTINGS).apply { putExtra(Settings.EXTRA_ACCOUNT_TYPES, arrayOf(AuthConstants.DEFAULT_ACCOUNT_TYPE)) }
+                    activity.startActivity(intent)
+                    return true
+                }
+                if (overrideUri.getQueryParameter(QUERY_GNOTS_ACTION) == ACTION_CLOSE || overrideUri.getQueryParameter(QUERY_WC_ACTION) == ACTION_CLOSE) {
+                    accountName?.let { activity.updateVerifyNotification(it) }
+                    activity.finishActivity()
+                    return true
+                }
                 if (allowedPrefixes.isNotEmpty() && allowedPrefixes.none { url.startsWith(it) }) {
                     try {
                         // noinspection UnsafeImplicitIntentLaunch
-                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url)).apply { addCategory(Intent.CATEGORY_BROWSABLE) }
+                        val intent = Intent(Intent.ACTION_VIEW, overrideUri).apply { addCategory(Intent.CATEGORY_BROWSABLE) }
                         if (callingPackage?.let { PackageUtils.isGooglePackage(activity, it) } == true) {
                             try {
                                 intent.`package` = GMS_PACKAGE_NAME
@@ -78,7 +140,15 @@ class WebViewHelper(private val activity: AppCompatActivity, private val webView
                     } catch (e: Exception) {
                         Log.w(TAG, "Error forwarding to browser", e)
                     }
+                    activity.finishActivity()
                     return true
+                }
+                if (overrideUri.getQueryParameter("hl").isNullOrEmpty()) {
+                    val urlWithLanguage = addLanguageParam(url)
+                    if (urlWithLanguage != null) {
+                        view.loadUrl(urlWithLanguage)
+                        return true
+                    }
                 }
                 return false
             }
@@ -100,14 +170,14 @@ class WebViewHelper(private val activity: AppCompatActivity, private val webView
         if (url != null) {
             webView.loadUrl(url)
         } else {
-            activity.finish()
+            activity.finishActivity()
         }
     }
 
     private fun addLanguageParam(url: String?): String? {
         val language = Locale.getDefault().language
         return if (language.isNotEmpty()) {
-            Uri.parse(url).buildUpon().appendQueryParameter("hl", language).toString()
+            url?.toUri()?.buildUpon()?.appendQueryParameter("hl", language)?.toString()
         } else {
             url
         }
@@ -134,11 +204,11 @@ class WebViewHelper(private val activity: AppCompatActivity, private val webView
             }
         } catch (e: Exception) {
             Log.w(TAG, "Failed to get weblogin auth.", e)
-            activity.finish()
+            activity.finishActivity()
         }
     }
 
-    private fun prepareWebViewSettings(settings: WebSettings) {
+    private fun prepareWebViewSettings(settings: WebSettings, callingPackage:String?) {
         settings.javaScriptEnabled = true
         settings.setSupportMultipleWindows(false)
         settings.allowFileAccess = false
@@ -150,6 +220,10 @@ class WebViewHelper(private val activity: AppCompatActivity, private val webView
         settings.userAgentString = "${settings.userAgentString} ${
             String.format(Locale.getDefault(), "OcIdWebView (%s)", JSONObject().apply {
                 put("os", "Android")
+                put("osVersion", SDK_INT)
+                put("app", GMS_PACKAGE_NAME)
+                put("callingAppId", callingPackage ?: "")
+                put("isDarkTheme", activity.isNightMode())
             }.toString())
         }"
     }

@@ -126,6 +126,10 @@
         android:description="@string/perm_car_vendor_extension_description"
         android:permissionGroup="com.google.android.gms.permission.CAR_INFORMATION"
         android:protectionLevel="dangerous" />
+    <permission
+        android:name="com.google.android.gms.locationsharingreporter.periodic.STATUS_UPDATE"
+        android:protectionLevel="signature"/>
+    <uses-permission android:name="com.google.android.gms.locationsharingreporter.periodic.STATUS_UPDATE"/>
 
     <permission
         android:name="com.google.android.gms.auth.permission.GOOGLE_ACCOUNT_CHANGE"
@@ -169,6 +173,11 @@
     <uses-permission
         android:name="android.permission.UPDATE_APP_OPS_STATS"
         tools:ignore="ProtectedPermissions" />
+
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
 
     <uses-sdk
         tools:overrideLibrary="androidx.compose.ui.tooling,
@@ -226,6 +235,23 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".locationsharingreporter.service.settings.LocationSharingSettingsActivity"
+            android:enabled="true"
+            android:process=":ui"
+            android:excludeFromRecents="true"
+            android:taskAffinity="org.microg.gms.settings"
+            android:exported="false" />
+
+        <activity
+            android:name=".locationsharingreporter.service.settings.LocationShareConfirmActivity"
+            android:enabled="true"
+            android:process=":ui"
+            android:theme="@style/ThemeTranslucentCommon"
+            android:launchMode="singleInstance"
+            android:excludeFromRecents="true"
+            android:exported="false" />
+
         <service android:name="org.microg.gms.places.GeoDataService">
             <intent-filter>
                 <action android:name="com.google.android.gms.location.places.GeoDataApi" />
@@ -266,6 +292,15 @@
             android:multiprocess="false"
             android:readPermission="android.permission.SUBSCRIBED_FEEDS_READ"
             android:writePermission="android.permission.SUBSCRIBED_FEEDS_WRITE" />
+        <provider
+            android:authorities="com.google.android.gms.fileprovider"
+            android:name="org.microg.gms.settings.GmsFileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider_paths"/>
+        </provider>
 
         <!-- Device Checkin -->
 
@@ -323,6 +358,25 @@
             android:name="org.microg.gms.gcm.McsService"
             android:process=":persistent" />
 
+        <service
+            android:name="org.microg.gms.gcm.GcmInGmsService"
+            android:exported="false"
+            android:process=":persistent"/>
+
+        <receiver
+            android:name="org.microg.gms.gcm.GcmRegistrationReceiver"
+            android:exported="false"
+            android:process=":persistent">
+            <intent-filter>
+                <action android:name="org.microg.gms.gcm.CONNECTED" />
+                <action android:name="org.microg.gms.gcm.REGISTER_ACCOUNT" />
+                <action android:name="org.microg.gms.gcm.REGISTER_ALL_ACCOUNTS" />
+                <action android:name="org.microg.gms.gcm.NOTIFY_COMPLETE" />
+
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </receiver>
+
         <receiver
             android:name="org.microg.gms.gcm.SendReceiver"
             android:process=":persistent">
@@ -359,8 +413,7 @@
         </receiver>
 
         <receiver
-            android:name="org.microg.gms.gcm.UnregisterReceiver"
-            android:process=":persistent">
+            android:name="org.microg.gms.common.PersistentTrustedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.PACKAGE_DATA_CLEARED" />
                 <action android:name="android.intent.action.PACKAGE_FULLY_REMOVED" />
@@ -408,6 +461,16 @@
                 <action android:name="com.google.android.gms.wearable.BIND" />
             </intent-filter>
         </service>
+
+        <activity
+            android:name="com.google.android.gms.wearable.consent.TermsOfServiceActivity"
+            android:process=":ui"
+            android:configChanges="screenSize|orientation|keyboardHidden">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.TOS"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
 
         <!-- Auth -->
 
@@ -528,6 +591,13 @@
             </intent-filter>
         </activity>
 
+        <service android:name=".locationsharingreporter.service.LocationSharingReporterApiService">
+            <intent-filter>
+                <action android:name="com.google.android.gms.locationsharingreporter.service.START" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </service>
+
         <service android:name="org.microg.gms.signin.SignInService">
             <intent-filter>
                 <action android:name="com.google.android.gms.signin.service.START" />
@@ -604,6 +674,12 @@
             android:theme="@style/Theme.LoginBlue"/>
 
         <!-- Games -->
+
+        <activity
+            android:name="org.microg.gms.games.ui.GamePlayDataActivity"
+            android:process=":ui"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
 
         <activity
             android:name="org.microg.gms.games.ui.InGameUiActivity"
@@ -922,6 +998,30 @@
             </intent-filter>
         </service>
 
+        <!-- family -->
+
+        <activity
+            android:name="com.google.android.gms.family.v2.manage.FamilyManagementActivity"
+            android:exported="true"
+            android:configChanges="screenSize|screenLayout|orientation"
+            android:process=":ui">
+            <intent-filter>
+                <action android:name="com.google.android.gms.family.v2.MANAGE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.google.android.gms.family.v2.manage.DeleteMemberActivity"
+            android:exported="true"
+            android:configChanges="screenSize|screenLayout|orientation"
+            android:process=":ui">
+            <intent-filter>
+                <action android:name="com.google.android.gms.family.v2.DELETE_MEMBER"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
+
         <!-- feedback -->
 
         <service android:name="org.microg.gms.feedback.FeedbackService">
@@ -1054,6 +1154,10 @@
             </intent-filter>
         </activity>
 
+        <service
+            android:name="com.google.android.gms.maps.auth.ApiTokenService"
+            android:exported="true"/>
+
         <service android:name="org.microg.gms.DummyService">
             <intent-filter>
                 <action android:name="com.google.android.contextmanager.service.ContextManagerService.START" />
@@ -1073,7 +1177,6 @@
                 <action android:name="com.google.android.gms.auth.api.identity.service.credentialsaving.START" />
                 <action android:name="com.google.android.gms.auth.api.phone.service.InternalService.START" />
                 <action android:name="com.google.android.gms.auth.api.signin.service.START" />
-                <action android:name="com.google.android.gms.auth.blockstore.service.START"/>
                 <action android:name="com.google.android.gms.auth.config.service.START" />
                 <action android:name="com.google.android.gms.auth.cryptauth.cryptauthservice.START" />
                 <action android:name="com.google.android.gms.auth.proximity.devicesyncservice.START" />

@@ -42,18 +42,22 @@ import android.webkit.WebView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.webkit.WebViewClientCompat;
 
 import com.google.android.gms.R;
 
 import org.json.JSONArray;
+import org.microg.gms.accountaction.AccountNotificationKt;
+import org.microg.gms.accountsettings.ui.MainActivity;
 import org.microg.gms.auth.AuthConstants;
 import org.microg.gms.auth.AuthManager;
 import org.microg.gms.auth.AuthRequest;
 import org.microg.gms.auth.AuthResponse;
 import org.microg.gms.checkin.CheckinManager;
 import org.microg.gms.checkin.LastCheckinInfo;
+import org.microg.gms.common.Constants;
 import org.microg.gms.common.HttpFormClient;
 import org.microg.gms.common.Utils;
 import org.microg.gms.people.PeopleManager;
@@ -67,34 +71,38 @@ import java.util.Locale;
 import static android.accounts.AccountManager.PACKAGE_NAME_KEY_LEGACY_NOT_VISIBLE;
 import static android.accounts.AccountManager.VISIBILITY_USER_MANAGED_VISIBLE;
 import static android.os.Build.VERSION.SDK_INT;
-import static android.os.Build.VERSION_CODES.GINGERBREAD_MR1;
-import static android.os.Build.VERSION_CODES.HONEYCOMB;
-import static android.os.Build.VERSION_CODES.LOLLIPOP;
 import static android.telephony.TelephonyManager.SIM_STATE_UNKNOWN;
 import static android.view.KeyEvent.KEYCODE_BACK;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 import static android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT;
+import static org.microg.gms.accountsettings.ui.ExtensionsKt.EXTRA_URL;
 import static org.microg.gms.auth.AuthPrefs.isAuthVisible;
 import static org.microg.gms.common.Constants.GMS_PACKAGE_NAME;
 import static org.microg.gms.common.Constants.GMS_VERSION_CODE;
 import static org.microg.gms.common.Constants.VENDING_PACKAGE_NAME;
+import static org.microg.gms.gcm.ExtensionsKt.ACTION_GCM_REGISTER_ACCOUNT;
+import static org.microg.gms.gcm.ExtensionsKt.KEY_GCM_REGISTER_ACCOUNT_NAME;
 
 public class LoginActivity extends AssistantActivity {
     public static final String TMPL_NEW_ACCOUNT = "new_account";
     public static final String EXTRA_TMPL = "tmpl";
     public static final String EXTRA_EMAIL = "email";
     public static final String EXTRA_TOKEN = "masterToken";
+    public static final String EXTRA_RE_AUTH_ACCOUNT = "re_auth_account";
     public static final int STATUS_BAR_DISABLE_BACK = 0x00400000;
 
     private static final String TAG = "GmsAuthLoginBrowser";
     private static final String EMBEDDED_SETUP_URL = "https://accounts.google.com/EmbeddedSetup";
+    private static final String EMBEDDED_RE_AUTH_URL = "https://accounts.google.com/embedded/reauth/v2/android";
     private static final String PROGRAMMATIC_AUTH_URL = "https://accounts.google.com/o/oauth2/programmatic_auth";
     private static final String GOOGLE_SUITE_URL = "https://accounts.google.com/signin/continue";
+    private static final String GOOGLE_SIGNUP_URL = "https://accounts.google.com/signup";
     private static final String MAGIC_USER_AGENT = " MinuteMaid";
     private static final String COOKIE_OAUTH_TOKEN = "oauth_token";
     private static final String ACTION_UPDATE_ACCOUNT = "com.google.android.gms.auth.GOOGLE_ACCOUNT_CHANGE";
     private static final String PERMISSION_UPDATE_ACCOUNT = "com.google.android.gms.auth.permission.GOOGLE_ACCOUNT_CHANGE";
+    private static final int REQUEST_CODE_SIGNUP = 1001;
 
     private final FidoHandler fidoHandler = new FidoHandler(this);
     private final DroidGuardHandler dgHandler = new DroidGuardHandler(this);
@@ -106,6 +114,8 @@ public class LoginActivity extends AssistantActivity {
     private InputMethodManager inputMethodManager;
     private ViewGroup authContent;
     private int state = 0;
+    private boolean isReAuth = false;
+    private Account reAuthAccount;
 
     @SuppressLint("AddJavascriptInterface")
     @Override
@@ -119,6 +129,22 @@ public class LoginActivity extends AssistantActivity {
         authContent = (ViewGroup) findViewById(R.id.auth_content);
         ((ViewGroup) findViewById(R.id.auth_root)).addView(webView);
         webView.setWebViewClient(new WebViewClientCompat() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                Log.d(TAG, "shouldOverrideUrlLoading: url: " + url);
+                Uri uri = Uri.parse(url);
+                String uriPath = uri.getPath();
+                if (uriPath != null && uriPath.contains("/signup")) {
+                    String biz = uri.getQueryParameter("biz");
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    intent.setPackage(GMS_PACKAGE_NAME);
+                    intent.putExtra(EXTRA_URL, biz != null ? GOOGLE_SIGNUP_URL + "?biz=" + biz : GOOGLE_SIGNUP_URL);
+                    startActivityForResult(intent, REQUEST_CODE_SIGNUP);
+                    return true;
+                }
+                return super.shouldOverrideUrlLoading(view, url);
+            }
+
             @Override
             public void onPageFinished(WebView view, String url) {
                 Log.d(TAG, "pageFinished: " + view.getUrl());
@@ -148,6 +174,10 @@ public class LoginActivity extends AssistantActivity {
                 response = (AccountAuthenticatorResponse) tempObject;
             }
         }
+        if (getIntent().hasExtra(EXTRA_RE_AUTH_ACCOUNT)) {
+            reAuthAccount = getIntent().getParcelableExtra(EXTRA_RE_AUTH_ACCOUNT);
+            isReAuth = reAuthAccount != null;
+        }
         if (getIntent().hasExtra(EXTRA_TOKEN)) {
             if (getIntent().hasExtra(EXTRA_EMAIL)) {
                 AccountManager accountManager = AccountManager.get(this);
@@ -160,12 +190,20 @@ public class LoginActivity extends AssistantActivity {
             } else {
                 retrieveRtToken(getIntent().getStringExtra(EXTRA_TOKEN));
             }
-        } else if (android.os.Build.VERSION.SDK_INT < 21) {
+        } else if (android.os.Build.VERSION.SDK_INT < 21 || isReAuth) {
             init();
         } else {
             setMessage(R.string.auth_before_connect);
             setBackButtonText(android.R.string.cancel);
             setNextButtonText(R.string.auth_sign_in);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_SIGNUP) {
+            webView.reload();
         }
     }
 
@@ -195,7 +233,7 @@ public class LoginActivity extends AssistantActivity {
         if (response != null) {
             response.onError(AccountManager.ERROR_CODE_CANCELED, "Canceled");
         }
-        if (SDK_INT >= LOLLIPOP) { finishAndRemoveTask(); } else finish();
+        if (SDK_INT >= 21) { finishAndRemoveTask(); } else finish();
     }
 
     @Override
@@ -213,7 +251,7 @@ public class LoginActivity extends AssistantActivity {
         authContent.addView(loading);
         setMessage(R.string.auth_connecting);
         CookieManager.getInstance().setAcceptCookie(true);
-        if (SDK_INT >= LOLLIPOP) {
+        if (SDK_INT >= 21) {
             CookieManager.getInstance().removeAllCookies(value -> start());
         } else {
             //noinspection deprecation
@@ -224,7 +262,7 @@ public class LoginActivity extends AssistantActivity {
 
     private static WebView createWebView(Context context) {
         WebView webView = new WebView(context);
-        if (SDK_INT < LOLLIPOP) {
+        if (SDK_INT < 21) {
             webView.setVisibility(VISIBLE);
         } else {
             webView.setVisibility(INVISIBLE);
@@ -315,31 +353,15 @@ public class LoginActivity extends AssistantActivity {
                 .token(oAuthToken).isAccessToken()
                 .addAccount()
                 .getAccountId()
-                .droidguardResults(null /*TODO*/)
+                .droidguardResults("null" /*TODO*/)
                 .getResponseAsync(new HttpFormClient.Callback<AuthResponse>() {
                     @Override
                     public void onResponse(AuthResponse response) {
                         Account account = new Account(response.email, accountType);
-                        if (accountManager.addAccountExplicitly(account, response.token, null)) {
-                            accountManager.setAuthToken(account, "SID", response.Sid);
-                            accountManager.setAuthToken(account, "LSID", response.LSid);
-                            accountManager.setUserData(account, "flags", "1");
-                            accountManager.setUserData(account, "services", response.services);
-                            accountManager.setUserData(account, "oauthAccessToken", "1");
-                            accountManager.setUserData(account, "firstName", response.firstName);
-                            accountManager.setUserData(account, "lastName", response.lastName);
-                            if (!TextUtils.isEmpty(response.accountId))
-                                accountManager.setUserData(account, "GoogleUserId", response.accountId);
-
-                            retrieveGmsToken(account);
-                            setResult(RESULT_OK);
+                        if (isReAuth && reAuthAccount != null && reAuthAccount.name.equals(account.name)) {
+                            accountManager.removeAccount(account, future -> saveAccount(account, response), null);
                         } else {
-                            Log.w(TAG, "Account NOT created!");
-                            runOnUiThread(() -> {
-                                showError(R.string.auth_general_error_desc);
-                                setNextButtonText(android.R.string.ok);
-                            });
-                            state = -2;
+                            saveAccount(account, response);
                         }
                     }
 
@@ -354,7 +376,35 @@ public class LoginActivity extends AssistantActivity {
                     }
                 });
     }
+
+    private void saveAccount(Account account, AuthResponse response) {
+        if (accountManager.addAccountExplicitly(account, response.token, null)) {
+            accountManager.setAuthToken(account, "SID", response.Sid);
+            accountManager.setAuthToken(account, "LSID", response.LSid);
+            accountManager.setUserData(account, "flags", "1");
+            accountManager.setUserData(account, "services", response.services);
+            accountManager.setUserData(account, "oauthAccessToken", "1");
+            accountManager.setUserData(account, "firstName", response.firstName);
+            accountManager.setUserData(account, "lastName", response.lastName);
+            if (!TextUtils.isEmpty(response.accountId))
+                accountManager.setUserData(account, "GoogleUserId", response.accountId);
+
+            retrieveGmsToken(account);
+            setResult(RESULT_OK);
+        } else {
+            Log.w(TAG, "Account NOT created!");
+            runOnUiThread(() -> {
+                showError(R.string.auth_general_error_desc);
+                setNextButtonText(android.R.string.ok);
+            });
+            state = -2;
+        }
+    }
+
     private void returnSuccessResponse(Account account){
+        if (isReAuth && reAuthAccount != null) {
+            AccountNotificationKt.cancelAccountNotificationChannel(this, reAuthAccount);
+        }
         if(response != null){
             Bundle bd = new Bundle();
             bd.putString(AccountManager.KEY_ACCOUNT_NAME,account.name);
@@ -380,6 +430,7 @@ public class LoginActivity extends AssistantActivity {
                 .hasPermission(true)
                 .addAccount()
                 .getAccountId()
+                .droidguardResults("null")
                 .getResponseAsync(new HttpFormClient.Callback<AuthResponse>() {
                     @Override
                     public void onResponse(AuthResponse response) {
@@ -392,7 +443,8 @@ public class LoginActivity extends AssistantActivity {
                         }
                         checkin(true);
                         returnSuccessResponse(account);
-                        if (SDK_INT >= LOLLIPOP) { finishAndRemoveTask(); } else finish();
+                        notifyGcmGroupUpdate(account.name);
+                        if (SDK_INT >= 21) { finishAndRemoveTask(); } else finish();
                     }
 
                     @Override
@@ -405,6 +457,13 @@ public class LoginActivity extends AssistantActivity {
                         state = -2;
                     }
                 });
+    }
+
+    private void notifyGcmGroupUpdate(String accountName) {
+        Intent intent = new Intent(ACTION_GCM_REGISTER_ACCOUNT);
+        intent.setPackage(Constants.GMS_PACKAGE_NAME);
+        intent.putExtra(KEY_GCM_REGISTER_ACCOUNT_NAME, accountName);
+        sendBroadcast(intent);
     }
 
     private boolean checkin(boolean force) {
@@ -426,16 +485,20 @@ public class LoginActivity extends AssistantActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    private static String buildUrl(String tmpl, Locale locale) {
-        return Uri.parse(EMBEDDED_SETUP_URL).buildUpon()
+    private String buildUrl(String tmpl, Locale locale) {
+        String uriString = isReAuth ? EMBEDDED_RE_AUTH_URL : EMBEDDED_SETUP_URL;
+        Uri.Builder builder = Uri.parse(uriString).buildUpon()
                 .appendQueryParameter("source", "android")
                 .appendQueryParameter("xoauth_display_name", "Android Device")
                 .appendQueryParameter("lang", locale.getLanguage())
                 .appendQueryParameter("cc", locale.getCountry().toLowerCase(Locale.US))
                 .appendQueryParameter("langCountry", locale.toString().toLowerCase(Locale.US))
                 .appendQueryParameter("hl", locale.toString().replace("_", "-"))
-                .appendQueryParameter("tmpl", tmpl)
-                .build().toString();
+                .appendQueryParameter("tmpl", tmpl);
+        if (isReAuth && reAuthAccount != null) {
+            builder.appendQueryParameter("Email", reAuthAccount.name);
+        }
+        return builder.build().toString();
     }
 
     private class JsBridge {
@@ -627,10 +690,8 @@ public class LoginActivity extends AssistantActivity {
             Log.d(TAG, "JSBridge: setAllActionsEnabled");
         }
 
-        @TargetApi(HONEYCOMB)
         @JavascriptInterface
         public final void setBackButtonEnabled(boolean backButtonEnabled) {
-            if (SDK_INT <= GINGERBREAD_MR1) return;
             int visibility = getWindow().getDecorView().getSystemUiVisibility();
             if (backButtonEnabled)
                 visibility &= -STATUS_BAR_DISABLE_BACK;

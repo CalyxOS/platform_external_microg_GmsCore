@@ -25,7 +25,6 @@ import java.security.KeyStore
 import java.security.cert.*
 import java.text.SimpleDateFormat
 import java.util.*
-import javax.net.ssl.CertPathTrustManagerParameters
 import javax.net.ssl.HttpsURLConnection
 import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManager
@@ -44,6 +43,9 @@ private val MOVING_WIFI_HOTSPOTS = setOf(
     "Air Canada",
     "ACWiFi",
     "ACWiFi.com",
+    // Colombia
+    "avianca",
+    "avaincaonair.com",
     // Czech Republic
     "CDWiFi",
     // France
@@ -76,6 +78,8 @@ private val MOVING_WIFI_HOTSPOTS = setOf(
     // New Zealand
     "AirNZ_InflightWiFi",
     "Bluebridge WiFi",
+    // Portugal
+    "TAP Air Portugal",
     // Singapore
     "KrisWorld",
     // Sweden
@@ -86,6 +90,8 @@ private val MOVING_WIFI_HOTSPOTS = setOf(
     "SBB-FREE",
     "SWISS Connect",
     "Edelweiss Entertainment",
+    // Thailand
+    "THAI Wireless IFE",
     // United Kingdom
     "Avanti_Free_WiFi",
     "CrossCountryWiFi",
@@ -381,8 +387,29 @@ class MovingWifiHelper(private val context: Context) {
         }
         private val SOURCE_SNCF = SncfLocationSource("https://wifi.sncf")
         private val SOURCE_SNCF_INTERCITES = SncfLocationSource("https://wifi.intercites.sncf")
-        private val SOURCE_LYRIA = SncfLocationSource("https://wifi.tgv-lyria.com")
         private val SOURCE_NORMANDIE = SncfLocationSource("https://wifi.normandie.fr")
+
+        private val SOURCE_LYRIA = object : MovingWifiLocationSource("https://wifi.tgv-lyria.com/api/train/gps/position/") {
+            /* If there is no location available (e.g. in a tunnel), the API
+               endpoint returns HTTP 500, though it may reuse a previous
+               location for a few seconds. The returned JSON has a
+               "satellites" integer field, but this always seems to be 0, even
+               when there is a valid location available.
+            */
+            override fun parse(location: Location, data: ByteArray): Location {
+                val json = JSONObject(data.decodeToString())
+                location.accuracy = 100f
+                location.latitude = json.getDouble("latitude")
+                location.longitude = json.getDouble("longitude")
+                json.optDouble("speed").takeIf { !it.isNaN() }?.let {
+                    // Speed is returned in m/s.
+                    location.speed = it.toFloat()
+                    LocationCompat.setSpeedAccuracyMetersPerSecond(location, location.speed * 0.1f)
+                }
+                json.optDouble("altitude").takeIf { !it.isNaN() }?.let { location.altitude = it }
+                return location
+            }
+        }
 
         private val SOURCE_OUIFI = object : MovingWifiLocationSource("https://ouifi.ouigo.com:8084/api/gps") {
             override fun parse(location: Location, data: ByteArray): Location {
@@ -462,6 +489,26 @@ class MovingWifiHelper(private val context: Context) {
             }
         }
 
+        private val SOURCE_FP3D_THAI_IFE = object : MovingWifiLocationSource("https://tha.mediasuite.zii.aero:8483/fp3d_logs/last") {
+            override fun parse(location: Location, data: ByteArray): Location {
+                val json = JSONObject(data.decodeToString())
+                if (!json.optBoolean("positionValid")) throw RuntimeException("GPS not valid")
+                location.accuracy = 100f
+                location.latitude = json.getDouble("presentLat")
+                location.longitude = json.getDouble("presentLon")
+                json.optLong("time").takeIf { it != 0L }?.let { location.time = it * 1000 }
+                json.optDouble("groundSpeedKnots").takeIf { !it.isNaN() }?.let {
+                    location.speed = (it * KNOTS_TO_METERS_PER_SECOND).toFloat()
+                    LocationCompat.setSpeedAccuracyMetersPerSecond(location, location.speed * 0.1f)
+                }
+                json.optDouble("trueHeading").takeIf { !it.isNaN() }?.let {
+                    location.bearing = it.toFloat()
+                    LocationCompat.setBearingAccuracyDegrees(location, 90f)
+                }
+                return location
+            }
+        }
+
         private val MOVING_WIFI_HOTSPOTS_LOCALLY_RETRIEVABLE: Map<String, List<MovingWifiLocationSource>> = mapOf(
             "WIFIonICE" to listOf(SOURCE_WIFI_ON_ICE),
             "OEBB" to listOf(SOURCE_OEBB_2, SOURCE_OEBB_1),
@@ -475,6 +522,7 @@ class MovingWifiHelper(private val context: Context) {
             "KrisWorld" to listOf(SOURCE_INFLIGHT_PANASONIC),
             "SWISS Connect" to listOf(SOURCE_INFLIGHT_PANASONIC),
             "Edelweiss Entertainment" to listOf(SOURCE_INFLIGHT_PANASONIC),
+            "TAP Air Portugal" to listOf(SOURCE_INFLIGHT_PANASONIC),
             "FlyNet" to listOf(SOURCE_LUFTHANSA_FLYNET_EUROPE, SOURCE_LUFTHANSA_FLYNET_EUROPE_2),
             "CDWiFi" to listOf(SOURCE_PASSENGERA_CD),
             "Air Canada" to listOf(SOURCE_AIR_CANADA),
@@ -488,7 +536,7 @@ class MovingWifiHelper(private val context: Context) {
             "agilis-Wifi" to listOf(SOURCE_HOTSPLOTS),
             "Austrian FlyNet" to listOf(SOURCE_AUSTRIAN_FLYNET_EUROPE),
             "EurostarTrainsWiFi" to listOf(SOURCE_OMBORD),
+            "THAI Wireless IFE" to listOf(SOURCE_FP3D_THAI_IFE)
         )
     }
 }
-

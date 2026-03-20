@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="license_notification_channel_name">Notificações de licença</string>
-    <string name="license_notification_channel_description">Notifica quando um app tenta validar sua licença, mas você não está logado à nenhuma conta do Google.</string>
+    <string name="license_notification_channel_description">Notifica quando um app tenta validar sua licença, mas você não está conectado à uma conta do Google.</string>
     <string name="license_notification_title">%1$s não conseguiu verificar sua licença</string>
-    <string name="license_notification_body">Se um app não estiver funcionando direito, inicie sessão em uma conta do Google em qual você comprou o app.</string>
-    <string name="license_notification_sign_in">Iniciar sessão</string>
+    <string name="license_notification_body">Se um app não estiver funcionando direito, conecte-se à uma conta do Google em qual você comprou o app.</string>
+    <string name="license_notification_sign_in">Conectar-se</string>
     <string name="license_notification_ignore">Ignorar</string>
     <string name="app_name">Acompanhante do microG</string>
     <string name="toast_installed">O acompanhante do microG não pode ser utilizado sozinho. Abrindo as configurações dos Serviços microG.</string>
@@ -16,7 +16,7 @@
     <string name="confirm_purchase">Confirmar compra</string>
     <string name="error_network">Não conectado à internet. Tenha certeza que o Wi-Fi ou os dados móveis estão ativados e tente novamente.</string>
     <string name="error_unknown">Erro desconhecido, por favor, saia e tente novamente.</string>
-    <string name="tips_remember_login_info">Lembrar da minha sessão neste dispositivo</string>
+    <string name="tips_remember_login_info">Lembrar da minha conta neste dispositivo</string>
     <string name="tips_forget_passwd">Esqueceu a senha?</string>
     <string name="tips_more_details">Saber mais</string>
     <string name="download_notification_tips">Baixando</string>
@@ -44,4 +44,13 @@
     <string name="installer_notification_progress_splitinstall_commiting">Instalando os componentes necessários para %s</string>
     <string name="installer_notification_progress_failed">Falha ao instalar \"%s\"</string>
     <string name="installer_notification_progress_splitinstall_downloading">Baixando os componentes necessários para %s</string>
+    <string name="billing_permission_desc">Permite que o usuário compre itens pelo Google Play dentro deste app.</string>
+    <string name="billing_permission_label">Serviço de cobrança do Google Play</string>
+    <string name="installer_notification_progress_splitinstall_click_install">Click para instalar os componentes necessários para %s</string>
+    <string name="app_install_permission_allowed">Permitir</string>
+    <string name="app_install_needs_permissions_title">Instalador de apps</string>
+    <string name="app_install_allow_to_install_third_app">Permitir que o \"Acompanhante do microG\" instale apps baixados por \"%1$s\"</string>
+    <string name="app_install_refuse_permission_remind">Se você negar, a instalação do aplicativo falhará.</string>
+    <string name="app_install_refuse_permission_remind_sub">Você pode modificar o estado de autorização a qualquer momento nas Configurações do microG.</string>
+    <string name="app_install_not_remind_again">Manter esta seleção e não perguntar novamente</string>
 </resources>
