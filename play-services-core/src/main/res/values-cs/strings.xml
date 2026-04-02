@@ -399,4 +399,6 @@
     <string name="prefcat_device_attestation_apps_title">Aplikace využívající atestaci zařízení</string>
     <string name="pref_device_attestation_app_allow_requests_title">Povolit žádosti</string>
     <string name="pref_device_attestation_app_allow_requests_summary">Povolit aplikaci požádat o atestaci zařízení</string>
+    <string name="pref_auth_allow_find_devices_title">Povolit odpovídání funkci Google Najít zařízení</string>
+    <string name="pref_auth_allow_find_devices_summary">Pokud je tato možnost povolena, zařízení může odpovědět na oznámení ze služby Najít moje zařízení od společnosti Google (jsou vyžadovány cloudové zprávy).</string>
 </resources>
