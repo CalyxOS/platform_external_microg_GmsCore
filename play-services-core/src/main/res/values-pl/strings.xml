@@ -411,4 +411,8 @@ Spróbuj ponownie później."</string>
     <string name="prefcat_device_attestation_apps_title">Aplikacje korzystające z funkcji poświadczenie urządzenia</string>
     <string name="pref_device_attestation_app_allow_requests_title">Zezwól na żądania</string>
     <string name="pref_device_attestation_app_allow_requests_summary">Zezwól aplikacji na żądanie poświadczenia urządzenia</string>
+    <string name="pref_auth_allow_find_devices_title">Odpowiadaj usłudze Google Znajdź Urządzenie</string>
+    <string name="pref_auth_allow_find_devices_summary">Gdy włączone, urządzenie może odpowiadać powiadomieniom z usługi Google Znajdź Urządzenie (Wymagane Cloud Messaging).</string>
+    <string name="credentials_service_sign_in_with_google_label">Zaloguj się z Google</string>
+    <string name="credentials_service_remote_custom_subtitle">Klucz dostępu, smartfon lub tablet</string>
 </resources>
