@@ -412,4 +412,6 @@
     <string name="prefcat_device_attestation_apps_title">Програми, які використовують сертифікацію пристрою</string>
     <string name="pref_device_attestation_app_allow_requests_title">Дозволити запити</string>
     <string name="pref_device_attestation_app_allow_requests_summary">Дозволити програмі запитувати сертифікацію пристрою</string>
+    <string name="pref_auth_allow_find_devices_title">Дозволити відповідь для Google Пошук телефона</string>
+    <string name="pref_auth_allow_find_devices_summary">Якщо цю функцію ввімкнено, пристрій зможе відповідати на сповіщення Google Пошук телефона (потрібна служба Cloud Messaging).</string>
 </resources>
